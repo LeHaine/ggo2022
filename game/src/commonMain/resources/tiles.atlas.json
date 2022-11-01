@@ -1,0 +1,374 @@
+{
+    "meta": {
+        "app": "https://littlekt.com",
+        "version": "1.0",
+        "image": "tiles.atlas.png",
+        "format": "RGBA8888",
+        "scale": 1.0,
+        "size": {
+            "w": 512,
+            "h": 256
+        },
+        "related_multi_packs": [
+        ]
+    },
+    "frames": [
+        {
+            "filename": "fxCircle0",
+            "frame": {
+                "x": 146,
+                "y": 201,
+                "w": 16,
+                "h": 16
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 16,
+                "h": 16
+            },
+            "sourceSize": {
+                "w": 16,
+                "h": 16
+            }
+        },
+        {
+            "filename": "fxDot0",
+            "frame": {
+                "x": 153,
+                "y": 188,
+                "w": 3,
+                "h": 3
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 3,
+                "h": 3
+            },
+            "sourceSize": {
+                "w": 3,
+                "h": 3
+            }
+        },
+        {
+            "filename": "fxGib0",
+            "frame": {
+                "x": 72,
+                "y": 216,
+                "w": 4,
+                "h": 3
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 2,
+                "y": 1,
+                "w": 4,
+                "h": 3
+            },
+            "sourceSize": {
+                "w": 8,
+                "h": 5
+            }
+        },
+        {
+            "filename": "fxGib1",
+            "frame": {
+                "x": 72,
+                "y": 225,
+                "w": 4,
+                "h": 3
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 2,
+                "y": 1,
+                "w": 4,
+                "h": 3
+            },
+            "sourceSize": {
+                "w": 8,
+                "h": 5
+            }
+        },
+        {
+            "filename": "fxGib2",
+            "frame": {
+                "x": 153,
+                "y": 179,
+                "w": 4,
+                "h": 3
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 2,
+                "y": 1,
+                "w": 4,
+                "h": 3
+            },
+            "sourceSize": {
+                "w": 8,
+                "h": 5
+            }
+        },
+        {
+            "filename": "fxImpact0",
+            "frame": {
+                "x": 121,
+                "y": 201,
+                "w": 14,
+                "h": 9
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 1,
+                "y": 0,
+                "w": 14,
+                "h": 9
+            },
+            "sourceSize": {
+                "w": 15,
+                "h": 9
+            }
+        },
+        {
+            "filename": "fxLine0",
+            "frame": {
+                "x": 4,
+                "y": 235,
+                "w": 33,
+                "h": 1
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 1,
+                "w": 33,
+                "h": 1
+            },
+            "sourceSize": {
+                "w": 33,
+                "h": 3
+            }
+        },
+        {
+            "filename": "fxLineDir0",
+            "frame": {
+                "x": 4,
+                "y": 242,
+                "w": 31,
+                "h": 3
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 2,
+                "y": 0,
+                "w": 31,
+                "h": 3
+            },
+            "sourceSize": {
+                "w": 33,
+                "h": 3
+            }
+        },
+        {
+            "filename": "fxSmallCircle0",
+            "frame": {
+                "x": 153,
+                "y": 167,
+                "w": 6,
+                "h": 6
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 6,
+                "h": 6
+            },
+            "sourceSize": {
+                "w": 6,
+                "h": 6
+            }
+        },
+        {
+            "filename": "fxSmoke0",
+            "frame": {
+                "x": 72,
+                "y": 167,
+                "w": 43,
+                "h": 43
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 43,
+                "h": 43
+            },
+            "sourceSize": {
+                "w": 44,
+                "h": 44
+            }
+        },
+        {
+            "filename": "fxSpotLight0",
+            "frame": {
+                "x": 4,
+                "y": 167,
+                "w": 62,
+                "h": 62
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 1,
+                "y": 1,
+                "w": 62,
+                "h": 62
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        {
+            "filename": "fxSwipe0",
+            "frame": {
+                "x": 82,
+                "y": 216,
+                "w": 26,
+                "h": 29
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 5,
+                "y": 1,
+                "w": 26,
+                "h": 29
+            },
+            "sourceSize": {
+                "w": 32,
+                "h": 32
+            }
+        },
+        {
+            "filename": "fxSwipe1",
+            "frame": {
+                "x": 114,
+                "y": 216,
+                "w": 26,
+                "h": 28
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 5,
+                "y": 2,
+                "w": 26,
+                "h": 28
+            },
+            "sourceSize": {
+                "w": 32,
+                "h": 32
+            }
+        },
+        {
+            "filename": "fxSwipe2",
+            "frame": {
+                "x": 121,
+                "y": 167,
+                "w": 26,
+                "h": 28
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 5,
+                "y": 2,
+                "w": 26,
+                "h": 28
+            },
+            "sourceSize": {
+                "w": 32,
+                "h": 32
+            }
+        },
+        {
+            "filename": "fxTail0",
+            "frame": {
+                "x": 43,
+                "y": 235,
+                "w": 33,
+                "h": 11
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 33,
+                "h": 11
+            },
+            "sourceSize": {
+                "w": 33,
+                "h": 11
+            }
+        },
+        {
+            "filename": "m5x7_16_0",
+            "frame": {
+                "x": 4,
+                "y": 4,
+                "w": 253,
+                "h": 59
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 1,
+                "y": 1,
+                "w": 253,
+                "h": 59
+            },
+            "sourceSize": {
+                "w": 256,
+                "h": 256
+            }
+        },
+        {
+            "filename": "m5x7_16_outline_0",
+            "frame": {
+                "x": 4,
+                "y": 69,
+                "w": 253,
+                "h": 92
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 1,
+                "y": 1,
+                "w": 253,
+                "h": 92
+            },
+            "sourceSize": {
+                "w": 256,
+                "h": 128
+            }
+        }
+    ]
+}

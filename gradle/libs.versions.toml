@@ -1,0 +1,22 @@
+[versions]
+plugin-android = "7.0.4"
+plugin-kotlin = "1.7.0"
+
+kotlinx-html = "0.7.2"
+kotlinx-coroutines = "1.6.0-native-mt"
+
+littlekt = "0.4.0.126e282-SNAPSHOT"
+rune="0.0.1.a0d040e-SNAPSHOT"
+
+[libraries]
+plugin-android = { module = "com.android.tools.build:gradle", version.ref = "plugin-android" }
+plugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "plugin-kotlin" }
+plugin-texturepacker = {module= "com.lehaine.littlekt.gradle:texturepacker", version.ref = "littlekt"}
+
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
+kotlinx-html-js = { module = "org.jetbrains.kotlinx:kotlinx-html-js", version.ref = "kotlinx-html" }
+
+rune-core = { module = "com.lehaine.rune:core", version.ref = "rune" }
+
+[bundles]
+plugins = ["plugin-android", "plugin-kotlin", "plugin-texturepacker"]
