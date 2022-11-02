@@ -6,7 +6,7 @@ pluginManagement {
     }
 }
 
-rootProject.name = "littlekt-game-base"
+rootProject.name = "glutton-for-punishment"
 include("game")
 
 enableFeaturePreview("VERSION_CATALOGS")

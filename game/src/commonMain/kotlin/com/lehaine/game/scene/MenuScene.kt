@@ -11,11 +11,12 @@ import com.lehaine.littlekt.graph.node.ui.label
 import com.lehaine.littlekt.graph.node.ui.vBoxContainer
 import com.lehaine.littlekt.util.viewport.ExtendViewport
 import com.lehaine.rune.engine.RuneScene
+import com.lehaine.rune.engine.RuneSceneDefault
 
 
 class MenuScene(
     context: Context
-) : RuneScene(context, ExtendViewport(Config.VIRTUAL_WIDTH, Config.VIRTUAL_HEIGHT)) {
+) : RuneSceneDefault(context, ExtendViewport(Config.VIRTUAL_WIDTH, Config.VIRTUAL_HEIGHT)) {
 
     override suspend fun Node.initialize() {
         centerContainer {

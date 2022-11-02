@@ -8,7 +8,7 @@ fun main() {
         width = 960
         height = 540
         backgroundColor = Color.DARK_GRAY
-        title = "LittleKt Game Template"
+        title = "Glutton for Punishment"
     }.start {
         GameCore(it)
     }

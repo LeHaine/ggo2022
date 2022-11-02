@@ -1,17 +1,24 @@
 package com.lehaine.game.scene
 
-import com.lehaine.game.Assets
 import com.lehaine.game.Config
 import com.lehaine.game.Fx
+import com.lehaine.game.GameInput
+import com.lehaine.game.createUiGameInputSignals
+import com.lehaine.game.entity.Hero
+import com.lehaine.game.entity.hero
 import com.lehaine.littlekt.Context
+import com.lehaine.littlekt.file.ldtk.LDtkMapLoader
+import com.lehaine.littlekt.file.vfs.readLDtkMapLoader
 import com.lehaine.littlekt.graph.node.Node
 import com.lehaine.littlekt.graph.node.canvasLayer
-import com.lehaine.littlekt.graph.node.component.HAlign
-import com.lehaine.littlekt.graph.node.component.VAlign
 import com.lehaine.littlekt.graph.node.node
+import com.lehaine.littlekt.graph.node.node2d.Node2D
+import com.lehaine.littlekt.graph.node.node2d.node2d
 import com.lehaine.littlekt.graph.node.ui.Control
 import com.lehaine.littlekt.graph.node.ui.control
-import com.lehaine.littlekt.graph.node.ui.label
+import com.lehaine.littlekt.graphics.tilemap.ldtk.LDtkLevel
+import com.lehaine.littlekt.input.GameAxis
+import com.lehaine.littlekt.input.GameButton
 import com.lehaine.littlekt.input.Key
 import com.lehaine.littlekt.util.viewport.ExtendViewport
 import com.lehaine.rune.engine.RuneScene
@@ -19,11 +26,17 @@ import com.lehaine.rune.engine.node.EntityCamera2D
 import com.lehaine.rune.engine.node.entityCamera2D
 import com.lehaine.rune.engine.node.pixelPerfectSlice
 import com.lehaine.rune.engine.node.pixelSmoothFrameBuffer
+import com.lehaine.rune.engine.node.renderable.LDtkGameLevelRenderable
+import com.lehaine.rune.engine.node.renderable.ldtkLevel
 import kotlin.time.Duration
 
 
 class GameScene(context: Context) :
-    RuneScene(context, ExtendViewport(Config.VIRTUAL_WIDTH, Config.VIRTUAL_HEIGHT)) {
+    RuneScene<GameInput>(
+        context,
+        ExtendViewport(Config.VIRTUAL_WIDTH, Config.VIRTUAL_HEIGHT),
+        uiInputSignals = createUiGameInputSignals()
+    ) {
     lateinit var background: Node
     lateinit var fxBackground: Node
     lateinit var main: Node
@@ -32,9 +45,39 @@ class GameScene(context: Context) :
     lateinit var top: Node
     lateinit var ui: Control
 
+    lateinit var entities: Node2D
+    var mapLoader: LDtkMapLoader? = null
+    lateinit var ldtkLevel: LDtkLevel
+    lateinit var hero: Hero
+
     val fx = Fx(this)
 
+    init {
+        controller.addBinding(GameInput.MOVE_LEFT, listOf(Key.A, Key.ARROW_LEFT), axes = listOf(GameAxis.LX))
+        controller.addBinding(GameInput.MOVE_RIGHT, listOf(Key.D, Key.ARROW_RIGHT), axes = listOf(GameAxis.LX))
+        controller.addBinding(GameInput.MOVE_UP, listOf(Key.W, Key.ARROW_UP), axes = listOf(GameAxis.LY))
+        controller.addBinding(GameInput.MOVE_DOWN, listOf(Key.S, Key.ARROW_DOWN), axes = listOf(GameAxis.LY))
+
+        controller.addBinding(GameInput.DASH, listOf(Key.SHIFT_LEFT), buttons = listOf(GameButton.XBOX_X))
+
+        controller.addAxis(GameInput.HORIZONTAL, GameInput.MOVE_RIGHT, GameInput.MOVE_LEFT)
+        controller.addAxis(GameInput.VERTICAL, GameInput.MOVE_DOWN, GameInput.MOVE_UP)
+
+        controller.addVector(
+            GameInput.MOVEMENT,
+            GameInput.MOVE_RIGHT,
+            GameInput.MOVE_DOWN,
+            GameInput.MOVE_LEFT,
+            GameInput.MOVE_UP
+        )
+    }
+
+
     override suspend fun Node.initialize() {
+        mapLoader?.dispose()
+        val mapLoader = resourcesVfs["world.ldtk"].readLDtkMapLoader().also { this@GameScene.mapLoader = it }
+        val world = mapLoader.loadMap(false, 0)
+        ldtkLevel = world.levels[0]
         createNodes()
     }
 
@@ -44,7 +87,8 @@ class GameScene(context: Context) :
 
             val fbo = pixelSmoothFrameBuffer {
                 entityCamera = entityCamera2D {
-                    // TODO set viewbounds
+                    viewBounds.width = ldtkLevel.pxWidth.toFloat()
+                    viewBounds.height = ldtkLevel.pxHeight.toFloat()
                     camera = canvasCamera
 
                     onUpdate += {
@@ -59,8 +103,15 @@ class GameScene(context: Context) :
                         }
                     }
                 }
+
+                val level: LDtkGameLevelRenderable<String>
+
                 background = node {
                     name = "Background"
+
+                    level = ldtkLevel(ldtkLevel) {
+                        gridSize = Config.GRID_CELL_SIZE
+                    }
                 }
 
                 fxBackground = node {
@@ -70,9 +121,13 @@ class GameScene(context: Context) :
                 main = node {
                     name = "Main"
 
-                    // TODO create level
+                    entities = node2d {
+                        name = "Entities"
+                        ySort = true
 
-                    // TODO create hero
+                        hero = hero(ldtkLevel.entities("Hero")[0], level)
+                        entityCamera.follow(hero, true)
+                    }
                 }
 
                 foreground = node {
@@ -86,8 +141,6 @@ class GameScene(context: Context) :
                 top = node {
                     name = "Top"
                 }
-
-                // TODO follow hero
             }
 
             pixelPerfectSlice {
@@ -105,17 +158,10 @@ class GameScene(context: Context) :
             anchorRight = 1f
             anchorBottom = 1f
 
-            label {
-                text = "TODO: Implement game logic"
-                font = Assets.pixelFont
-                anchorRight = 1f
-                anchorBottom = 1f
-                verticalAlign = VAlign.CENTER
-                horizontalAlign = HAlign.CENTER
-            }
         }
         fx.createParticleBatchNodes()
     }
+
     override fun update(dt: Duration) {
         fx.update(dt)
         super.update(dt)
@@ -126,11 +172,11 @@ class GameScene(context: Context) :
             resize(graphics.width, graphics.height)
         }
 
-        if(input.isKeyJustPressed(Key.T)) {
+        if (input.isKeyJustPressed(Key.T)) {
             println(root.treeString())
         }
 
-        if(input.isKeyJustPressed(Key.P)) {
+        if (input.isKeyJustPressed(Key.P)) {
             println(stats)
         }
     }
