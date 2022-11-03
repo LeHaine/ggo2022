@@ -37,20 +37,21 @@ class Hero(data: LDtkEntity, level: GameLevel<*>) : LevelEntity(level, Config.GR
 
     private var xMoveStrength = 0f
     private var yMoveStrength = 0f
+    private val shadow = sprite {
+        name = "Shadow"
+        slice = Assets.atlas.getByPrefix("shadow").slice
+        x -= Config.GRID_CELL_SIZE * data.pivotX
+        y -= Config.GRID_CELL_SIZE * data.pivotY
+    }
 
 
     init {
-        sprite {
-            slice = Assets.atlas.getByPrefix("shadow").slice
-            x -= Config.GRID_CELL_SIZE * data.pivotX
-            y -= Config.GRID_CELL_SIZE * data.pivotY
-        }
+        moveChild(shadow, 0)
         anchorX = data.pivotX
         anchorY = data.pivotY
         toGridPosition(data.cx, data.cy)
-        registerState(Assets.heroIdle, 0)
+        sprite.registerState(Assets.heroIdle, 0)
     }
-
 
     override fun update(dt: Duration) {
         super.update(dt)
