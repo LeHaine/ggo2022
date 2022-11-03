@@ -16,6 +16,7 @@ import com.lehaine.littlekt.graph.node.node2d.Node2D
 import com.lehaine.littlekt.graph.node.node2d.node2d
 import com.lehaine.littlekt.graph.node.ui.Control
 import com.lehaine.littlekt.graph.node.ui.control
+import com.lehaine.littlekt.graphics.Color
 import com.lehaine.littlekt.graphics.tilemap.ldtk.LDtkLevel
 import com.lehaine.littlekt.input.GameAxis
 import com.lehaine.littlekt.input.GameButton
@@ -70,6 +71,8 @@ class GameScene(context: Context) :
             GameInput.MOVE_LEFT,
             GameInput.MOVE_UP
         )
+
+        clearColor = Color.fromHex("#422e37")
     }
 
 

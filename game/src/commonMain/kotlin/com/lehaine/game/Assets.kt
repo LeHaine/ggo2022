@@ -4,8 +4,11 @@ import com.lehaine.littlekt.AssetProvider
 import com.lehaine.littlekt.BitmapFontAssetParameter
 import com.lehaine.littlekt.Context
 import com.lehaine.littlekt.Disposable
+import com.lehaine.littlekt.graphics.Animation
 import com.lehaine.littlekt.graphics.TextureAtlas
+import com.lehaine.littlekt.graphics.TextureSlice
 import com.lehaine.littlekt.graphics.font.BitmapFont
+import com.lehaine.littlekt.graphics.getAnimation
 import kotlin.jvm.Volatile
 
 class Assets private constructor(context: Context) : Disposable {
@@ -17,6 +20,8 @@ class Assets private constructor(context: Context) : Disposable {
             BitmapFontAssetParameter(preloadedTextures = listOf(atlas["m5x7_16_outline_0"].slice))
         ).content
     }
+
+    private val heroIdle by assets.prepare { atlas.getAnimation("heroIdle") }
 
     override fun dispose() {
         atlas.dispose()
@@ -30,6 +35,8 @@ class Assets private constructor(context: Context) : Disposable {
 
         val atlas: TextureAtlas get() = INSTANCE.atlas
         val pixelFont: BitmapFont get() = INSTANCE.pixelFont
+
+        val heroIdle: Animation<TextureSlice> get() = INSTANCE.heroIdle
 
         fun createInstance(context: Context, onLoad: () -> Unit): Assets {
             check(instance == null) { "Instance already created!" }
