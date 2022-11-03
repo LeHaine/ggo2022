@@ -432,6 +432,27 @@
                 "w": 256,
                 "h": 128
             }
+        },
+        {
+            "filename": "shadow",
+            "frame": {
+                "x": 334,
+                "y": 107,
+                "w": 12,
+                "h": 6
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 2,
+                "y": 10,
+                "w": 12,
+                "h": 6
+            },
+            "sourceSize": {
+                "w": 16,
+                "h": 16
+            }
         }
     ]
 }

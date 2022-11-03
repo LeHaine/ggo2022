@@ -9,6 +9,7 @@ import com.lehaine.littlekt.graphics.tilemap.ldtk.LDtkEntity
 import com.lehaine.rune.engine.GameLevel
 import com.lehaine.rune.engine.node.renderable.entity.LevelEntity
 import com.lehaine.rune.engine.node.renderable.entity.toGridPosition
+import com.lehaine.rune.engine.node.renderable.sprite
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -39,7 +40,11 @@ class Hero(data: LDtkEntity, level: GameLevel<*>) : LevelEntity(level, Config.GR
 
 
     init {
-        topCollisionRatio = 0.1f
+        sprite {
+            slice = Assets.atlas.getByPrefix("shadow").slice
+            x -= Config.GRID_CELL_SIZE * data.pivotX
+            y -= Config.GRID_CELL_SIZE * data.pivotY
+        }
         anchorX = data.pivotX
         anchorY = data.pivotY
         toGridPosition(data.cx, data.cy)
