@@ -37,7 +37,7 @@
         {
             "filename": "fxDot0",
             "frame": {
-                "x": 234,
+                "x": 254,
                 "y": 121,
                 "w": 3,
                 "h": 3
@@ -58,8 +58,8 @@
         {
             "filename": "fxGib0",
             "frame": {
-                "x": 204,
-                "y": 121,
+                "x": 334,
+                "y": 107,
                 "w": 4,
                 "h": 3
             },
@@ -79,7 +79,7 @@
         {
             "filename": "fxGib1",
             "frame": {
-                "x": 214,
+                "x": 244,
                 "y": 121,
                 "w": 4,
                 "h": 3
@@ -100,8 +100,8 @@
         {
             "filename": "fxGib2",
             "frame": {
-                "x": 224,
-                "y": 121,
+                "x": 334,
+                "y": 116,
                 "w": 4,
                 "h": 3
             },
@@ -121,8 +121,8 @@
         {
             "filename": "fxImpact0",
             "frame": {
-                "x": 43,
-                "y": 102,
+                "x": 375,
+                "y": 112,
                 "w": 14,
                 "h": 9
             },
@@ -184,8 +184,8 @@
         {
             "filename": "fxSmallCircle0",
             "frame": {
-                "x": 63,
-                "y": 102,
+                "x": 363,
+                "y": 59,
                 "w": 6,
                 "h": 6
             },
@@ -329,10 +329,115 @@
             }
         },
         {
-            "filename": "heroIdle0",
+            "filename": "heroAttack0",
+            "frame": {
+                "x": 344,
+                "y": 72,
+                "w": 25,
+                "h": 20
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 16,
+                "y": 12,
+                "w": 25,
+                "h": 20
+            },
+            "sourceSize": {
+                "w": 48,
+                "h": 32
+            }
+        },
+        {
+            "filename": "heroAttack1",
+            "frame": {
+                "x": 344,
+                "y": 98,
+                "w": 25,
+                "h": 19
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 16,
+                "y": 13,
+                "w": 25,
+                "h": 19
+            },
+            "sourceSize": {
+                "w": 48,
+                "h": 32
+            }
+        },
+        {
+            "filename": "heroAttack2",
+            "frame": {
+                "x": 148,
+                "y": 102,
+                "w": 26,
+                "h": 19
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 16,
+                "y": 13,
+                "w": 26,
+                "h": 19
+            },
+            "sourceSize": {
+                "w": 48,
+                "h": 32
+            }
+        },
+        {
+            "filename": "heroAttack3",
             "frame": {
                 "x": 80,
                 "y": 102,
+                "w": 28,
+                "h": 18
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 16,
+                "y": 14,
+                "w": 28,
+                "h": 18
+            },
+            "sourceSize": {
+                "w": 48,
+                "h": 32
+            }
+        },
+        {
+            "filename": "heroAttack4",
+            "frame": {
+                "x": 114,
+                "y": 102,
+                "w": 28,
+                "h": 20
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 16,
+                "y": 12,
+                "w": 28,
+                "h": 20
+            },
+            "sourceSize": {
+                "w": 48,
+                "h": 32
+            }
+        },
+        {
+            "filename": "heroIdle0",
+            "frame": {
+                "x": 344,
+                "y": 72,
                 "w": 25,
                 "h": 20
             },
@@ -352,8 +457,8 @@
         {
             "filename": "heroIdle1",
             "frame": {
-                "x": 111,
-                "y": 102,
+                "x": 363,
+                "y": 4,
                 "w": 25,
                 "h": 21
             },
@@ -373,8 +478,8 @@
         {
             "filename": "heroIdle2",
             "frame": {
-                "x": 142,
-                "y": 102,
+                "x": 363,
+                "y": 31,
                 "w": 25,
                 "h": 22
             },
@@ -394,8 +499,8 @@
         {
             "filename": "heroIdle3",
             "frame": {
-                "x": 173,
-                "y": 102,
+                "x": 375,
+                "y": 59,
                 "w": 25,
                 "h": 21
             },
@@ -405,6 +510,90 @@
                 "x": 16,
                 "y": 11,
                 "w": 25,
+                "h": 21
+            },
+            "sourceSize": {
+                "w": 48,
+                "h": 32
+            }
+        },
+        {
+            "filename": "heroWalk0",
+            "frame": {
+                "x": 180,
+                "y": 102,
+                "w": 26,
+                "h": 21
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 16,
+                "y": 11,
+                "w": 26,
+                "h": 21
+            },
+            "sourceSize": {
+                "w": 48,
+                "h": 32
+            }
+        },
+        {
+            "filename": "heroWalk1",
+            "frame": {
+                "x": 212,
+                "y": 102,
+                "w": 26,
+                "h": 20
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 16,
+                "y": 12,
+                "w": 26,
+                "h": 20
+            },
+            "sourceSize": {
+                "w": 48,
+                "h": 32
+            }
+        },
+        {
+            "filename": "heroWalk2",
+            "frame": {
+                "x": 375,
+                "y": 86,
+                "w": 25,
+                "h": 20
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 16,
+                "y": 12,
+                "w": 25,
+                "h": 20
+            },
+            "sourceSize": {
+                "w": 48,
+                "h": 32
+            }
+        },
+        {
+            "filename": "heroWalk3",
+            "frame": {
+                "x": 394,
+                "y": 4,
+                "w": 24,
+                "h": 21
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 16,
+                "y": 11,
+                "w": 24,
                 "h": 21
             },
             "sourceSize": {
@@ -436,8 +625,8 @@
         {
             "filename": "shadow",
             "frame": {
-                "x": 334,
-                "y": 107,
+                "x": 244,
+                "y": 102,
                 "w": 12,
                 "h": 6
             },

@@ -6,6 +6,7 @@ import com.lehaine.game.GameInput
 import com.lehaine.littlekt.graph.node.Node
 import com.lehaine.littlekt.graph.node.addTo
 import com.lehaine.littlekt.graphics.tilemap.ldtk.LDtkEntity
+import com.lehaine.littlekt.math.isFuzzyZero
 import com.lehaine.rune.engine.GameLevel
 import com.lehaine.rune.engine.node.renderable.entity.LevelEntity
 import com.lehaine.rune.engine.node.renderable.entity.toGridPosition
@@ -37,11 +38,12 @@ class Hero(data: LDtkEntity, level: GameLevel<*>) : LevelEntity(level, Config.GR
 
     private var xMoveStrength = 0f
     private var yMoveStrength = 0f
+
     private val shadow = sprite {
         name = "Shadow"
         slice = Assets.atlas.getByPrefix("shadow").slice
         x -= Config.GRID_CELL_SIZE * data.pivotX
-        y -= Config.GRID_CELL_SIZE * data.pivotY
+        y -= Config.GRID_CELL_SIZE * data.pivotY - 2f
     }
 
 
@@ -50,7 +52,10 @@ class Hero(data: LDtkEntity, level: GameLevel<*>) : LevelEntity(level, Config.GR
         anchorX = data.pivotX
         anchorY = data.pivotY
         toGridPosition(data.cx, data.cy)
-        sprite.registerState(Assets.heroIdle, 0)
+        sprite.apply {
+            registerState(Assets.heroWalk, 5) { !velocityX.isFuzzyZero(0.05f) || !velocityY.isFuzzyZero(0.05f) }
+            registerState(Assets.heroIdle, 0)
+        }
     }
 
     override fun update(dt: Duration) {
