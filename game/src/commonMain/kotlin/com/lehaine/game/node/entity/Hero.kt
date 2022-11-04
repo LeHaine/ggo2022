@@ -1,10 +1,12 @@
-package com.lehaine.game.entity
+package com.lehaine.game.node.entity
 
 import com.lehaine.game.Assets
 import com.lehaine.game.Config
 import com.lehaine.game.GameInput
+import com.lehaine.game.node.controller
 import com.lehaine.littlekt.graph.node.Node
 import com.lehaine.littlekt.graph.node.addTo
+import com.lehaine.littlekt.graph.node.annotation.SceneGraphDslMarker
 import com.lehaine.littlekt.graph.node.node2d.Node2D
 import com.lehaine.littlekt.graphics.tilemap.ldtk.LDtkEntity
 import com.lehaine.littlekt.math.geom.cosine
@@ -20,7 +22,6 @@ import com.lehaine.rune.engine.node.renderable.sprite
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
-import kotlin.math.sign
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -30,7 +31,7 @@ fun Node.hero(
     level: GameLevel<*>,
     camera: EntityCamera2D,
     projectiles: Node2D,
-    callback: Hero.() -> Unit = {}
+    callback: @SceneGraphDslMarker Hero.() -> Unit = {}
 ): Hero {
     contract { callsInPlace(callback, InvocationKind.EXACTLY_ONCE) }
     return Hero(data, level, camera, projectiles).also(callback).addTo(this)

@@ -1,8 +1,9 @@
 package com.lehaine.game.scene
 
 import com.lehaine.game.*
-import com.lehaine.game.entity.Hero
-import com.lehaine.game.entity.hero
+import com.lehaine.game.node.entity.Hero
+import com.lehaine.game.node.entity.hero
+import com.lehaine.game.node.level.TestSpawner
 import com.lehaine.littlekt.Context
 import com.lehaine.littlekt.file.ldtk.LDtkMapLoader
 import com.lehaine.littlekt.file.vfs.readLDtkMapLoader
@@ -28,8 +29,6 @@ import com.lehaine.rune.engine.node.EntityCamera2D
 import com.lehaine.rune.engine.node.entityCamera2D
 import com.lehaine.rune.engine.node.pixelPerfectSlice
 import com.lehaine.rune.engine.node.pixelSmoothFrameBuffer
-import com.lehaine.rune.engine.node.renderable.LDtkGameLevelRenderable
-import com.lehaine.rune.engine.node.renderable.ldtkLevel
 import kotlin.math.roundToInt
 import kotlin.time.Duration
 
@@ -87,7 +86,7 @@ class GameScene(context: Context) :
         val mapLoader = resourcesVfs["world.ldtk"].readLDtkMapLoader().also { this@GameScene.mapLoader = it }
         val world = mapLoader.loadMap(false, 0)
         ldtkLevel = world.levels[0]
-        val cursorImage =  resourcesVfs["cursor.png"].readPixmap()
+        val cursorImage = resourcesVfs["cursor.png"].readPixmap()
         val cursor =
             Cursor(cursorImage, (cursorImage.width * 0.5).roundToInt(), (cursorImage.height * 0.5f).roundToInt())
         context.graphics.setCursor(cursor)
@@ -99,7 +98,9 @@ class GameScene(context: Context) :
             val entityCamera: EntityCamera2D
 
             val fbo = pixelSmoothFrameBuffer {
+                targetHeight = 235
                 entityCamera = entityCamera2D {
+                    trackingSpeed = 1.25f
                     viewBounds.width = ldtkLevel.pxWidth.toFloat()
                     viewBounds.height = ldtkLevel.pxHeight.toFloat()
                     camera = canvasCamera
@@ -117,14 +118,12 @@ class GameScene(context: Context) :
                     }
                 }
 
-                val level: LDtkGameLevelRenderable<String>
+                val level: Level
 
                 background = node {
                     name = "Background"
 
-                    level = ldtkLevel(ldtkLevel) {
-                        gridSize = Config.GRID_CELL_SIZE
-                    }
+                    level = Level(ldtkLevel).addTo(this)
                 }
 
                 fxBackground = node {
@@ -147,6 +146,8 @@ class GameScene(context: Context) :
                     }
 
                     projectiles.addTo(this)
+
+                    TestSpawner(hero, level).addTo(this)
                 }
 
                 foreground = node {
@@ -179,6 +180,11 @@ class GameScene(context: Context) :
 
         }
         fx.createParticleBatchNodes()
+    }
+
+    override fun resize(width: Int, height: Int, centerCamera: Boolean) {
+        super.resize(width, height, centerCamera)
+        println("$width,$height")
     }
 
     override fun update(dt: Duration) {

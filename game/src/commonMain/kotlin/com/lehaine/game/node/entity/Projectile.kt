@@ -1,4 +1,4 @@
-package com.lehaine.game.entity
+package com.lehaine.game.node.entity
 
 /**
  * @author Colton Daily

@@ -1,7 +1,8 @@
-package com.lehaine.game.entity
+package com.lehaine.game.node.entity
 
 import com.lehaine.game.Assets
 import com.lehaine.game.Config
+import com.lehaine.game.node.entity.mob.Mob
 import com.lehaine.littlekt.math.distSqr
 import com.lehaine.littlekt.math.geom.cosine
 import com.lehaine.littlekt.math.geom.sine

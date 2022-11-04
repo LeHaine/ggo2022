@@ -1,14 +1,13 @@
-package com.lehaine.game.entity
+package com.lehaine.game.node.entity.mob
 
 import com.lehaine.game.Config
+import com.lehaine.game.Level
+import com.lehaine.game.node.entity.Hero
 import com.lehaine.littlekt.math.geom.Angle
 import com.lehaine.littlekt.util.signal1v
-import com.lehaine.rune.engine.GameLevel
 import com.lehaine.rune.engine.node.renderable.entity.LevelEntity
 import com.lehaine.rune.engine.node.renderable.entity.cd
 import com.lehaine.rune.engine.node.renderable.entity.toGridPosition
-import kotlin.math.ceil
-import kotlin.random.Random
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -16,7 +15,7 @@ import kotlin.time.Duration.Companion.milliseconds
  * @author Colton Daily
  * @date 11/4/2022
  */
-open class Mob(val hero: Hero, level: GameLevel<*>) : LevelEntity(level, Config.GRID_CELL_SIZE.toFloat()) {
+open class Mob(val hero: Hero, override val level: Level) : LevelEntity(level, Config.GRID_CELL_SIZE.toFloat()) {
 
     open var speed = 0.003f
     var speedMul = 1f
@@ -74,7 +73,10 @@ open class Mob(val hero: Hero, level: GameLevel<*>) : LevelEntity(level, Config.
     fun spawn() {
         enabled = true
         ALL += this
+        onSpawn()
     }
+
+    open fun onSpawn() = Unit
 
     fun die(spawnDrop: Boolean = true) {
         if (spawnDrop) {
@@ -93,38 +95,16 @@ open class Mob(val hero: Hero, level: GameLevel<*>) : LevelEntity(level, Config.
     }
 
     fun teleportToRandomSpotAroundHero() {
-        val camera = hero.camera.camera ?: return
-        val vw = camera.virtualWidth
-        val vh = camera.virtualHeight
-        val vx = camera.position.x - vw * 0.5f - Config.GRID_CELL_SIZE * 3
-        val vy = camera.position.y - vh * 0.5f - Config.GRID_CELL_SIZE * 3
-        val vx2 = vx + vw + Config.GRID_CELL_SIZE * 3
-        val vy2 = vy + vh + Config.GRID_CELL_SIZE * 3
-        val w = vw + Config.GRID_CELL_SIZE * 3 * 2
-        val h = vh + Config.GRID_CELL_SIZE * 3 * 2
-        val perimeter = (w * 2) + (h * 2)
-        val point = Random.nextFloat() * perimeter
+        var scanning = true
+        while (scanning) {
+            val fx = (0..level.levelWidth).random()
+            val fy = (0..level.levelHeight).random()
 
-        var rx: Float
-        var ry: Float
-
-        if (point <= w) { // anywhere at top
-            rx = (Random.nextFloat() * w) + vx
-            ry = vy
-        } else if (point <= w + h) { // anywhere on right
-            rx = vx2
-            ry = (Random.nextFloat() * h) + vy
-        } else if (point <= (w * 2) + h) { // anywhere on bottom
-            rx = (Random.nextFloat() * w) + vx
-            ry = vy2
-        } else { // anywhere on left
-            rx = vx
-            ry = (Random.nextFloat() * h) + vy
+            if (level.isValid(fx, fy) && !level.hasCollision(fx, fy)) {
+                toGridPosition(fx, fy)
+                scanning = false
+            }
         }
-        rx /= Config.GRID_CELL_SIZE
-        ry /= Config.GRID_CELL_SIZE
-
-        toGridPosition(ceil(rx).toInt(), ceil(ry).toInt())
     }
 
     open fun reset() {
