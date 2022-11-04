@@ -6,7 +6,7 @@ import com.lehaine.littlekt.graphics.Color
 fun main() {
     createLittleKtApp {
         width = 960
-        height = 540
+        height = 800
         backgroundColor = Color.DARK_GRAY
         title = "Glutton for Punishment"
     }.start {

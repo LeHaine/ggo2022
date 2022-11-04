@@ -1,5 +1,6 @@
 package com.lehaine.game.node.entity.mob
 
+import com.lehaine.game.Assets
 import com.lehaine.game.Config
 import com.lehaine.game.Level
 import com.lehaine.game.node.entity.Hero
@@ -8,6 +9,7 @@ import com.lehaine.littlekt.util.signal1v
 import com.lehaine.rune.engine.node.renderable.entity.LevelEntity
 import com.lehaine.rune.engine.node.renderable.entity.cd
 import com.lehaine.rune.engine.node.renderable.entity.toGridPosition
+import com.lehaine.rune.engine.node.renderable.sprite
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -27,6 +29,13 @@ open class Mob(val hero: Hero, override val level: Level) : LevelEntity(level, C
 
     val onDeath = signal1v<Mob>()
     var lastHitAngle: Angle = Angle.ZERO
+
+    protected val shadow = sprite {
+        name = "Shadow"
+        slice = Assets.atlas.getByPrefix("shadow").slice
+        x -= Config.GRID_CELL_SIZE * 0.5f
+        y -= Config.GRID_CELL_SIZE  - 2f
+    }.also { moveChild(it, 0) }
 
     override fun update(dt: Duration) {
         super.update(dt)
