@@ -114,6 +114,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
         val offset = 20f
 
         val angle = angleToMouse
+        projectile.sprite.flipY = dir == -1
         projectile.rotation = angle
         projectile.globalPosition(globalX + offset * angle.cosine, globalY + offset * angle.sine)
         projectile.enabled = true
