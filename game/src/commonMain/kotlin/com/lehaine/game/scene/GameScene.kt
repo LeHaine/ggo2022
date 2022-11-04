@@ -1,14 +1,12 @@
 package com.lehaine.game.scene
 
-import com.lehaine.game.Config
-import com.lehaine.game.Fx
-import com.lehaine.game.GameInput
-import com.lehaine.game.createUiGameInputSignals
+import com.lehaine.game.*
 import com.lehaine.game.entity.Hero
 import com.lehaine.game.entity.hero
 import com.lehaine.littlekt.Context
 import com.lehaine.littlekt.file.ldtk.LDtkMapLoader
 import com.lehaine.littlekt.file.vfs.readLDtkMapLoader
+import com.lehaine.littlekt.file.vfs.readPixmap
 import com.lehaine.littlekt.graph.node.Node
 import com.lehaine.littlekt.graph.node.addTo
 import com.lehaine.littlekt.graph.node.canvasLayer
@@ -18,6 +16,7 @@ import com.lehaine.littlekt.graph.node.node2d.node2d
 import com.lehaine.littlekt.graph.node.ui.Control
 import com.lehaine.littlekt.graph.node.ui.control
 import com.lehaine.littlekt.graphics.Color
+import com.lehaine.littlekt.graphics.Cursor
 import com.lehaine.littlekt.graphics.tilemap.ldtk.LDtkLevel
 import com.lehaine.littlekt.input.GameAxis
 import com.lehaine.littlekt.input.GameButton
@@ -31,6 +30,7 @@ import com.lehaine.rune.engine.node.pixelPerfectSlice
 import com.lehaine.rune.engine.node.pixelSmoothFrameBuffer
 import com.lehaine.rune.engine.node.renderable.LDtkGameLevelRenderable
 import com.lehaine.rune.engine.node.renderable.ldtkLevel
+import kotlin.math.roundToInt
 import kotlin.time.Duration
 
 
@@ -87,6 +87,10 @@ class GameScene(context: Context) :
         val mapLoader = resourcesVfs["world.ldtk"].readLDtkMapLoader().also { this@GameScene.mapLoader = it }
         val world = mapLoader.loadMap(false, 0)
         ldtkLevel = world.levels[0]
+        val cursorImage =  resourcesVfs["cursor.png"].readPixmap()
+        val cursor =
+            Cursor(cursorImage, (cursorImage.width * 0.5).roundToInt(), (cursorImage.height * 0.5f).roundToInt())
+        context.graphics.setCursor(cursor)
         createNodes()
     }
 
