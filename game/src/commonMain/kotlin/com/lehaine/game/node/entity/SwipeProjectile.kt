@@ -9,6 +9,7 @@ import com.lehaine.littlekt.math.geom.sine
 import com.lehaine.littlekt.util.fastForEach
 import com.lehaine.rune.engine.node.renderable.entity.Entity
 import com.lehaine.rune.engine.node.renderable.entity.angleTo
+import com.lehaine.rune.engine.node.renderable.entity.cd
 import kotlin.time.Duration
 
 /**
@@ -18,7 +19,6 @@ import kotlin.time.Duration
 class SwipeProjectile(val hero: Hero) : Entity(Config.GRID_CELL_SIZE.toFloat()), Projectile {
     private var swiped = false
 
-    var timer = Duration.ZERO
 
     val knockbackPower = 0.1f
 
@@ -33,7 +33,7 @@ class SwipeProjectile(val hero: Hero) : Entity(Config.GRID_CELL_SIZE.toFloat()),
         super.update(dt)
         if (!swiped) {
             sprite.playOnce(Assets.swipeAttack1)
-            timer = Assets.swipeAttack1.duration
+            cd("swipe", Assets.swipeAttack1.duration)
             swiped = true
             Mob.ALL.fastForEach {
                 val dist = outerRadius + it.outerRadius
@@ -47,10 +47,7 @@ class SwipeProjectile(val hero: Hero) : Entity(Config.GRID_CELL_SIZE.toFloat()),
                 }
             }
         }
-        if(swiped) {
-            timer -= dt
-        }
-        if (timer <= Duration.ZERO && swiped) {
+        if (!cd.has("swipe") && swiped) {
             swiped = false
             enabled = false
             hero.projectileFinished(this)

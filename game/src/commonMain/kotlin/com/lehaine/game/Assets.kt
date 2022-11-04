@@ -29,8 +29,10 @@ class Assets private constructor(context: Context) : Disposable {
 
     private val swipeAttack1 by assets.prepare { atlas.getAnimation("swipeAttack1", 75.milliseconds) }
 
-    private val meatballStandUp by assets.prepare { atlas.getAnimation("meatBallStandUp") }
-    private val meatballRun by assets.prepare { atlas.getAnimation("meatBallRun") }
+    private val meatBallStandUp by assets.prepare { atlas.getAnimation("meatBallStandUp") }
+    private val meatBallRun by assets.prepare { atlas.getAnimation("meatBallRun") }
+    private val meatBallSit by assets.prepare { atlas.getAnimation("meatBallSit", 250.milliseconds) }
+
 
     override fun dispose() {
         atlas.dispose()
@@ -52,8 +54,9 @@ class Assets private constructor(context: Context) : Disposable {
 
         val swipeAttack1: Animation<TextureSlice> get() = INSTANCE.swipeAttack1
 
-        val meatBallStandUp: Animation<TextureSlice> get() = INSTANCE.meatballStandUp
-        val meatBallRun: Animation<TextureSlice> get() = INSTANCE.meatballRun
+        val meatBallStandUp: Animation<TextureSlice> get() = INSTANCE.meatBallStandUp
+        val meatBallRun: Animation<TextureSlice> get() = INSTANCE.meatBallRun
+        val meatBallSit: Animation<TextureSlice> get() = INSTANCE.meatBallSit
 
         fun createInstance(context: Context, onLoad: () -> Unit): Assets {
             check(instance == null) { "Instance already created!" }

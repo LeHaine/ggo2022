@@ -179,12 +179,8 @@ class GameScene(context: Context) :
             anchorBottom = 1f
 
         }
-        fx.createParticleBatchNodes()
-    }
 
-    override fun resize(width: Int, height: Int, centerCamera: Boolean) {
-        super.resize(width, height, centerCamera)
-        println("$width,$height")
+        fx.createParticleBatchNodes()
     }
 
     override fun update(dt: Duration) {

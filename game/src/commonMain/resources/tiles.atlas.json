@@ -184,8 +184,8 @@
         {
             "filename": "fxSmallCircle0",
             "frame": {
-                "x": 56,
-                "y": 153,
+                "x": 81,
+                "y": 154,
                 "w": 6,
                 "h": 6
             },
@@ -791,6 +791,48 @@
             }
         },
         {
+            "filename": "meatBallSitting0",
+            "frame": {
+                "x": 4,
+                "y": 155,
+                "w": 19,
+                "h": 15
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 14,
+                "y": 17,
+                "w": 19,
+                "h": 15
+            },
+            "sourceSize": {
+                "w": 48,
+                "h": 32
+            }
+        },
+        {
+            "filename": "meatBallSitting1",
+            "frame": {
+                "x": 4,
+                "y": 176,
+                "w": 19,
+                "h": 16
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 14,
+                "y": 16,
+                "w": 19,
+                "h": 16
+            },
+            "sourceSize": {
+                "w": 48,
+                "h": 32
+            }
+        },
+        {
             "filename": "meatBallStandUp0",
             "frame": {
                 "x": 4,
@@ -814,8 +856,8 @@
         {
             "filename": "meatBallStandUp1",
             "frame": {
-                "x": 4,
-                "y": 176,
+                "x": 93,
+                "y": 128,
                 "w": 19,
                 "h": 15
             },
@@ -836,7 +878,7 @@
             "filename": "meatBallStandUp2",
             "frame": {
                 "x": 93,
-                "y": 128,
+                "y": 149,
                 "w": 19,
                 "h": 16
             },
@@ -856,8 +898,8 @@
         {
             "filename": "meatBallStandUp3",
             "frame": {
-                "x": 93,
-                "y": 150,
+                "x": 56,
+                "y": 154,
                 "w": 19,
                 "h": 19
             },
