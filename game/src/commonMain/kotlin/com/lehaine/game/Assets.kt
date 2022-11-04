@@ -24,6 +24,7 @@ class Assets private constructor(context: Context) : Disposable {
     private val heroIdle by assets.prepare { atlas.getAnimation("heroIdle") }
     private val heroWalk by assets.prepare { atlas.getAnimation("heroWalk") }
     private val heroAttack by assets.prepare { atlas.getAnimation("heroAttack") }
+    private val heroSoar by assets.prepare { atlas.getAnimation("heroSoar") }
 
     override fun dispose() {
         atlas.dispose()
@@ -41,6 +42,7 @@ class Assets private constructor(context: Context) : Disposable {
         val heroIdle: Animation<TextureSlice> get() = INSTANCE.heroIdle
         val heroWalk: Animation<TextureSlice> get() = INSTANCE.heroWalk
         val heroAttack: Animation<TextureSlice> get() = INSTANCE.heroAttack
+        val heroSoar: Animation<TextureSlice> get() = INSTANCE.heroSoar
 
         fun createInstance(context: Context, onLoad: () -> Unit): Assets {
             check(instance == null) { "Instance already created!" }

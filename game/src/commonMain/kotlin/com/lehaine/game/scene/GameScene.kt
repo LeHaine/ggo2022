@@ -10,6 +10,7 @@ import com.lehaine.littlekt.Context
 import com.lehaine.littlekt.file.ldtk.LDtkMapLoader
 import com.lehaine.littlekt.file.vfs.readLDtkMapLoader
 import com.lehaine.littlekt.graph.node.Node
+import com.lehaine.littlekt.graph.node.addTo
 import com.lehaine.littlekt.graph.node.canvasLayer
 import com.lehaine.littlekt.graph.node.node
 import com.lehaine.littlekt.graph.node.node2d.Node2D
@@ -21,6 +22,7 @@ import com.lehaine.littlekt.graphics.tilemap.ldtk.LDtkLevel
 import com.lehaine.littlekt.input.GameAxis
 import com.lehaine.littlekt.input.GameButton
 import com.lehaine.littlekt.input.Key
+import com.lehaine.littlekt.input.Pointer
 import com.lehaine.littlekt.util.viewport.ExtendViewport
 import com.lehaine.rune.engine.RuneScene
 import com.lehaine.rune.engine.node.EntityCamera2D
@@ -59,7 +61,11 @@ class GameScene(context: Context) :
         controller.addBinding(GameInput.MOVE_UP, listOf(Key.W, Key.ARROW_UP), axes = listOf(GameAxis.LY))
         controller.addBinding(GameInput.MOVE_DOWN, listOf(Key.S, Key.ARROW_DOWN), axes = listOf(GameAxis.LY))
 
-        controller.addBinding(GameInput.DASH, listOf(Key.SHIFT_LEFT), buttons = listOf(GameButton.XBOX_X))
+        controller.addBinding(
+            GameInput.ATTACK,
+            buttons = listOf(GameButton.XBOX_X),
+            pointers = listOf(Pointer.MOUSE_LEFT)
+        )
 
         controller.addAxis(GameInput.HORIZONTAL, GameInput.MOVE_RIGHT, GameInput.MOVE_LEFT)
         controller.addAxis(GameInput.VERTICAL, GameInput.MOVE_DOWN, GameInput.MOVE_UP)
@@ -124,13 +130,19 @@ class GameScene(context: Context) :
                 main = node {
                     name = "Main"
 
+
+                    val projectiles = Node2D().apply {
+                        name = "Projectiles"
+                    }
                     entities = node2d {
                         name = "Entities"
                         ySort = true
 
-                        hero = hero(ldtkLevel.entities("Hero")[0], level)
+                        hero = hero(ldtkLevel.entities("Hero")[0], level, entityCamera, projectiles)
                         entityCamera.follow(hero, true)
                     }
+
+                    projectiles.addTo(this)
                 }
 
                 foreground = node {

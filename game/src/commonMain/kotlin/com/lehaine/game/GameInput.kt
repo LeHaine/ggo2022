@@ -15,7 +15,7 @@ enum class GameInput {
     UI_FOCUS_NEXT,
     UI_FOCUS_PREV,
 
-    DASH,
+    ATTACK,
 
     MOVE_LEFT,
     MOVE_RIGHT,
