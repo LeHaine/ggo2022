@@ -10,6 +10,7 @@ import com.lehaine.littlekt.graphics.TextureSlice
 import com.lehaine.littlekt.graphics.font.BitmapFont
 import com.lehaine.littlekt.graphics.getAnimation
 import kotlin.jvm.Volatile
+import kotlin.time.Duration.Companion.milliseconds
 
 class Assets private constructor(context: Context) : Disposable {
     private val assets = AssetProvider(context)
@@ -25,6 +26,8 @@ class Assets private constructor(context: Context) : Disposable {
     private val heroWalk by assets.prepare { atlas.getAnimation("heroWalk") }
     private val heroAttack by assets.prepare { atlas.getAnimation("heroAttack") }
     private val heroSoar by assets.prepare { atlas.getAnimation("heroSoar") }
+
+    private val swipeAttack1 by assets.prepare { atlas.getAnimation("swipeAttack1", 75.milliseconds) }
 
     override fun dispose() {
         atlas.dispose()
@@ -43,6 +46,8 @@ class Assets private constructor(context: Context) : Disposable {
         val heroWalk: Animation<TextureSlice> get() = INSTANCE.heroWalk
         val heroAttack: Animation<TextureSlice> get() = INSTANCE.heroAttack
         val heroSoar: Animation<TextureSlice> get() = INSTANCE.heroSoar
+
+        val swipeAttack1: Animation<TextureSlice> get() = INSTANCE.swipeAttack1
 
         fun createInstance(context: Context, onLoad: () -> Unit): Assets {
             check(instance == null) { "Instance already created!" }

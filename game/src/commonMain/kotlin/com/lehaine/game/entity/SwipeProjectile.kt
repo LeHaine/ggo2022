@@ -6,7 +6,6 @@ import com.lehaine.littlekt.math.distSqr
 import com.lehaine.littlekt.math.geom.cosine
 import com.lehaine.littlekt.math.geom.sine
 import com.lehaine.littlekt.util.fastForEach
-import com.lehaine.littlekt.util.seconds
 import com.lehaine.rune.engine.node.renderable.entity.Entity
 import com.lehaine.rune.engine.node.renderable.entity.angleTo
 import kotlin.time.Duration
@@ -18,19 +17,22 @@ import kotlin.time.Duration
 class SwipeProjectile(val hero: Hero) : Entity(Config.GRID_CELL_SIZE.toFloat()), Projectile {
     private var swiped = false
 
+    var timer = Duration.ZERO
+
     val knockbackPower = 0.1f
 
     init {
-        sprite.slice = Assets.atlas.getByPrefix("fxSwipe").slice
         anchorX = 0.5f
         anchorY = 0.5f
-        width = 32f
-        height = 32f
+        width = 64f
+        height = 64f
     }
 
     override fun update(dt: Duration) {
         super.update(dt)
         if (!swiped) {
+            sprite.playOnce(Assets.swipeAttack1)
+            timer = Assets.swipeAttack1.duration
             swiped = true
             Mob.ALL.fastForEach {
                 val dist = outerRadius + it.outerRadius
@@ -44,10 +46,11 @@ class SwipeProjectile(val hero: Hero) : Entity(Config.GRID_CELL_SIZE.toFloat()),
                 }
             }
         }
-        sprite.color.a -= 5f * dt.seconds
-        if (sprite.color.a <= 0f) {
+        if(swiped) {
+            timer -= dt
+        }
+        if (timer <= Duration.ZERO && swiped) {
             swiped = false
-            sprite.color.a = 1f
             enabled = false
             hero.projectileFinished(this)
         }

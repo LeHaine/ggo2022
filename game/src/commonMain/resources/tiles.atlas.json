@@ -7,7 +7,7 @@
         "scale": 1.0,
         "size": {
             "w": 512,
-            "h": 128
+            "h": 256
         },
         "related_multi_packs": [
         ]
@@ -16,8 +16,8 @@
         {
             "filename": "fxCircle0",
             "frame": {
-                "x": 312,
-                "y": 107,
+                "x": 491,
+                "y": 109,
                 "w": 16,
                 "h": 16
             },
@@ -37,8 +37,8 @@
         {
             "filename": "fxDot0",
             "frame": {
-                "x": 254,
-                "y": 121,
+                "x": 505,
+                "y": 4,
                 "w": 3,
                 "h": 3
             },
@@ -58,8 +58,8 @@
         {
             "filename": "fxGib0",
             "frame": {
-                "x": 334,
-                "y": 107,
+                "x": 331,
+                "y": 62,
                 "w": 4,
                 "h": 3
             },
@@ -79,8 +79,8 @@
         {
             "filename": "fxGib1",
             "frame": {
-                "x": 244,
-                "y": 121,
+                "x": 500,
+                "y": 13,
                 "w": 4,
                 "h": 3
             },
@@ -100,8 +100,8 @@
         {
             "filename": "fxGib2",
             "frame": {
-                "x": 334,
-                "y": 116,
+                "x": 500,
+                "y": 22,
                 "w": 4,
                 "h": 3
             },
@@ -121,8 +121,8 @@
         {
             "filename": "fxImpact0",
             "frame": {
-                "x": 406,
-                "y": 115,
+                "x": 491,
+                "y": 131,
                 "w": 14,
                 "h": 9
             },
@@ -142,8 +142,8 @@
         {
             "filename": "fxLine0",
             "frame": {
-                "x": 4,
-                "y": 121,
+                "x": 348,
+                "y": 119,
                 "w": 33,
                 "h": 1
             },
@@ -163,8 +163,8 @@
         {
             "filename": "fxLineDir0",
             "frame": {
-                "x": 43,
-                "y": 121,
+                "x": 468,
+                "y": 4,
                 "w": 31,
                 "h": 3
             },
@@ -184,8 +184,8 @@
         {
             "filename": "fxSmallCircle0",
             "frame": {
-                "x": 363,
-                "y": 60,
+                "x": 378,
+                "y": 126,
                 "w": 6,
                 "h": 6
             },
@@ -205,8 +205,8 @@
         {
             "filename": "fxSmoke0",
             "frame": {
-                "x": 263,
-                "y": 72,
+                "x": 419,
+                "y": 4,
                 "w": 43,
                 "h": 43
             },
@@ -247,8 +247,8 @@
         {
             "filename": "fxSwipe0",
             "frame": {
-                "x": 312,
-                "y": 72,
+                "x": 468,
+                "y": 13,
                 "w": 26,
                 "h": 29
             },
@@ -268,8 +268,8 @@
         {
             "filename": "fxSwipe1",
             "frame": {
-                "x": 331,
-                "y": 4,
+                "x": 468,
+                "y": 48,
                 "w": 26,
                 "h": 28
             },
@@ -289,8 +289,8 @@
         {
             "filename": "fxSwipe2",
             "frame": {
-                "x": 331,
-                "y": 38,
+                "x": 436,
+                "y": 53,
                 "w": 26,
                 "h": 28
             },
@@ -310,8 +310,8 @@
         {
             "filename": "fxTail0",
             "frame": {
-                "x": 4,
-                "y": 102,
+                "x": 392,
+                "y": 110,
                 "w": 33,
                 "h": 11
             },
@@ -331,8 +331,8 @@
         {
             "filename": "heroAttack0",
             "frame": {
-                "x": 344,
-                "y": 98,
+                "x": 200,
+                "y": 102,
                 "w": 25,
                 "h": 20
             },
@@ -352,8 +352,8 @@
         {
             "filename": "heroAttack1",
             "frame": {
-                "x": 375,
-                "y": 98,
+                "x": 231,
+                "y": 102,
                 "w": 25,
                 "h": 19
             },
@@ -373,7 +373,7 @@
         {
             "filename": "heroAttack2",
             "frame": {
-                "x": 148,
+                "x": 72,
                 "y": 102,
                 "w": 26,
                 "h": 19
@@ -394,7 +394,7 @@
         {
             "filename": "heroAttack3",
             "frame": {
-                "x": 80,
+                "x": 4,
                 "y": 102,
                 "w": 28,
                 "h": 18
@@ -415,7 +415,7 @@
         {
             "filename": "heroAttack4",
             "frame": {
-                "x": 114,
+                "x": 38,
                 "y": 102,
                 "w": 28,
                 "h": 20
@@ -436,8 +436,8 @@
         {
             "filename": "heroAttack5",
             "frame": {
-                "x": 363,
-                "y": 4,
+                "x": 436,
+                "y": 87,
                 "w": 25,
                 "h": 23
             },
@@ -457,8 +457,8 @@
         {
             "filename": "heroIdle0",
             "frame": {
-                "x": 344,
-                "y": 98,
+                "x": 200,
+                "y": 102,
                 "w": 25,
                 "h": 20
             },
@@ -478,8 +478,8 @@
         {
             "filename": "heroIdle1",
             "frame": {
-                "x": 363,
-                "y": 33,
+                "x": 468,
+                "y": 82,
                 "w": 25,
                 "h": 21
             },
@@ -499,8 +499,8 @@
         {
             "filename": "heroIdle2",
             "frame": {
-                "x": 376,
-                "y": 60,
+                "x": 72,
+                "y": 127,
                 "w": 25,
                 "h": 22
             },
@@ -520,8 +520,8 @@
         {
             "filename": "heroIdle3",
             "frame": {
-                "x": 406,
-                "y": 88,
+                "x": 231,
+                "y": 127,
                 "w": 25,
                 "h": 21
             },
@@ -541,8 +541,8 @@
         {
             "filename": "heroSoar0",
             "frame": {
-                "x": 394,
-                "y": 4,
+                "x": 4,
+                "y": 126,
                 "w": 25,
                 "h": 23
             },
@@ -562,8 +562,8 @@
         {
             "filename": "heroSoar1",
             "frame": {
-                "x": 407,
-                "y": 33,
+                "x": 35,
+                "y": 128,
                 "w": 25,
                 "h": 23
             },
@@ -583,7 +583,7 @@
         {
             "filename": "heroSoar2",
             "frame": {
-                "x": 180,
+                "x": 104,
                 "y": 102,
                 "w": 26,
                 "h": 22
@@ -604,7 +604,7 @@
         {
             "filename": "heroWalk0",
             "frame": {
-                "x": 212,
+                "x": 136,
                 "y": 102,
                 "w": 26,
                 "h": 21
@@ -625,8 +625,8 @@
         {
             "filename": "heroWalk1",
             "frame": {
-                "x": 344,
-                "y": 72,
+                "x": 168,
+                "y": 102,
                 "w": 26,
                 "h": 20
             },
@@ -646,8 +646,8 @@
         {
             "filename": "heroWalk2",
             "frame": {
-                "x": 407,
-                "y": 62,
+                "x": 4,
+                "y": 155,
                 "w": 25,
                 "h": 20
             },
@@ -667,8 +667,8 @@
         {
             "filename": "heroWalk3",
             "frame": {
-                "x": 425,
-                "y": 4,
+                "x": 348,
+                "y": 126,
                 "w": 24,
                 "h": 21
             },
@@ -709,8 +709,8 @@
         {
             "filename": "shadow",
             "frame": {
-                "x": 244,
-                "y": 102,
+                "x": 431,
+                "y": 116,
                 "w": 12,
                 "h": 6
             },
@@ -725,6 +725,174 @@
             "sourceSize": {
                 "w": 16,
                 "h": 16
+            }
+        },
+        {
+            "filename": "swipeAttack10",
+            "frame": {
+                "x": 263,
+                "y": 72,
+                "w": 35,
+                "h": 52
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 25,
+                "y": 6,
+                "w": 35,
+                "h": 52
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        {
+            "filename": "swipeAttack11",
+            "frame": {
+                "x": 304,
+                "y": 72,
+                "w": 38,
+                "h": 52
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 22,
+                "y": 6,
+                "w": 38,
+                "h": 52
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        {
+            "filename": "swipeAttack12",
+            "frame": {
+                "x": 331,
+                "y": 4,
+                "w": 39,
+                "h": 52
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 22,
+                "y": 6,
+                "w": 39,
+                "h": 52
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        {
+            "filename": "swipeAttack13",
+            "frame": {
+                "x": 348,
+                "y": 62,
+                "w": 38,
+                "h": 51
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 22,
+                "y": 7,
+                "w": 38,
+                "h": 51
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        {
+            "filename": "swipeAttack14",
+            "frame": {
+                "x": 376,
+                "y": 4,
+                "w": 37,
+                "h": 49
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 22,
+                "y": 9,
+                "w": 37,
+                "h": 49
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        {
+            "filename": "swipeAttack15",
+            "frame": {
+                "x": 392,
+                "y": 59,
+                "w": 38,
+                "h": 45
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 21,
+                "y": 12,
+                "w": 38,
+                "h": 45
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        {
+            "filename": "swipeAttack16",
+            "frame": {
+                "x": 467,
+                "y": 109,
+                "w": 18,
+                "h": 22
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 21,
+                "y": 35,
+                "w": 18,
+                "h": 22
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        {
+            "filename": "swipeAttack17",
+            "frame": {
+                "x": 431,
+                "y": 110,
+                "w": -1,
+                "h": -1
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 63,
+                "y": 63,
+                "w": -1,
+                "h": -1
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
             }
         }
     ]
