@@ -42,6 +42,7 @@ Top-down, with a reddish palette, pixel.
 - Swing / Attack ability
 - Dash / Dodge ability
 - Something to do with bones ability
+- Uses a lantern instead of dagger off hand to light up levels that are dark.
 
 #### Mobs
 
