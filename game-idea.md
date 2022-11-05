@@ -33,8 +33,8 @@ Top-down, with a reddish palette, pixel.
 	- Add abilities:
 		- Dash: to dodge enemies and quickly get to enemies 
 		- Soul drain: drain the soul of an enemy which instantly kills them
-		- Banish: select & "banish" (kill) a bunch of enemies
-		- Combo attacks on main attack
+		- Hands of Death: select & pull down enemies which instantly kill.
+		- Combo attacks on main attack?
 	
 
 #### Hero
