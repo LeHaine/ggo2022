@@ -33,9 +33,9 @@ fun Node.meatBall(
  */
 class MeatBall(hero: Hero, level: Level) : Mob(hero, level) {
 
+    override var speed: Float = 0.009f
     private var xDir = 0f
     private var yDir = 0f
-
 
     init {
         sprite.apply {
