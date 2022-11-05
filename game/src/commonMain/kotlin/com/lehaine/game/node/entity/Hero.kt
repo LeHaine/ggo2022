@@ -59,7 +59,6 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
 
     private var xMoveStrength = 0f
     private var yMoveStrength = 0f
-    private var attacking = false
 
     private var tx = 1
     private var ty = 1
@@ -78,9 +77,9 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
         anchorY = data.pivotY
         toGridPosition(data.cx, data.cy)
         sprite.apply {
-            registerState(Assets.heroSoar, 15) { attacking && tx != -1 && ty != -1 }
+            registerState(Assets.heroSoar, 15) { tx != -1 && ty != -1 }
             registerState(Assets.heroWalk, 5) {
-                !attacking && !velocityX.isFuzzyZero(0.05f) || !velocityY.isFuzzyZero(
+                !velocityX.isFuzzyZero(0.05f) || !velocityY.isFuzzyZero(
                     0.05f
                 )
             }
@@ -91,12 +90,15 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
     override fun update(dt: Duration) {
         super.update(dt)
 
-        if (!attacking) {
+        xMoveStrength = 0f
+        yMoveStrength = 0f
+        if (!cd.has("swipeAttack")) {
             val movement = controller.vector(GameInput.MOVEMENT)
             xMoveStrength = movement.x
             yMoveStrength = movement.y
             dir = dirToMouse
         }
+
 
         if (controller.pressed(GameInput.ATTACK) && !cd.has("swipeAttack")) {
             cd("swipeAttack", 250.milliseconds)
