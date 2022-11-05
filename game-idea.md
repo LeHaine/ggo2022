@@ -30,6 +30,12 @@ Top-down, with a reddish palette, pixel.
     - Character abilities changes (stronger, aoe, etc)
     - Maybe something more roguelite-y and more passive upgrades like faster attacks, more HP, lower cooldowns, etc
     - Passive auto attacks (think vampire survivors)
+	- Add abilities:
+		- Dash: to dodge enemies and quickly get to enemies 
+		- Soul drain: drain the soul of an enemy which instantly kills them
+		- Banish: select & "banish" (kill) a bunch of enemies
+		- Combo attacks on main attack
+	
 
 #### Hero
 
