@@ -65,6 +65,11 @@ class GameScene(context: Context) :
             buttons = listOf(GameButton.XBOX_X),
             pointers = listOf(Pointer.MOUSE_LEFT)
         )
+        controller.addBinding(
+            GameInput.SOAR,
+            buttons = listOf(GameButton.XBOX_A),
+            pointers = listOf(Pointer.MOUSE_RIGHT)
+        )
 
         controller.addAxis(GameInput.HORIZONTAL, GameInput.MOVE_RIGHT, GameInput.MOVE_LEFT)
         controller.addAxis(GameInput.VERTICAL, GameInput.MOVE_DOWN, GameInput.MOVE_UP)

@@ -24,6 +24,7 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.seconds
 
 @OptIn(ExperimentalContracts::class)
 fun Node.hero(
@@ -60,9 +61,6 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
     private var xMoveStrength = 0f
     private var yMoveStrength = 0f
 
-    private var tx = 1
-    private var ty = 1
-
     private val shadow = sprite {
         name = "Shadow"
         slice = Assets.atlas.getByPrefix("shadow").slice
@@ -77,7 +75,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
         anchorY = data.pivotY
         toGridPosition(data.cx, data.cy)
         sprite.apply {
-            registerState(Assets.heroSoar, 15) { tx != -1 && ty != -1 }
+            registerState(Assets.heroSoar, 15) { cd.has("soar") }
             registerState(Assets.heroWalk, 5) {
                 !velocityX.isFuzzyZero(0.05f) || !velocityY.isFuzzyZero(
                     0.05f
@@ -90,8 +88,11 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
     override fun update(dt: Duration) {
         super.update(dt)
 
+        if (cd.has("soar")) return
+
         xMoveStrength = 0f
         yMoveStrength = 0f
+
         if (!cd.has("swipeAttack")) {
             val movement = controller.vector(GameInput.MOVEMENT)
             xMoveStrength = movement.x
@@ -103,6 +104,21 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
         if (controller.pressed(GameInput.ATTACK) && !cd.has("swipeAttack")) {
             cd("swipeAttack", 250.milliseconds)
             swipeAttack()
+        } else if (controller.pressed(GameInput.SOAR) && !cd.has("soarAttack") && !cd.has("soar")) {
+            val angle = angleToMouse
+            xMoveStrength = angle.cosine
+            yMoveStrength = angle.sine
+            speedMultiplier = 5f
+            sprite.color.a = 0.5f
+            scaleX = 1.25f
+            scaleY = 0.9f
+            cd("soarAttack", 2.seconds)
+            cd("soar", 250.milliseconds) {
+                speedMultiplier = 1f
+                sprite.color.a = 1f
+                scaleX = 1f
+                scaleY = 1f
+            }
         }
     }
 

@@ -16,6 +16,7 @@ enum class GameInput {
     UI_FOCUS_PREV,
 
     ATTACK,
+    SOAR,
 
     MOVE_LEFT,
     MOVE_RIGHT,
