@@ -3,7 +3,10 @@ package com.lehaine.game
 import com.lehaine.game.scene.GameScene
 import com.lehaine.littlekt.graph.node.render.BlendMode
 import com.lehaine.littlekt.graph.node.render.Material
-import com.lehaine.littlekt.graphics.*
+import com.lehaine.littlekt.graphics.Color
+import com.lehaine.littlekt.graphics.Particle
+import com.lehaine.littlekt.graphics.ParticleSimulator
+import com.lehaine.littlekt.graphics.TextureSlice
 import com.lehaine.littlekt.math.PI2_F
 import com.lehaine.littlekt.math.random
 import com.lehaine.littlekt.util.seconds
@@ -57,6 +60,14 @@ class Fx(val game: GameScene) {
         particleSimulator.update(dt, tmod)
     }
 
+    fun shadowSmall(x: Float, y: Float, duration: Duration) {
+        create(1) {
+            val shadowSlice = Assets.atlas.getByPrefix("shadowSmall").slice
+            val p = allocBotNormal(shadowSlice, x - shadowSlice.width * 0.5f, y - shadowSlice.height * 0.5f)
+            p.life = duration
+        }
+    }
+
     fun meatBallExplode(x: Float, y: Float) {
         fun setParticle(p: Particle) {
             p.xDelta = (0..2).random().asRandomSign
@@ -105,7 +116,7 @@ class Fx(val game: GameScene) {
                 particle.scaleX *= (1f..1.25f).random()
             }
         }
-        if(particle.y >= particle.data0 && particle.yDelta > 0) {
+        if (particle.y >= particle.data0 && particle.yDelta > 0) {
             particle.gravityY = 0f
             particle.yDelta = 0f
         }
@@ -142,10 +153,10 @@ class Fx(val game: GameScene) {
     private fun allocTopAdd(slice: TextureSlice, x: Float, y: Float) =
         particleSimulator.alloc(slice, x, y).also { topAdd.add(it) }
 
-    private fun allocBogNormal(slice: TextureSlice, x: Float, y: Float) =
+    private fun allocBotNormal(slice: TextureSlice, x: Float, y: Float) =
         particleSimulator.alloc(slice, x, y).also { bgNormal.add(it) }
 
-    private fun allocBogAdd(slice: TextureSlice, x: Float, y: Float) =
+    private fun allocBotAdd(slice: TextureSlice, x: Float, y: Float) =
         particleSimulator.alloc(slice, x, y).also { bgAdd.add(it) }
 
     private fun create(num: Int, createParticle: (index: Int) -> Unit) {

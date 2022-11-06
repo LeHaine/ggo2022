@@ -3,11 +3,11 @@ package com.lehaine.game.node.entity
 import com.lehaine.game.Assets
 import com.lehaine.game.Config
 import com.lehaine.game.node.entity.mob.Mob
+import com.lehaine.game.node.fx
 import com.lehaine.littlekt.math.distSqr
 import com.lehaine.littlekt.util.fastForEach
 import com.lehaine.rune.engine.node.renderable.entity.Entity
 import com.lehaine.rune.engine.node.renderable.entity.cd
-import com.lehaine.rune.engine.node.renderable.sprite
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -23,12 +23,6 @@ class BoneSpearProjectile(val hero: Hero) : Entity(Config.GRID_CELL_SIZE.toFloat
         anchorY = 1f
         width = 32f
         height = 32f
-        sprite {
-            name = "Shadow"
-            slice = Assets.atlas.getByPrefix("shadowSmall").slice
-            anchorX = 0.5f
-            anchorY = 1f
-        }.also { sendChildToTop(it) }
 
         sprite.onFrameChanged += { frameIdx ->
             if (frameIdx == 9) {
@@ -48,6 +42,7 @@ class BoneSpearProjectile(val hero: Hero) : Entity(Config.GRID_CELL_SIZE.toFloat
     override fun update(dt: Duration) {
         super.update(dt)
         if (!attacked) {
+            fx.shadowSmall(globalX, globalY, Assets.boneSpearAttack.duration)
             sprite.playOnce(Assets.boneSpearAttack)
             cd("attack", Assets.boneSpearAttack.duration)
             attacked = true
