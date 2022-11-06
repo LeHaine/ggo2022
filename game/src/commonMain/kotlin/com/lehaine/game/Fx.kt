@@ -64,7 +64,7 @@ class Fx(val game: GameScene) {
             p.gravityY = 0.1f.about()
             p.friction = 0.94f.about(0.05f).coerceAtMost(1f)
             p.rotationDelta = (0f..PI2_F).random()
-            p.data0 = y.toInt() + (0..12).random().toInt()
+            p.data0 = y + (0..12).random().toInt()
             p.alpha = (0.7f..1f).random()
             p.life = (1..2).random().seconds
             p.onUpdate = ::bloodPhysics
@@ -84,14 +84,14 @@ class Fx(val game: GameScene) {
         create(50) {
             val idx = Random.nextInt(3)
             val p = allocTopNormal(Assets.atlas.getByPrefix("fxGib$idx").slice, x, y)
-            p.color.set(MEAT_RED).also { p.colorBits = MEAT_RED_COLOR_BITS }
+            p.color.set(MEAT_RED)
             setParticle(p)
         }
     }
 
     private fun bloodPhysics(particle: Particle) {
-        if (particle.isColliding() && particle.data0 != 1) {
-            particle.data0 = 1
+        if (particle.isColliding() && particle.data0 != 1f) {
+            particle.data0 = 1f
             particle.xDelta *= 0.4f
             particle.yDelta = 0f
             particle.gravityY = (0f..0.001f).random()
@@ -123,7 +123,7 @@ class Fx(val game: GameScene) {
 
         if (particle.isColliding() || particle.y >= particle.data0 && particle.yDelta > 0) {
             particle.data0++
-            if (particle.data0 == 1) {
+            if (particle.data0 == 1f) {
                 particle.gravityY = 0f
                 particle.yDelta = 0f
                 particle.xDelta *= 0.5f
@@ -175,9 +175,6 @@ class Fx(val game: GameScene) {
 
     companion object {
         private val DUST_COLOR = Color.fromHex("#efddc0")
-        private val DUST_COLOR_BITS = DUST_COLOR.toFloatBits()
-
         private val MEAT_RED = Color.fromHex("#994551")
-        private val MEAT_RED_COLOR_BITS = MEAT_RED.toFloatBits()
     }
 }
