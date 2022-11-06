@@ -30,12 +30,11 @@ Top-down, with a reddish palette, pixel.
     - Character abilities changes (stronger, aoe, etc)
     - Maybe something more roguelite-y and more passive upgrades like faster attacks, more HP, lower cooldowns, etc
     - Passive auto attacks (think vampire survivors)
-	- Add abilities:
-		- Dash: to dodge enemies and quickly get to enemies 
-		- Soul drain: drain the soul of an enemy which instantly kills them
-		- Hands of Death: select & pull down enemies which instantly kill.
-		- Combo attacks on main attack?
-	
+    - Add abilities:
+        - Dash: to dodge enemies and quickly get to enemies
+        - Soul drain: drain the soul of an enemy which instantly kills them
+        - Hands of Death: select & pull down enemies which instantly kill.
+        - Combo attacks on main attack?
 
 #### Hero
 
@@ -60,4 +59,17 @@ of the bone man in his office. Depending on the amount of mobs & mobs collected 
 with more work and can use bones to upgrade.
 
 If rewarded with more work, hero goes back into small arena, stronger mobs appear, hero fights mobs with new upgrades,
-hero dies, rinse and repeat. 
+hero dies, rinse and repeat.
+
+### 11/6 Setting update
+
+Instead of collecting bones - the bone man can still be the bone man but instead the mobs being slayed in the arena
+are "people" stuck and transformed into weird beasts while some are still humanoid-y. These souls are refusing to move
+on to the underworld so death is forced to slay.
+
+The goal is too collect enough souls every time before getting back to the bone man to satisfy his need. Update
+collecting enough souls then death is
+punished with more work by needing to claim harder souls.
+
+Also as a secondary cliché we can add some dude named Pete (For Pete's Sake) somewhere in the office where each time
+death fails something happens to Pete. So the for Pete's sake we want succeed and be punished.
