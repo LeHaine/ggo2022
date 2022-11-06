@@ -57,6 +57,7 @@ class MeatBall(hero: Hero, level: Level) : Mob(hero, level) {
 
     override fun update(dt: Duration) {
         super.update(dt)
+        if (hasEffect(Effect.Stun)) return
         if (cd.has("stand") || cd.has("sit") || cd.has("stun")) {
             return
         }
@@ -70,6 +71,7 @@ class MeatBall(hero: Hero, level: Level) : Mob(hero, level) {
 
     override fun fixedUpdate() {
         super.fixedUpdate()
+        if (hasEffect(Effect.Stun)) return
         if (cd.has("stun") || cd.has("stand") || cd.has("sit")) return
 
         velocityX += speed * speedMul * xDir
@@ -82,6 +84,8 @@ class MeatBall(hero: Hero, level: Level) : Mob(hero, level) {
             hero.camera.shake(100.milliseconds, 2f)
             fx.meatBallExplode(globalX, globalY)
         }
+        addEffect(Effect.Stun, Assets.meatBallHandOfDeath.duration)
+        addEffect(Effect.Invincible, Assets.meatBallHandOfDeath.duration)
         cd("stun", Assets.meatBallHandOfDeath.duration) {
             die()
         }

@@ -5,6 +5,7 @@ import com.lehaine.game.Config
 import com.lehaine.game.Level
 import com.lehaine.game.node.entity.Hero
 import com.lehaine.littlekt.math.geom.Angle
+import com.lehaine.littlekt.util.fastForEach
 import com.lehaine.littlekt.util.signal1v
 import com.lehaine.rune.engine.node.renderable.entity.LevelEntity
 import com.lehaine.rune.engine.node.renderable.entity.cd
@@ -30,11 +31,14 @@ abstract class Mob(val hero: Hero, override val level: Level) : LevelEntity(leve
     val onDeath = signal1v<Mob>()
     var lastHitAngle: Angle = Angle.ZERO
 
+    private val effects = mutableMapOf<Effect, Duration>()
+    private val effectsToRemove = mutableListOf<Effect>()
+
     protected val shadow = sprite {
         name = "Shadow"
         slice = Assets.atlas.getByPrefix("shadow").slice
         x -= Config.GRID_CELL_SIZE * 0.5f
-        y -= Config.GRID_CELL_SIZE  - 2f
+        y -= Config.GRID_CELL_SIZE - 2f
     }.also { moveChild(it, 0) }
 
     override fun update(dt: Duration) {
@@ -50,6 +54,7 @@ abstract class Mob(val hero: Hero, override val level: Level) : LevelEntity(leve
             sprite.color.b = hitRatio
         }
 
+        updateEffects(dt)
 
         val camera = hero.camera.camera
         if (camera != null) {
@@ -71,6 +76,8 @@ abstract class Mob(val hero: Hero, override val level: Level) : LevelEntity(leve
     }
 
     open fun hit(damage: Int, from: Angle) {
+        if (hasEffect(Effect.Invincible)) return
+
         health -= damage
         lastHitAngle = from
         sprite.color.r = 1f
@@ -125,11 +132,51 @@ abstract class Mob(val hero: Hero, override val level: Level) : LevelEntity(leve
         globalScaleY = 1f
     }
 
+    fun hasEffect(effect: Effect) = effects.contains(effect)
+    fun getEffectDuration(effect: Effect) = effects[effect] ?: Duration.ZERO
+    fun addEffect(effect: Effect, duration: Duration) {
+        if (health < 0 || effects.contains(effect) && (effects[effect] ?: Duration.ZERO) > duration) {
+            return
+        }
+        if (duration <= Duration.ZERO) {
+            clearEffect(effect)
+        } else {
+            val isNew = hasEffect(effect)
+            effects[effect] = duration
+            if (isNew) {
+                onEffectStart(effect)
+            }
+        }
+    }
+
+    fun clearEffect(effect: Effect) {
+        effects.remove(effect)?.let { onEffectEnd(effect) }
+    }
+
+    open fun onEffectStart(effect: Effect) = Unit
+
+    open fun onEffectEnd(effect: Effect) = Unit
+
+    private fun updateEffects(dt: Duration) {
+        if (health <= 0) return
+        effects.forEach { entry ->
+            val remainingDuration = entry.value - dt
+            if (remainingDuration <= Duration.ZERO) {
+                effectsToRemove += entry.key
+            } else {
+                effects[entry.key] = remainingDuration
+            }
+        }
+        effectsToRemove.fastForEach {
+            effects.remove(it)
+        }
+        effectsToRemove.clear()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         ALL -= this
     }
-
 
     companion object {
         val ALL = mutableListOf<Mob>()
