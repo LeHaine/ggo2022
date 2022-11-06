@@ -51,6 +51,7 @@ class GameScene(context: Context) :
     var mapLoader: LDtkMapLoader? = null
     lateinit var ldtkLevel: LDtkLevel
     lateinit var hero: Hero
+    lateinit var level: Level
 
     val fx = Fx(this)
 
@@ -69,6 +70,12 @@ class GameScene(context: Context) :
             GameInput.SOAR,
             buttons = listOf(GameButton.XBOX_A),
             pointers = listOf(Pointer.MOUSE_RIGHT)
+        )
+
+        controller.addBinding(
+            GameInput.HAND_OF_DEATH,
+            buttons = listOf(GameButton.XBOX_Y),
+            keys = listOf(Key.Q)
         )
 
         controller.addAxis(GameInput.HORIZONTAL, GameInput.MOVE_RIGHT, GameInput.MOVE_LEFT)
@@ -123,7 +130,6 @@ class GameScene(context: Context) :
                     }
                 }
 
-                val level: Level
 
                 background = node {
                     name = "Background"

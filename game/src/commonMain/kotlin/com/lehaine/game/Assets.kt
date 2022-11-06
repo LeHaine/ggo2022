@@ -4,11 +4,8 @@ import com.lehaine.littlekt.AssetProvider
 import com.lehaine.littlekt.BitmapFontAssetParameter
 import com.lehaine.littlekt.Context
 import com.lehaine.littlekt.Disposable
-import com.lehaine.littlekt.graphics.Animation
-import com.lehaine.littlekt.graphics.TextureAtlas
-import com.lehaine.littlekt.graphics.TextureSlice
+import com.lehaine.littlekt.graphics.*
 import com.lehaine.littlekt.graphics.font.BitmapFont
-import com.lehaine.littlekt.graphics.getAnimation
 import kotlin.jvm.Volatile
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -32,6 +29,13 @@ class Assets private constructor(context: Context) : Disposable {
     private val meatBallStandUp by assets.prepare { atlas.getAnimation("meatBallStandUp") }
     private val meatBallRun by assets.prepare { atlas.getAnimation("meatBallRun") }
     private val meatBallSit by assets.prepare { atlas.getAnimation("meatBallSit", 250.milliseconds) }
+    private val meatBallHandOfDeath by assets.prepare {
+        atlas.createAnimation("meatBallHandOfDeathGrab") {
+            frames(0..1)
+            frames(2, frameTime = 500.milliseconds)
+            frames(3, frameTime = 1000.milliseconds)
+        }
+    }
 
 
     override fun dispose() {
@@ -57,6 +61,8 @@ class Assets private constructor(context: Context) : Disposable {
         val meatBallStandUp: Animation<TextureSlice> get() = INSTANCE.meatBallStandUp
         val meatBallRun: Animation<TextureSlice> get() = INSTANCE.meatBallRun
         val meatBallSit: Animation<TextureSlice> get() = INSTANCE.meatBallSit
+        val meatBallHandOfDeath: Animation<TextureSlice> get() = INSTANCE.meatBallHandOfDeath
+
 
         fun createInstance(context: Context, onLoad: () -> Unit): Assets {
             check(instance == null) { "Instance already created!" }

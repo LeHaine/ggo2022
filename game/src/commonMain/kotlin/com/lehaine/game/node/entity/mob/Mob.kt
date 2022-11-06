@@ -17,7 +17,7 @@ import kotlin.time.Duration.Companion.milliseconds
  * @author Colton Daily
  * @date 11/4/2022
  */
-open class Mob(val hero: Hero, override val level: Level) : LevelEntity(level, Config.GRID_CELL_SIZE.toFloat()) {
+abstract class Mob(val hero: Hero, override val level: Level) : LevelEntity(level, Config.GRID_CELL_SIZE.toFloat()) {
 
     open var speed = 0.003f
     var speedMul = 1f
@@ -115,6 +115,8 @@ open class Mob(val hero: Hero, override val level: Level) : LevelEntity(level, C
             }
         }
     }
+
+    abstract fun handleHandOfDeath()
 
     open fun reset() {
         health = baseHealth

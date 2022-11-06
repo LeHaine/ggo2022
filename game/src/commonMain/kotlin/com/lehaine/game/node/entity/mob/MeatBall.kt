@@ -3,6 +3,7 @@ package com.lehaine.game.node.entity.mob
 import com.lehaine.game.Assets
 import com.lehaine.game.Level
 import com.lehaine.game.node.entity.Hero
+import com.lehaine.game.node.fx
 import com.lehaine.littlekt.graph.node.Node
 import com.lehaine.littlekt.graph.node.addTo
 import com.lehaine.littlekt.graph.node.annotation.SceneGraphDslMarker
@@ -39,22 +40,24 @@ class MeatBall(hero: Hero, level: Level) : Mob(hero, level) {
 
     init {
         sprite.apply {
-            registerState(Assets.meatBallSit, 5) { cd.has("sit") }
-            registerState(Assets.meatBallRun, 0)
+            registerState(Assets.meatBallSit, 5) { cd.has("sit") && !cd.has("stun") }
+            registerState(Assets.meatBallRun, 0) { !cd.has("stun") }
         }
     }
 
     override fun onSpawn() {
         super.onSpawn()
         cd("sit", (1000..2000).random().milliseconds) {
-            cd("stand", Assets.meatBallStandUp.duration)
-            sprite.playOnce(Assets.meatBallStandUp)
+            if (!cd.has("stun")) {
+                cd("stand", Assets.meatBallStandUp.duration)
+                sprite.playOnce(Assets.meatBallStandUp)
+            }
         }
     }
 
     override fun update(dt: Duration) {
         super.update(dt)
-        if (cd.has("stand") || cd.has("sit")) {
+        if (cd.has("stand") || cd.has("sit") || cd.has("stun")) {
             return
         }
 
@@ -67,9 +70,20 @@ class MeatBall(hero: Hero, level: Level) : Mob(hero, level) {
 
     override fun fixedUpdate() {
         super.fixedUpdate()
-        if (cd.has("stand") || cd.has("sit")) return
+        if (cd.has("stun") || cd.has("stand") || cd.has("sit")) return
 
         velocityX += speed * speedMul * xDir
         velocityY += speed * speedMul * yDir
+    }
+
+    override fun handleHandOfDeath() {
+        sprite.playOnce(Assets.meatBallHandOfDeath)
+        cd("shake", 700.milliseconds) {
+            hero.camera.shake(100.milliseconds, 2f)
+            fx.meatBallExplode(globalX, globalY)
+        }
+        cd("stun", Assets.meatBallHandOfDeath.duration) {
+            die()
+        }
     }
 }

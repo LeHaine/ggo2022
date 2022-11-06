@@ -4,6 +4,7 @@ import com.lehaine.game.Assets
 import com.lehaine.game.Config
 import com.lehaine.game.GameInput
 import com.lehaine.game.node.controller
+import com.lehaine.game.node.entity.mob.Mob
 import com.lehaine.littlekt.graph.node.Node
 import com.lehaine.littlekt.graph.node.addTo
 import com.lehaine.littlekt.graph.node.annotation.SceneGraphDslMarker
@@ -13,6 +14,7 @@ import com.lehaine.littlekt.math.geom.cosine
 import com.lehaine.littlekt.math.geom.sine
 import com.lehaine.littlekt.math.isFuzzyZero
 import com.lehaine.littlekt.util.datastructure.Pool
+import com.lehaine.littlekt.util.fastForEach
 import com.lehaine.rune.engine.GameLevel
 import com.lehaine.rune.engine.node.EntityCamera2D
 import com.lehaine.rune.engine.node.renderable.entity.LevelEntity
@@ -54,6 +56,9 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
             SwipeProjectile(this).apply { enabled = false }.addTo(projectiles)
         }
     }
+
+
+    private val mobsTemp = mutableListOf<Mob>()
 
     private var speed = 0.03f
     private var speedMultiplier = 1f
@@ -119,6 +124,8 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
                 scaleX = 1f
                 scaleY = 1f
             }
+        } else if (controller.pressed(GameInput.HAND_OF_DEATH)) {
+            performHandOfDeath()
         }
     }
 
@@ -139,11 +146,27 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
         projectile.enabled = true
     }
 
+    fun performHandOfDeath() {
+        if (Mob.ALL.isEmpty()) return
+
+        repeat(5) {
+            var mob = Mob.ALL.random()
+            while(mobsTemp.contains(mob)) {
+                mob = Mob.ALL.random()
+            }
+            mobsTemp += mob
+        }
+
+        mobsTemp.fastForEach {
+            it.handleHandOfDeath()
+        }
+        mobsTemp.clear()
+    }
+
+
     fun projectileFinished(projectile: Projectile) {
         when (projectile) {
-            is SwipeProjectile -> {
-                swipeProjectilePool.free(projectile)
-            }
+            is SwipeProjectile -> swipeProjectilePool.free(projectile)
         }
     }
 }
