@@ -107,6 +107,7 @@ abstract class Mob(val hero: Hero, override val level: Level) : LevelEntity(leve
         reset()
     }
 
+    abstract fun explode()
     open fun onSpawnDrop() {
         // TODO
     }

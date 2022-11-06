@@ -71,11 +71,15 @@ class GameScene(context: Context) :
             buttons = listOf(GameButton.XBOX_A),
             pointers = listOf(Pointer.MOUSE_RIGHT)
         )
-
         controller.addBinding(
             GameInput.HAND_OF_DEATH,
             buttons = listOf(GameButton.XBOX_Y),
             keys = listOf(Key.Q)
+        )
+        controller.addBinding(
+            GameInput.BONE_SPEAR,
+            buttons = listOf(GameButton.XBOX_B),
+            keys = listOf(Key.E)
         )
 
         controller.addAxis(GameInput.HORIZONTAL, GameInput.MOVE_RIGHT, GameInput.MOVE_LEFT)

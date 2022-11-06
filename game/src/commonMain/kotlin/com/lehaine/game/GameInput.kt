@@ -18,6 +18,7 @@ enum class GameInput {
     ATTACK,
     SOAR,
     HAND_OF_DEATH,
+    BONE_SPEAR,
 
     MOVE_LEFT,
     MOVE_RIGHT,

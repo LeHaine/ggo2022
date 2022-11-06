@@ -90,4 +90,8 @@ class MeatBall(hero: Hero, level: Level) : Mob(hero, level) {
             die()
         }
     }
+
+    override fun explode() {
+        fx.meatBallExplode(globalX, globalY)
+    }
 }

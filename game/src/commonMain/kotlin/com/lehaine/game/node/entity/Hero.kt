@@ -19,6 +19,7 @@ import com.lehaine.littlekt.util.fastForEach
 import com.lehaine.rune.engine.GameLevel
 import com.lehaine.rune.engine.node.EntityCamera2D
 import com.lehaine.rune.engine.node.renderable.entity.LevelEntity
+import com.lehaine.rune.engine.node.renderable.entity.castRayTo
 import com.lehaine.rune.engine.node.renderable.entity.cd
 import com.lehaine.rune.engine.node.renderable.entity.toGridPosition
 import com.lehaine.rune.engine.node.renderable.sprite
@@ -55,6 +56,12 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
     private val swipeProjectilePool: Pool<SwipeProjectile> by lazy {
         Pool(5) {
             SwipeProjectile(this).apply { enabled = false }.addTo(projectiles)
+        }
+    }
+
+    private val boneSpearProjectile: Pool<BoneSpearProjectile> by lazy {
+        Pool(1) {
+            BoneSpearProjectile(this).apply { enabled = false }.addTo(projectiles)
         }
     }
 
@@ -130,6 +137,12 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
             }
         } else if (controller.pressed(GameInput.HAND_OF_DEATH)) {
             performHandOfDeath()
+        } else if (controller.pressed(GameInput.BONE_SPEAR)) {
+            val tcx = (mouseX / Config.GRID_CELL_SIZE).toInt()
+            val tcy = (mouseY / Config.GRID_CELL_SIZE).toInt()
+            if (castRayTo(tcx, tcy) { cx, cy -> !level.hasCollision(cx, cy) }) {
+                boneSpearAttack(mouseX, mouseY)
+            }
         }
     }
 
@@ -169,6 +182,14 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
         projectile.enabled = true
     }
 
+    fun boneSpearAttack(tx: Float, ty: Float) {
+        val projectile = boneSpearProjectile.alloc()
+        projectile.globalX = tx
+        projectile.globalY = ty
+        projectile.enabled = true
+    }
+
+
     fun performHandOfDeath() {
         if (Mob.ALL.isEmpty()) return
 
@@ -190,6 +211,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
     fun projectileFinished(projectile: Projectile) {
         when (projectile) {
             is SwipeProjectile -> swipeProjectilePool.free(projectile)
+            is BoneSpearProjectile -> boneSpearProjectile.free(projectile)
         }
     }
 
