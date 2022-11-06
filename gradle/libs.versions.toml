@@ -7,7 +7,7 @@ kotlinx-coroutines = "1.6.4"
 
 # "0.6.0.1c113b7-SNAPSHOT"
 littlekt = "0.5.3"
-# aade390
+# 238bfdf
 rune="0.0.1.6c28ca4-SNAPSHOT"
 
 [libraries]

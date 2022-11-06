@@ -3,9 +3,9 @@ package com.lehaine.game.node.entity.mob
 import com.lehaine.game.Assets
 import com.lehaine.game.Config
 import com.lehaine.game.Level
+import com.lehaine.game.node.entity.Effectible
 import com.lehaine.game.node.entity.Hero
 import com.lehaine.littlekt.math.geom.Angle
-import com.lehaine.littlekt.util.fastForEach
 import com.lehaine.littlekt.util.signal1v
 import com.lehaine.rune.engine.node.renderable.entity.LevelEntity
 import com.lehaine.rune.engine.node.renderable.entity.cd
@@ -18,7 +18,8 @@ import kotlin.time.Duration.Companion.milliseconds
  * @author Colton Daily
  * @date 11/4/2022
  */
-abstract class Mob(val hero: Hero, override val level: Level) : LevelEntity(level, Config.GRID_CELL_SIZE.toFloat()) {
+abstract class Mob(val hero: Hero, override val level: Level) : LevelEntity(level, Config.GRID_CELL_SIZE.toFloat()),
+    Effectible {
 
     open var speed = 0.003f
     var speedMul = 1f
@@ -31,8 +32,8 @@ abstract class Mob(val hero: Hero, override val level: Level) : LevelEntity(leve
     val onDeath = signal1v<Mob>()
     var lastHitAngle: Angle = Angle.ZERO
 
-    private val effects = mutableMapOf<Effect, Duration>()
-    private val effectsToRemove = mutableListOf<Effect>()
+    override val effects: MutableMap<Effect, Duration> = mutableMapOf()
+    override val effectsToRemove: MutableList<Effect> = mutableListOf()
 
     protected val shadow = sprite {
         name = "Shadow"
@@ -44,7 +45,7 @@ abstract class Mob(val hero: Hero, override val level: Level) : LevelEntity(leve
     override fun update(dt: Duration) {
         super.update(dt)
         if (isCollidingWithInnerCircle(hero) && !cd.has("damageCooldown")) {
-            hero.health -= damage
+            hero.hit(damage)
             cd.timeout("damageCooldown", 100.milliseconds)
         }
         if (cd.has("hit")) {
@@ -125,52 +126,13 @@ abstract class Mob(val hero: Hero, override val level: Level) : LevelEntity(leve
 
     abstract fun handleHandOfDeath()
 
+    override fun isEffectible(): Boolean = health > 0
+
     open fun reset() {
         health = baseHealth
         damage = baseDamage
         globalScaleX = 1f
         globalScaleY = 1f
-    }
-
-    fun hasEffect(effect: Effect) = effects.contains(effect)
-    fun getEffectDuration(effect: Effect) = effects[effect] ?: Duration.ZERO
-    fun addEffect(effect: Effect, duration: Duration) {
-        if (health < 0 || effects.contains(effect) && (effects[effect] ?: Duration.ZERO) > duration) {
-            return
-        }
-        if (duration <= Duration.ZERO) {
-            clearEffect(effect)
-        } else {
-            val isNew = hasEffect(effect)
-            effects[effect] = duration
-            if (isNew) {
-                onEffectStart(effect)
-            }
-        }
-    }
-
-    fun clearEffect(effect: Effect) {
-        effects.remove(effect)?.let { onEffectEnd(effect) }
-    }
-
-    open fun onEffectStart(effect: Effect) = Unit
-
-    open fun onEffectEnd(effect: Effect) = Unit
-
-    private fun updateEffects(dt: Duration) {
-        if (health <= 0) return
-        effects.forEach { entry ->
-            val remainingDuration = entry.value - dt
-            if (remainingDuration <= Duration.ZERO) {
-                effectsToRemove += entry.key
-            } else {
-                effects[entry.key] = remainingDuration
-            }
-        }
-        effectsToRemove.fastForEach {
-            effects.remove(it)
-        }
-        effectsToRemove.clear()
     }
 
     override fun onDestroy() {

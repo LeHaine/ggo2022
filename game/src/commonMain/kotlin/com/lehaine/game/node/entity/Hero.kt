@@ -4,6 +4,7 @@ import com.lehaine.game.Assets
 import com.lehaine.game.Config
 import com.lehaine.game.GameInput
 import com.lehaine.game.node.controller
+import com.lehaine.game.node.entity.mob.Effect
 import com.lehaine.game.node.entity.mob.Mob
 import com.lehaine.littlekt.graph.node.Node
 import com.lehaine.littlekt.graph.node.addTo
@@ -46,10 +47,10 @@ fun Node.hero(
  * @date 11/2/2022
  */
 class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, projectiles: Node2D) :
-    LevelEntity(level, Config.GRID_CELL_SIZE.toFloat()) {
+    LevelEntity(level, Config.GRID_CELL_SIZE.toFloat()), Effectible {
 
     val damange = 5
-    var health = 10f
+    private var health = 10f
 
     private val swipeProjectilePool: Pool<SwipeProjectile> by lazy {
         Pool(5) {
@@ -57,6 +58,8 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
         }
     }
 
+    override val effects: MutableMap<Effect, Duration> = mutableMapOf()
+    override val effectsToRemove: MutableList<Effect> = mutableListOf()
 
     private val mobsTemp = mutableListOf<Mob>()
 
@@ -105,6 +108,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
             dir = dirToMouse
         }
 
+        updateEffects(dt)
 
         if (controller.pressed(GameInput.ATTACK) && !cd.has("swipeAttack")) {
             cd("swipeAttack", 250.milliseconds)
@@ -118,9 +122,9 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
             scaleX = 1.25f
             scaleY = 0.9f
             cd("soarAttack", 2.seconds)
+            addEffect(Effect.Invincible, 350.milliseconds)
             cd("soar", 250.milliseconds) {
                 speedMultiplier = 1f
-                sprite.color.a = 1f
                 scaleX = 1f
                 scaleY = 1f
             }
@@ -129,10 +133,29 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
         }
     }
 
+    override fun onEffectStart(effect: Effect) {
+        super.onEffectStart(effect)
+        if (effect == Effect.Invincible) {
+            sprite.color.a = 0.5f
+        }
+    }
+
+    override fun onEffectEnd(effect: Effect) {
+        super.onEffectEnd(effect)
+        if (effect == Effect.Invincible) {
+            sprite.color.a = 1f
+        }
+    }
+
     override fun fixedUpdate() {
         super.fixedUpdate()
         velocityX += speed * speedMultiplier * xMoveStrength
         velocityY += speed * speedMultiplier * yMoveStrength
+    }
+
+    fun hit(damage: Float) {
+        if (hasEffect(Effect.Invincible)) return
+        health -= damage
     }
 
     fun swipeAttack() {
@@ -151,7 +174,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
 
         repeat(5) {
             var mob = Mob.ALL.random()
-            while(mobsTemp.contains(mob)) {
+            while (mobsTemp.contains(mob)) {
                 mob = Mob.ALL.random()
             }
             mobsTemp += mob
@@ -169,4 +192,6 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
             is SwipeProjectile -> swipeProjectilePool.free(projectile)
         }
     }
+
+    override fun isEffectible(): Boolean = health > 0
 }
