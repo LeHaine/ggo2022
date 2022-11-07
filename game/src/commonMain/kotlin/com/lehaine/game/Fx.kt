@@ -68,12 +68,27 @@ class Fx(val game: GameScene) {
         }
     }
 
+    fun groundParticles(x: Float, y: Float) {
+        create(30) {
+            val p = allocTopNormal(Assets.atlas.getByPrefix("fxDot").slice, x, y)
+            p.xDelta = (0..2).random().asRandomSign
+            p.yDelta = -(1..2).random()
+            p.color.set(pickOne(MEAT_RED, DARK_MEAT_RED, LIGHT_MEAT_RED))
+            p.life = (1f..1.2f).random().seconds
+            p.friction = 0.97f.about(0.05f).coerceAtMost(1f)
+            p.rotationDelta = (0f..PI2_F).random()
+            p.gravityY = 0.1f.about()
+            p.data0 = y + (0..12).random().toInt()
+            p.onUpdate = ::fleshGroundPhysics
+        }
+    }
+
     fun meatBallExplode(x: Float, y: Float) {
         fun setParticle(p: Particle) {
             p.xDelta = (0..2).random().asRandomSign
             p.yDelta = (1..2).random().asRandomSign
             p.gravityY = 0.1f.about()
-            p.friction = 0.94f.about(0.05f).coerceAtMost(1f)
+            p.friction = 0.97f.about(0.05f).coerceAtMost(1f)
             p.rotationDelta = (0f..PI2_F).random()
             p.data0 = y + (0..12).random().toInt()
             p.alpha = (0.7f..1f).random()
@@ -106,6 +121,28 @@ class Fx(val game: GameScene) {
             particle.xDelta *= 0.4f
             particle.yDelta = 0f
             particle.gravityY = (0f..0.001f).random()
+            particle.friction = (0.5f..0.7f).random()
+            particle.scaleDeltaY = (0f..0.001f).random()
+            particle.rotationDelta = 0f
+            if (particle.isColliding(-5) || particle.isColliding(5)) {
+                particle.scaleY *= (1f..1.25f).random()
+            }
+            if (particle.isColliding(offsetY = -5) || particle.isColliding(offsetY = 5)) {
+                particle.scaleX *= (1f..1.25f).random()
+            }
+        }
+        if (particle.y >= particle.data0 && particle.yDelta > 0) {
+            particle.gravityY = 0f
+            particle.yDelta = 0f
+        }
+    }
+
+    private fun fleshGroundPhysics(particle: Particle) {
+        if (particle.isColliding() && particle.data0 != 1f) {
+            particle.data0 = 1f
+            particle.xDelta *= 0.4f
+            particle.yDelta = 0f
+            particle.gravityY = 0f
             particle.friction = (0.5f..0.7f).random()
             particle.scaleDeltaY = (0f..0.001f).random()
             particle.rotationDelta = 0f
@@ -180,12 +217,26 @@ class Fx(val game: GameScene) {
         return about(this.toFloat(), sign)
     }
 
+    private fun <T> pickOne(one: T, two: T, three: T): T {
+        val r = Random.nextInt(2)
+        if (r == 0) return one
+        if (r == 1) return two
+        return three
+    }
+
+    private fun <T> pickOne(one: T, two: T): T {
+        val r = Random.nextFloat()
+        if (r < 0.5f) return one
+        return two
+    }
+
     private val randomSign: Int get() = (0..1).random().toInt() * 2 - 1
     private val Float.asRandomSign: Float get() = if (Random.nextFloat() >= 0.5f) this else -this
     private val Int.asRandomSign: Int get() = if (Random.nextFloat() >= 0.5f) this else -this
 
     companion object {
-        private val DUST_COLOR = Color.fromHex("#efddc0")
         private val MEAT_RED = Color.fromHex("#994551")
+        private val LIGHT_MEAT_RED = Color.fromHex("#a25d64")
+        private val DARK_MEAT_RED = Color.fromHex("#703d57")
     }
 }
