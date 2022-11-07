@@ -50,7 +50,7 @@ fun Node.hero(
 class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, projectiles: Node2D) :
     LevelEntity(level, Config.GRID_CELL_SIZE.toFloat()), Effectible {
 
-    val damange = 5
+    val damage = 5
     private var health = 10f
 
     private val swipeProjectilePool: Pool<SwipeProjectile> by lazy {
@@ -64,6 +64,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
             BoneSpearProjectile(this).apply { enabled = false }.addTo(projectiles)
         }
     }
+    private val canMove = data.field<Boolean>("canMove").value
 
     override val effects: MutableMap<Effect, Duration> = mutableMapOf()
     override val effectsToRemove: MutableList<Effect> = mutableListOf()
@@ -98,12 +99,16 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
             }
             registerState(Assets.heroIdle, 0)
         }
+
+        if (!canMove) {
+            addEffect(Effect.Invincible, Duration.INFINITE)
+        }
     }
 
     override fun update(dt: Duration) {
         super.update(dt)
 
-        if (cd.has("soar")) return
+        if (cd.has("soar") || !canMove) return
 
         xMoveStrength = 0f
         yMoveStrength = 0f

@@ -39,7 +39,7 @@ class SwipeProjectile(val hero: Hero) : Entity(Config.GRID_CELL_SIZE.toFloat()),
                 val dist = outerRadius + it.outerRadius
                 val colliding = distSqr(px, py, it.px, it.py) <= dist * dist
                 if (it.enabled && colliding) {
-                    it.hit(hero.damange, hero.angleTo(it))
+                    it.hit(hero.damage, hero.angleTo(it))
 
                     val angle = hero.angleTo(it)
                     it.velocityX += knockbackPower * angle.cosine
