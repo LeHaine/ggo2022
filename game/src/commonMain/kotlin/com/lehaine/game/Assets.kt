@@ -19,6 +19,8 @@ class Assets private constructor(context: Context) : Disposable {
         ).content
     }
 
+    private val boneManIdle by assets.prepare { atlas.getAnimation("boneManIdle", 250.milliseconds) }
+
     private val heroIdle by assets.prepare { atlas.getAnimation("heroIdle") }
     private val heroWalk by assets.prepare { atlas.getAnimation("heroWalk") }
     private val heroAttack by assets.prepare { atlas.getAnimation("heroAttack") }
@@ -51,6 +53,8 @@ class Assets private constructor(context: Context) : Disposable {
 
         val atlas: TextureAtlas get() = INSTANCE.atlas
         val pixelFont: BitmapFont get() = INSTANCE.pixelFont
+
+        val boneManIdle: Animation<TextureSlice> get() = INSTANCE.boneManIdle
 
         val heroIdle: Animation<TextureSlice> get() = INSTANCE.heroIdle
         val heroWalk: Animation<TextureSlice> get() = INSTANCE.heroWalk

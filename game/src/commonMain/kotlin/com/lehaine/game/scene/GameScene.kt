@@ -1,10 +1,12 @@
 package com.lehaine.game.scene
 
 import com.lehaine.game.*
+import com.lehaine.game.node.entity.BoneMan
 import com.lehaine.game.node.entity.Hero
 import com.lehaine.game.node.entity.hero
 import com.lehaine.game.node.level.TestSpawner
 import com.lehaine.littlekt.Context
+import com.lehaine.littlekt.async.KtScope
 import com.lehaine.littlekt.file.ldtk.LDtkMapLoader
 import com.lehaine.littlekt.file.vfs.readLDtkMapLoader
 import com.lehaine.littlekt.file.vfs.readPixmap
@@ -29,6 +31,7 @@ import com.lehaine.rune.engine.node.EntityCamera2D
 import com.lehaine.rune.engine.node.entityCamera2D
 import com.lehaine.rune.engine.node.pixelPerfectSlice
 import com.lehaine.rune.engine.node.pixelSmoothFrameBuffer
+import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 import kotlin.time.Duration
 
@@ -52,6 +55,7 @@ class GameScene(context: Context) :
     lateinit var ldtkLevel: LDtkLevel
     lateinit var hero: Hero
     lateinit var level: Level
+    private var levelIdx = 0
 
     val fx = Fx(this)
 
@@ -158,11 +162,19 @@ class GameScene(context: Context) :
 
                         hero = hero(ldtkLevel.entities("Hero")[0], level, entityCamera, projectiles)
                         entityCamera.follow(hero, true)
+
+                        if (ldtkLevel.entitiesByIdentifier.contains("BoneMan")) {
+                            ldtkLevel.entities("BoneMan").firstOrNull()?.let {
+                                BoneMan(it).addTo(this)
+                            }
+                        }
                     }
 
                     projectiles.addTo(this)
 
-                    TestSpawner(hero, level).addTo(this)
+                    if (ldtkLevel.entitiesByIdentifier.contains("MonsterSpawner")) {
+                        TestSpawner(hero, level).addTo(this)
+                    }
                 }
 
                 foreground = node {
@@ -208,12 +220,33 @@ class GameScene(context: Context) :
             resize(graphics.width, graphics.height)
         }
 
+        if (input.isKeyJustPressed(Key.NUM1)) {
+            loadLevel(0)
+
+        } else if (input.isKeyJustPressed(Key.NUM2)) {
+            loadLevel(1)
+        }
+
         if (input.isKeyJustPressed(Key.T)) {
             println(root.treeString())
         }
 
         if (input.isKeyJustPressed(Key.P)) {
             println(stats)
+        }
+    }
+
+    private fun loadLevel(idx: Int) {
+        levelIdx = idx
+        mapLoader?.let {
+            KtScope.launch {
+                val world = it.loadMap(false, idx)
+                ldtkLevel = world.levels[0]
+
+                destroyRoot()
+                root.createNodes()
+                resize(graphics.width, graphics.height)
+            }
         }
     }
 }

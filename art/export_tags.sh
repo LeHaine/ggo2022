@@ -1,7 +1,7 @@
 #!/bin/bash
 aseprite="D:/Program Files (x86)/SteamLibrary/steamapps/common/Aseprite/Aseprite.exe"
 fileName=""
-excludeFiles=("expBar.aseprite" "healthBar.aseprite" "dragonArrow.aseprite")
+excludeFiles=()
 
 if [ -z "$1" ]; then
   for file in ./ase/*.aseprite; do
