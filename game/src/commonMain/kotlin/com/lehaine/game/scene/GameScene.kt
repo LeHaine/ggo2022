@@ -124,18 +124,6 @@ class GameScene(context: Context) :
                     viewBounds.width = ldtkLevel.pxWidth.toFloat()
                     viewBounds.height = ldtkLevel.pxHeight.toFloat()
                     camera = canvasCamera
-
-                    onUpdate += {
-                        if (input.isKeyJustPressed(Key.Z)) {
-                            targetZoom = 0.5f
-                        }
-                        if (input.isKeyJustPressed(Key.X)) {
-                            targetZoom = 1f
-                        }
-                        if (input.isKeyJustPressed(Key.C)) {
-                            targetZoom = 2f
-                        }
-                    }
                 }
 
 
