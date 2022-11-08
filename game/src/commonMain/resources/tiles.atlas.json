@@ -37,8 +37,8 @@
         {
             "filename": "boneManIdle0",
             "frame": {
-                "x": 362,
-                "y": 448,
+                "x": 412,
+                "y": 338,
                 "w": 42,
                 "h": 38
             },
@@ -58,8 +58,8 @@
         {
             "filename": "boneManIdle1",
             "frame": {
-                "x": 426,
-                "y": 416,
+                "x": 422,
+                "y": 445,
                 "w": 40,
                 "h": 39
             },
@@ -79,8 +79,8 @@
         {
             "filename": "boneManIdle2",
             "frame": {
-                "x": 410,
-                "y": 461,
+                "x": 468,
+                "y": 412,
                 "w": 40,
                 "h": 40
             },
@@ -100,8 +100,8 @@
         {
             "filename": "boneSpearAttack0",
             "frame": {
-                "x": 497,
-                "y": 321,
+                "x": 468,
+                "y": 458,
                 "w": 8,
                 "h": 38
             },
@@ -121,8 +121,8 @@
         {
             "filename": "boneSpearAttack1",
             "frame": {
-                "x": 436,
-                "y": 280,
+                "x": 351,
+                "y": 339,
                 "w": 11,
                 "h": 51
             },
@@ -142,8 +142,8 @@
         {
             "filename": "boneSpearAttack2",
             "frame": {
-                "x": 319,
-                "y": 400,
+                "x": 335,
+                "y": 338,
                 "w": 10,
                 "h": 52
             },
@@ -163,8 +163,8 @@
         {
             "filename": "boneSpearAttack3",
             "frame": {
-                "x": 318,
-                "y": 341,
+                "x": 319,
+                "y": 431,
                 "w": 10,
                 "h": 53
             },
@@ -184,8 +184,8 @@
         {
             "filename": "boneSpearAttack4",
             "frame": {
-                "x": 302,
-                "y": 417,
+                "x": 318,
+                "y": 371,
                 "w": 11,
                 "h": 54
             },
@@ -458,7 +458,7 @@
             "filename": "boneSpearAttack17",
             "frame": {
                 "x": 301,
-                "y": 355,
+                "y": 371,
                 "w": 11,
                 "h": 56
             },
@@ -478,8 +478,8 @@
         {
             "filename": "boneSpearAttack18",
             "frame": {
-                "x": 314,
-                "y": 280,
+                "x": 302,
+                "y": 433,
                 "w": 11,
                 "h": 55
             },
@@ -499,7 +499,7 @@
         {
             "filename": "boneSpearAttack19",
             "frame": {
-                "x": 331,
+                "x": 377,
                 "y": 280,
                 "w": 10,
                 "h": 53
@@ -520,8 +520,8 @@
         {
             "filename": "boneSpearAttack20",
             "frame": {
-                "x": 285,
-                "y": 509,
+                "x": 463,
+                "y": 419,
                 "w": -1,
                 "h": -1
             },
@@ -541,8 +541,8 @@
         {
             "filename": "fxBigEye",
             "frame": {
-                "x": 414,
-                "y": 423,
+                "x": 478,
+                "y": 280,
                 "w": 6,
                 "h": 9
             },
@@ -562,8 +562,8 @@
         {
             "filename": "fxCircle0",
             "frame": {
-                "x": 583,
-                "y": 460,
+                "x": 557,
+                "y": 278,
                 "w": 16,
                 "h": 16
             },
@@ -583,8 +583,8 @@
         {
             "filename": "fxDot0",
             "frame": {
-                "x": 401,
-                "y": 505,
+                "x": 368,
+                "y": 280,
                 "w": 3,
                 "h": 3
             },
@@ -604,8 +604,8 @@
         {
             "filename": "fxGib0",
             "frame": {
-                "x": 41,
-                "y": 505,
+                "x": 380,
+                "y": 445,
                 "w": 4,
                 "h": 3
             },
@@ -625,8 +625,8 @@
         {
             "filename": "fxGib1",
             "frame": {
-                "x": 536,
-                "y": 477,
+                "x": 164,
+                "y": 480,
                 "w": 4,
                 "h": 3
             },
@@ -646,7 +646,7 @@
         {
             "filename": "fxGib2",
             "frame": {
-                "x": 51,
+                "x": 378,
                 "y": 505,
                 "w": 4,
                 "h": 3
@@ -667,8 +667,8 @@
         {
             "filename": "fxImpact0",
             "frame": {
-                "x": 362,
-                "y": 492,
+                "x": 57,
+                "y": 499,
                 "w": 14,
                 "h": 9
             },
@@ -688,8 +688,8 @@
         {
             "filename": "fxLine0",
             "frame": {
-                "x": 362,
-                "y": 507,
+                "x": 429,
+                "y": 412,
                 "w": 33,
                 "h": 1
             },
@@ -730,8 +730,8 @@
         {
             "filename": "fxLittleEye",
             "frame": {
-                "x": 288,
-                "y": 366,
+                "x": 514,
+                "y": 442,
                 "w": 4,
                 "h": 6
             },
@@ -751,8 +751,8 @@
         {
             "filename": "fxMeatLeg",
             "frame": {
-                "x": 401,
-                "y": 492,
+                "x": 507,
+                "y": 308,
                 "w": 3,
                 "h": 7
             },
@@ -772,8 +772,8 @@
         {
             "filename": "fxSmallCircle0",
             "frame": {
-                "x": 414,
-                "y": 438,
+                "x": 478,
+                "y": 295,
                 "w": 6,
                 "h": 6
             },
@@ -793,8 +793,8 @@
         {
             "filename": "fxSmoke0",
             "frame": {
-                "x": 375,
-                "y": 338,
+                "x": 380,
+                "y": 396,
                 "w": 43,
                 "h": 43
             },
@@ -835,8 +835,8 @@
         {
             "filename": "fxSwipe0",
             "frame": {
-                "x": 472,
-                "y": 452,
+                "x": 507,
+                "y": 373,
                 "w": 26,
                 "h": 29
             },
@@ -856,8 +856,8 @@
         {
             "filename": "fxSwipe1",
             "frame": {
-                "x": 504,
-                "y": 452,
+                "x": 514,
+                "y": 408,
                 "w": 26,
                 "h": 28
             },
@@ -877,8 +877,8 @@
         {
             "filename": "fxSwipe2",
             "frame": {
-                "x": 507,
-                "y": 4,
+                "x": 539,
+                "y": 373,
                 "w": 26,
                 "h": 28
             },
@@ -898,8 +898,8 @@
         {
             "filename": "fxTail0",
             "frame": {
-                "x": 473,
-                "y": 378,
+                "x": 478,
+                "y": 321,
                 "w": 33,
                 "h": 11
             },
@@ -919,8 +919,8 @@
         {
             "filename": "heroAttack0",
             "frame": {
-                "x": 507,
-                "y": 119,
+                "x": 429,
+                "y": 382,
                 "w": 25,
                 "h": 20
             },
@@ -941,7 +941,7 @@
             "filename": "heroAttack1",
             "frame": {
                 "x": 507,
-                "y": 145,
+                "y": 4,
                 "w": 25,
                 "h": 19
             },
@@ -962,7 +962,7 @@
             "filename": "heroAttack2",
             "frame": {
                 "x": 524,
-                "y": 486,
+                "y": 468,
                 "w": 26,
                 "h": 19
             },
@@ -982,8 +982,8 @@
         {
             "filename": "heroAttack3",
             "frame": {
-                "x": 456,
-                "y": 487,
+                "x": 429,
+                "y": 419,
                 "w": 28,
                 "h": 18
             },
@@ -1003,8 +1003,8 @@
         {
             "filename": "heroAttack4",
             "frame": {
-                "x": 490,
-                "y": 487,
+                "x": 524,
+                "y": 442,
                 "w": 28,
                 "h": 20
             },
@@ -1025,7 +1025,7 @@
             "filename": "heroAttack5",
             "frame": {
                 "x": 507,
-                "y": 170,
+                "y": 29,
                 "w": 25,
                 "h": 23
             },
@@ -1045,8 +1045,8 @@
         {
             "filename": "heroIdle0",
             "frame": {
-                "x": 507,
-                "y": 119,
+                "x": 429,
+                "y": 382,
                 "w": 25,
                 "h": 20
             },
@@ -1067,7 +1067,7 @@
             "filename": "heroIdle1",
             "frame": {
                 "x": 507,
-                "y": 199,
+                "y": 58,
                 "w": 25,
                 "h": 21
             },
@@ -1088,7 +1088,7 @@
             "filename": "heroIdle2",
             "frame": {
                 "x": 507,
-                "y": 226,
+                "y": 85,
                 "w": 25,
                 "h": 22
             },
@@ -1109,7 +1109,7 @@
             "filename": "heroIdle3",
             "frame": {
                 "x": 507,
-                "y": 254,
+                "y": 113,
                 "w": 25,
                 "h": 21
             },
@@ -1130,7 +1130,7 @@
             "filename": "heroSoar0",
             "frame": {
                 "x": 507,
-                "y": 281,
+                "y": 140,
                 "w": 25,
                 "h": 23
             },
@@ -1150,8 +1150,8 @@
         {
             "filename": "heroSoar1",
             "frame": {
-                "x": 511,
-                "y": 310,
+                "x": 507,
+                "y": 169,
                 "w": 25,
                 "h": 23
             },
@@ -1171,8 +1171,8 @@
         {
             "filename": "heroSoar2",
             "frame": {
-                "x": 507,
-                "y": 38,
+                "x": 556,
+                "y": 468,
                 "w": 26,
                 "h": 22
             },
@@ -1192,8 +1192,8 @@
         {
             "filename": "heroWalk0",
             "frame": {
-                "x": 507,
-                "y": 66,
+                "x": 558,
+                "y": 441,
                 "w": 26,
                 "h": 21
             },
@@ -1213,8 +1213,8 @@
         {
             "filename": "heroWalk1",
             "frame": {
-                "x": 507,
-                "y": 93,
+                "x": 588,
+                "y": 468,
                 "w": 26,
                 "h": 20
             },
@@ -1234,8 +1234,8 @@
         {
             "filename": "heroWalk2",
             "frame": {
-                "x": 511,
-                "y": 339,
+                "x": 507,
+                "y": 198,
                 "w": 25,
                 "h": 20
             },
@@ -1255,8 +1255,8 @@
         {
             "filename": "heroWalk3",
             "frame": {
-                "x": 512,
-                "y": 365,
+                "x": 507,
+                "y": 224,
                 "w": 24,
                 "h": 21
             },
@@ -1297,8 +1297,8 @@
         {
             "filename": "meatBallHandOfDeathGrab0",
             "frame": {
-                "x": 379,
-                "y": 387,
+                "x": 460,
+                "y": 338,
                 "w": 41,
                 "h": 30
             },
@@ -1318,8 +1318,8 @@
         {
             "filename": "meatBallHandOfDeathGrab1",
             "frame": {
-                "x": 472,
-                "y": 416,
+                "x": 482,
+                "y": 458,
                 "w": 36,
                 "h": 30
             },
@@ -1339,8 +1339,8 @@
         {
             "filename": "meatBallHandOfDeathGrab2",
             "frame": {
-                "x": 453,
-                "y": 280,
+                "x": 507,
+                "y": 338,
                 "w": 31,
                 "h": 29
             },
@@ -1360,7 +1360,7 @@
         {
             "filename": "meatBallHandOfDeathGrab3",
             "frame": {
-                "x": 164,
+                "x": 175,
                 "y": 480,
                 "w": 30,
                 "h": 26
@@ -1381,8 +1381,8 @@
         {
             "filename": "meatBallRun0",
             "frame": {
-                "x": 424,
-                "y": 338,
+                "x": 546,
+                "y": 407,
                 "w": 20,
                 "h": 28
             },
@@ -1402,8 +1402,8 @@
         {
             "filename": "meatBallRun1",
             "frame": {
-                "x": 556,
-                "y": 477,
+                "x": 532,
+                "y": 251,
                 "w": 21,
                 "h": 21
             },
@@ -1423,8 +1423,8 @@
         {
             "filename": "meatBallRun2",
             "frame": {
-                "x": 379,
-                "y": 423,
+                "x": 314,
+                "y": 296,
                 "w": 29,
                 "h": 19
             },
@@ -1444,8 +1444,8 @@
         {
             "filename": "meatBallRun3",
             "frame": {
-                "x": 111,
-                "y": 489,
+                "x": 422,
+                "y": 490,
                 "w": 29,
                 "h": 18
             },
@@ -1465,8 +1465,8 @@
         {
             "filename": "meatBallSitting0",
             "frame": {
-                "x": 473,
-                "y": 395,
+                "x": 524,
+                "y": 493,
                 "w": 19,
                 "h": 15
             },
@@ -1486,8 +1486,8 @@
         {
             "filename": "meatBallSitting1",
             "frame": {
-                "x": 263,
-                "y": 355,
+                "x": 349,
+                "y": 296,
                 "w": 19,
                 "h": 16
             },
@@ -1507,8 +1507,8 @@
         {
             "filename": "meatBallStandUp0",
             "frame": {
-                "x": 473,
-                "y": 395,
+                "x": 524,
+                "y": 493,
                 "w": 19,
                 "h": 15
             },
@@ -1528,8 +1528,8 @@
         {
             "filename": "meatBallStandUp1",
             "frame": {
-                "x": 539,
-                "y": 392,
+                "x": 537,
+                "y": 224,
                 "w": 19,
                 "h": 15
             },
@@ -1549,8 +1549,8 @@
         {
             "filename": "meatBallStandUp2",
             "frame": {
-                "x": 539,
-                "y": 413,
+                "x": 532,
+                "y": 278,
                 "w": 19,
                 "h": 16
             },
@@ -1570,8 +1570,8 @@
         {
             "filename": "meatBallStandUp3",
             "frame": {
-                "x": 560,
-                "y": 435,
+                "x": 541,
+                "y": 300,
                 "w": 19,
                 "h": 19
             },
@@ -1591,8 +1591,8 @@
         {
             "filename": "meatBallStandUp4",
             "frame": {
-                "x": 514,
-                "y": 392,
+                "x": 507,
+                "y": 251,
                 "w": 19,
                 "h": 23
             },
@@ -1612,8 +1612,8 @@
         {
             "filename": "meatBallStandUp5",
             "frame": {
-                "x": 514,
-                "y": 421,
+                "x": 507,
+                "y": 280,
                 "w": 19,
                 "h": 22
             },
@@ -1633,8 +1633,8 @@
         {
             "filename": "shadow",
             "frame": {
-                "x": 146,
-                "y": 489,
+                "x": 457,
+                "y": 502,
                 "w": 12,
                 "h": 6
             },
@@ -1654,8 +1654,8 @@
         {
             "filename": "shadowSmall",
             "frame": {
-                "x": 288,
-                "y": 355,
+                "x": 541,
+                "y": 325,
                 "w": 7,
                 "h": 5
             },
@@ -1673,10 +1673,136 @@
             }
         },
         {
+            "filename": "stabAttack10",
+            "frame": {
+                "x": 263,
+                "y": 355,
+                "w": 64,
+                "h": 10
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 26,
+                "w": 64,
+                "h": 10
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        {
+            "filename": "stabAttack11",
+            "frame": {
+                "x": 111,
+                "y": 489,
+                "w": 58,
+                "h": 11
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 5,
+                "y": 26,
+                "w": 58,
+                "h": 11
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        {
+            "filename": "stabAttack12",
+            "frame": {
+                "x": 314,
+                "y": 321,
+                "w": 57,
+                "h": 11
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 6,
+                "y": 26,
+                "w": 57,
+                "h": 11
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        {
+            "filename": "stabAttack13",
+            "frame": {
+                "x": 314,
+                "y": 280,
+                "w": 48,
+                "h": 10
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 16,
+                "y": 27,
+                "w": 48,
+                "h": 10
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        {
+            "filename": "stabAttack14",
+            "frame": {
+                "x": 482,
+                "y": 494,
+                "w": 29,
+                "h": 10
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 35,
+                "y": 27,
+                "w": 29,
+                "h": 10
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        {
+            "filename": "stabAttack15",
+            "frame": {
+                "x": 285,
+                "y": 509,
+                "w": -1,
+                "h": -1
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 63,
+                "y": 63,
+                "w": -1,
+                "h": -1
+            },
+            "sourceSize": {
+                "w": 64,
+                "h": 64
+            }
+        },
+        {
             "filename": "swipeAttack10",
             "frame": {
-                "x": 334,
-                "y": 339,
+                "x": 393,
+                "y": 280,
                 "w": 35,
                 "h": 52
             },
@@ -1696,7 +1822,7 @@
         {
             "filename": "swipeAttack11",
             "frame": {
-                "x": 347,
+                "x": 434,
                 "y": 280,
                 "w": 38,
                 "h": 52
@@ -1717,8 +1843,8 @@
         {
             "filename": "swipeAttack12",
             "frame": {
-                "x": 391,
-                "y": 280,
+                "x": 335,
+                "y": 396,
                 "w": 39,
                 "h": 52
             },
@@ -1738,8 +1864,8 @@
         {
             "filename": "swipeAttack13",
             "frame": {
-                "x": 453,
-                "y": 321,
+                "x": 368,
+                "y": 339,
                 "w": 38,
                 "h": 51
             },
@@ -1759,8 +1885,8 @@
         {
             "filename": "swipeAttack14",
             "frame": {
-                "x": 319,
-                "y": 458,
+                "x": 335,
+                "y": 454,
                 "w": 37,
                 "h": 49
             },
@@ -1780,8 +1906,8 @@
         {
             "filename": "swipeAttack15",
             "frame": {
-                "x": 335,
-                "y": 397,
+                "x": 378,
+                "y": 454,
                 "w": 38,
                 "h": 45
             },
@@ -1801,8 +1927,8 @@
         {
             "filename": "swipeAttack16",
             "frame": {
-                "x": 536,
-                "y": 449,
+                "x": 517,
+                "y": 308,
                 "w": 18,
                 "h": 22
             },
@@ -1822,7 +1948,7 @@
         {
             "filename": "swipeAttack17",
             "frame": {
-                "x": 290,
+                "x": 285,
                 "y": 509,
                 "w": -1,
                 "h": -1
@@ -1864,8 +1990,8 @@
         {
             "filename": "uiButton",
             "frame": {
-                "x": 335,
-                "y": 448,
+                "x": 457,
+                "y": 490,
                 "w": 4,
                 "h": 4
             },
@@ -1885,8 +2011,8 @@
         {
             "filename": "uiButtonHighlight",
             "frame": {
-                "x": 556,
-                "y": 504,
+                "x": 478,
+                "y": 307,
                 "w": 4,
                 "h": 4
             },
@@ -1906,8 +2032,8 @@
         {
             "filename": "uiOutline",
             "frame": {
-                "x": 345,
-                "y": 448,
+                "x": 412,
+                "y": 382,
                 "w": 4,
                 "h": 4
             },
@@ -1927,8 +2053,8 @@
         {
             "filename": "uiPanel",
             "frame": {
-                "x": 426,
-                "y": 378,
+                "x": 460,
+                "y": 374,
                 "w": 41,
                 "h": 32
             },

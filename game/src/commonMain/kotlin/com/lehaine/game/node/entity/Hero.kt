@@ -49,11 +49,17 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
 
     val damage = 5
     private var health = 10f
-    private var swipeAttackCombo = 0
+    private var attackCombo = 0
 
     private val swipeProjectilePool: Pool<SwipeProjectile> by lazy {
-        Pool(5) {
+        Pool(2) {
             SwipeProjectile(this).apply { enabled = false }.addTo(projectiles)
+        }
+    }
+
+    private val stabProjectilePool: Pool<StabProjectile> by lazy {
+        Pool(2) {
+            StabProjectile(this).apply { enabled = false }.addTo(projectiles)
         }
     }
 
@@ -121,32 +127,40 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
 
 
         if (controller.down(GameInput.ATTACK)) {
-            if (!cd.has("swipeAttackCD")) {
-                when (swipeAttackCombo) {
-                    0, 1 -> {
-                        cd("swipeAttackCD", 1000.milliseconds) {
-                            swipeAttackCombo++
+            if (!cd.has("attackCD")) {
+                when (attackCombo) {
+                    0 -> {
+                        cd("attackCD", 1000.milliseconds) {
+                            attackCombo++
                         }
-                        swipeAttack()
+                        swipeAttack(false)
+                    }
+
+                    1 -> {
+
+                        cd("attackCD", 1000.milliseconds) {
+                            attackCombo++
+                        }
+                        swipeAttack(true)
                     }
 
                     2 -> {
-                        cd("swipeAttackCD", 1000.milliseconds) {
-                            swipeAttackCombo++
+                        cd("attackCD", 750.milliseconds) {
+                            attackCombo++
                         }
-                        swipeAttack()
+                        doubleStabAttack()
                     }
 
                     3 -> {
-                        cd("swipeAttackCD", 1500.milliseconds) {
-                            swipeAttackCombo = 0
+                        cd("attackCD", 1500.milliseconds) {
+                            attackCombo = 0
                         }
-                        swipeAttack()
+                        swipeAttack(false)
                     }
                 }
 
                 cd("swipeCombo", 1300.milliseconds) {
-                    swipeAttackCombo = 0
+                    attackCombo = 0
                 }
             }
 
@@ -201,18 +215,38 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
         health -= damage
     }
 
-    fun swipeAttack() {
+    fun swipeAttack(flipY: Boolean) {
         val projectile = swipeProjectilePool.alloc()
         val offset = 20f
 
         val angle = angleToMouse
-        projectile.sprite.flipY = dir == -1
+        projectile.sprite.flipY = if (flipY) dir == 1 else dir == -1
         projectile.rotation = angle
         projectile.globalPosition(globalX + offset * angle.cosine, globalY + offset * angle.sine)
         projectile.enabled = true
         addEffect(Effect.Stun, 250.milliseconds)
         velocityX += 0.1f * angleToMouse.cosine
         velocityY += 0.1f * angleToMouse.sine
+    }
+
+    fun doubleStabAttack(attackNum: Int = 1) {
+        val projectile = stabProjectilePool.alloc()
+        val offsetX = (20..40).random()
+        val offsetY = (20..40).random()
+
+        val angle = angleToMouse
+        projectile.sprite.flipY = dir == -1
+        projectile.rotation = angle
+        projectile.globalPosition(globalX + offsetX * angle.cosine, globalY + offsetY * angle.sine)
+        projectile.enabled = true
+        if (attackNum == 1) {
+            cd("doubleStabDelay", 250.milliseconds) {
+                doubleStabAttack(2)
+            }
+            velocityX += 0.1f * angleToMouse.cosine
+            velocityY += 0.1f * angleToMouse.sine
+            addEffect(Effect.Stun, 250.milliseconds)
+        }
     }
 
     fun boneSpearAttack(tx: Float, ty: Float) {
@@ -245,6 +279,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
         when (projectile) {
             is SwipeProjectile -> swipeProjectilePool.free(projectile)
             is BoneSpearProjectile -> boneSpearProjectile.free(projectile)
+            is StabProjectile -> stabProjectilePool.free(projectile)
         }
     }
 
