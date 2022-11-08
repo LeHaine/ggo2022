@@ -13,12 +13,16 @@ import com.lehaine.littlekt.file.vfs.readPixmap
 import com.lehaine.littlekt.graph.node.Node
 import com.lehaine.littlekt.graph.node.addTo
 import com.lehaine.littlekt.graph.node.canvasLayer
+import com.lehaine.littlekt.graph.node.component.NinePatchDrawable
 import com.lehaine.littlekt.graph.node.node
 import com.lehaine.littlekt.graph.node.node2d.Node2D
 import com.lehaine.littlekt.graph.node.node2d.node2d
-import com.lehaine.littlekt.graph.node.ui.*
+import com.lehaine.littlekt.graph.node.ui.Control
+import com.lehaine.littlekt.graph.node.ui.control
+import com.lehaine.littlekt.graph.node.ui.panel
 import com.lehaine.littlekt.graphics.Color
 import com.lehaine.littlekt.graphics.Cursor
+import com.lehaine.littlekt.graphics.NinePatch
 import com.lehaine.littlekt.graphics.tilemap.ldtk.LDtkLevel
 import com.lehaine.littlekt.input.GameAxis
 import com.lehaine.littlekt.input.GameButton
@@ -191,6 +195,13 @@ class GameScene(context: Context) :
             name = "UI"
             anchorRight = 1f
             anchorBottom = 1f
+            panel {
+                name = "Border"
+                val border9p = NinePatch(Assets.atlas.getByPrefix("uiArenaBorder").slice, 16, 16, 15, 15)
+                panel = NinePatchDrawable(border9p)
+                anchorRight = 1f
+                anchorBottom = 1f
+            }
 
         }
 
