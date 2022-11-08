@@ -49,6 +49,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
 
     val damage = 5
     private var health = 10f
+    private var swipeAttackCombo = 0
 
     private val swipeProjectilePool: Pool<SwipeProjectile> by lazy {
         Pool(5) {
@@ -119,9 +120,36 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
         }
 
 
-        if (controller.down(GameInput.ATTACK) && !cd.has("swipeAttack")) {
-            cd("swipeAttack", 1.seconds)
-            swipeAttack()
+        if (controller.down(GameInput.ATTACK)) {
+            if (!cd.has("swipeAttackCD")) {
+                when (swipeAttackCombo) {
+                    0, 1 -> {
+                        cd("swipeAttackCD", 1000.milliseconds) {
+                            swipeAttackCombo++
+                        }
+                        swipeAttack()
+                    }
+
+                    2 -> {
+                        cd("swipeAttackCD", 1000.milliseconds) {
+                            swipeAttackCombo++
+                        }
+                        swipeAttack()
+                    }
+
+                    3 -> {
+                        cd("swipeAttackCD", 1500.milliseconds) {
+                            swipeAttackCombo = 0
+                        }
+                        swipeAttack()
+                    }
+                }
+
+                cd("swipeCombo", 1300.milliseconds) {
+                    swipeAttackCombo = 0
+                }
+            }
+
         } else if (controller.pressed(GameInput.SOAR) && !cd.has("soarAttack") && !cd.has("soar")) {
             val angle = angleToMouse
             xMoveStrength = angle.cosine
@@ -183,6 +211,8 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
         projectile.globalPosition(globalX + offset * angle.cosine, globalY + offset * angle.sine)
         projectile.enabled = true
         addEffect(Effect.Stun, 250.milliseconds)
+        velocityX += 0.1f * angleToMouse.cosine
+        velocityY += 0.1f * angleToMouse.sine
     }
 
     fun boneSpearAttack(tx: Float, ty: Float) {
