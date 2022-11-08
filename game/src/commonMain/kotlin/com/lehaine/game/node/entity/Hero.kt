@@ -18,10 +18,7 @@ import com.lehaine.littlekt.util.datastructure.Pool
 import com.lehaine.littlekt.util.fastForEach
 import com.lehaine.rune.engine.GameLevel
 import com.lehaine.rune.engine.node.EntityCamera2D
-import com.lehaine.rune.engine.node.renderable.entity.LevelEntity
-import com.lehaine.rune.engine.node.renderable.entity.castRayTo
-import com.lehaine.rune.engine.node.renderable.entity.cd
-import com.lehaine.rune.engine.node.renderable.entity.toGridPosition
+import com.lehaine.rune.engine.node.renderable.entity.*
 import com.lehaine.rune.engine.node.renderable.sprite
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
@@ -48,7 +45,7 @@ fun Node.hero(
  * @date 11/2/2022
  */
 class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, projectiles: Node2D) :
-    LevelEntity(level, Config.GRID_CELL_SIZE.toFloat()), Effectible {
+    ObliqueEntity(level, Config.GRID_CELL_SIZE.toFloat()), Effectible {
 
     val damage = 5
     private var health = 10f

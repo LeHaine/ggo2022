@@ -8,6 +8,7 @@ import com.lehaine.game.node.entity.Hero
 import com.lehaine.littlekt.math.geom.Angle
 import com.lehaine.littlekt.util.signal1v
 import com.lehaine.rune.engine.node.renderable.entity.LevelEntity
+import com.lehaine.rune.engine.node.renderable.entity.ObliqueEntity
 import com.lehaine.rune.engine.node.renderable.entity.cd
 import com.lehaine.rune.engine.node.renderable.entity.toGridPosition
 import com.lehaine.rune.engine.node.renderable.sprite
@@ -18,7 +19,7 @@ import kotlin.time.Duration.Companion.milliseconds
  * @author Colton Daily
  * @date 11/4/2022
  */
-abstract class Mob(val hero: Hero, override val level: Level) : LevelEntity(level, Config.GRID_CELL_SIZE.toFloat()),
+abstract class Mob(val hero: Hero, override val level: Level) : ObliqueEntity(level, Config.GRID_CELL_SIZE.toFloat()),
     Effectible {
 
     open var speed = 0.003f
