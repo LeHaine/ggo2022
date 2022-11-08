@@ -49,7 +49,7 @@ class Assets private constructor(context: Context) : Disposable {
         assets.prepare {
             val button9p = NinePatch(atlas.getByPrefix("uiButton").slice, 0, 0, 0, 0)
             val buttonHighlight9p = NinePatch(atlas.getByPrefix("uiButtonHighlight").slice, 0, 0, 0, 0)
-            val panel9p = NinePatch(atlas.getByPrefix("uiPanel").slice, 0, 0, 2, 0)
+            val panel9p = NinePatch(atlas.getByPrefix("uiPanel").slice, 15, 15, 15, 1)
             val outline9p = NinePatch(atlas.getByPrefix("uiOutline").slice, 1, 1, 1, 1)
 
             val theme = createDefaultTheme(

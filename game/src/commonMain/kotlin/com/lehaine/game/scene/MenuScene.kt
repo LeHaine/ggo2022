@@ -5,12 +5,8 @@ import com.lehaine.game.Config
 import com.lehaine.littlekt.Context
 import com.lehaine.littlekt.graph.node.Node
 import com.lehaine.littlekt.graph.node.component.HAlign
-import com.lehaine.littlekt.graph.node.ui.button
-import com.lehaine.littlekt.graph.node.ui.centerContainer
-import com.lehaine.littlekt.graph.node.ui.label
-import com.lehaine.littlekt.graph.node.ui.vBoxContainer
+import com.lehaine.littlekt.graph.node.ui.*
 import com.lehaine.littlekt.util.viewport.ExtendViewport
-import com.lehaine.rune.engine.RuneScene
 import com.lehaine.rune.engine.RuneSceneDefault
 
 
@@ -23,31 +19,39 @@ class MenuScene(
             anchorRight = 1f
             anchorBottom = 1f
 
-            vBoxContainer {
-                separation = 10
+            panelContainer {
+                paddedContainer {
+                    paddingTop = 25
+                    paddingLeft = 10
+                    paddingBottom = 10
+                    paddingRight = 10
+                    vBoxContainer {
+                        separation = 10
 
-                label {
-                    text = "Main Menu"
-                    font = Assets.pixelFont
-                    horizontalAlign = HAlign.CENTER
-                    fontScaleX = 2f
-                    fontScaleY = 2f
-                }
+                        label {
+                            text = "Main Menu"
+                            font = Assets.pixelFont
+                            horizontalAlign = HAlign.CENTER
+                            fontScaleX = 2f
+                            fontScaleY = 2f
+                        }
 
-                button {
-                    var startingGame = false
-                    text = "Start Game"
+                        button {
+                            var startingGame = false
+                            text = "Start Game"
 
-                    onPressed += {
-                        if (!startingGame) {
-                            startingGame = true
-                            changeTo(GameScene(context))
+                            onPressed += {
+                                if (!startingGame) {
+                                    startingGame = true
+                                    changeTo(GameScene(context))
+                                }
+                            }
+                        }
+
+                        button {
+                            text = "Settings"
                         }
                     }
-                }
-
-                button {
-                    text = "Settings"
                 }
             }
         }
