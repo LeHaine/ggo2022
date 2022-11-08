@@ -113,7 +113,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
         xMoveStrength = 0f
         yMoveStrength = 0f
 
-        if (!cd.has("swipeAttack")) {
+        if (!hasEffect(Effect.Stun)) {
             val movement = controller.vector(GameInput.MOVEMENT)
             xMoveStrength = movement.x
             yMoveStrength = movement.y
@@ -122,8 +122,8 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
 
         updateEffects(dt)
 
-        if (controller.pressed(GameInput.ATTACK) && !cd.has("swipeAttack")) {
-            cd("swipeAttack", 250.milliseconds)
+        if (controller.down(GameInput.ATTACK) && !cd.has("swipeAttack")) {
+            cd("swipeAttack", 1.seconds)
             swipeAttack()
         } else if (controller.pressed(GameInput.SOAR) && !cd.has("soarAttack") && !cd.has("soar")) {
             val angle = angleToMouse
@@ -185,6 +185,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
         projectile.rotation = angle
         projectile.globalPosition(globalX + offset * angle.cosine, globalY + offset * angle.sine)
         projectile.enabled = true
+        addEffect(Effect.Stun, 250.milliseconds)
     }
 
     fun boneSpearAttack(tx: Float, ty: Float) {
