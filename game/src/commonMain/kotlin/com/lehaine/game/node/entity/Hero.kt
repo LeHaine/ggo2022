@@ -108,6 +108,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
     override fun update(dt: Duration) {
         super.update(dt)
 
+        updateEffects(dt)
         if (cd.has("soar") || !canMove) return
 
         xMoveStrength = 0f
@@ -120,7 +121,6 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
             dir = dirToMouse
         }
 
-        updateEffects(dt)
 
         if (controller.down(GameInput.ATTACK) && !cd.has("swipeAttack")) {
             cd("swipeAttack", 1.seconds)
