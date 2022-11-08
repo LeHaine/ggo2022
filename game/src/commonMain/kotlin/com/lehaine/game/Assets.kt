@@ -4,6 +4,11 @@ import com.lehaine.littlekt.AssetProvider
 import com.lehaine.littlekt.BitmapFontAssetParameter
 import com.lehaine.littlekt.Context
 import com.lehaine.littlekt.Disposable
+import com.lehaine.littlekt.graph.node.component.NinePatchDrawable
+import com.lehaine.littlekt.graph.node.component.Theme
+import com.lehaine.littlekt.graph.node.component.createDefaultTheme
+import com.lehaine.littlekt.graph.node.ui.Button
+import com.lehaine.littlekt.graph.node.ui.Panel
 import com.lehaine.littlekt.graphics.*
 import com.lehaine.littlekt.graphics.font.BitmapFont
 import kotlin.jvm.Volatile
@@ -37,6 +42,38 @@ class Assets private constructor(context: Context) : Disposable {
             frames(0..1)
             frames(2, frameTime = 500.milliseconds)
             frames(3, frameTime = 1000.milliseconds)
+        }
+    }
+
+    init {
+        assets.prepare {
+            val button9p = NinePatch(atlas.getByPrefix("uiButton").slice, 0, 0, 0, 0)
+            val buttonHighlight9p = NinePatch(atlas.getByPrefix("uiButtonHighlight").slice, 0, 0, 0, 0)
+            val panel9p = NinePatch(atlas.getByPrefix("uiPanel").slice, 0, 0, 2, 0)
+            val outline9p = NinePatch(atlas.getByPrefix("uiOutline").slice, 1, 1, 1, 1)
+
+            val theme = createDefaultTheme(
+                extraDrawables = mapOf(
+                    "Button" to mapOf(
+                        Button.themeVars.normal to NinePatchDrawable(button9p),
+                        Button.themeVars.pressed to NinePatchDrawable(button9p).apply {
+                            modulate = Color.WHITE.toMutableColor().scaleRgb(0.6f)
+                        },
+                        Button.themeVars.hover to NinePatchDrawable(buttonHighlight9p),
+                        Button.themeVars.focus to NinePatchDrawable(outline9p),
+                        Button.themeVars.disabled to NinePatchDrawable(buttonHighlight9p).apply {
+                            modulate = Color.WHITE.toMutableColor().scaleRgb(0.6f)
+                        }
+                    ),
+
+                    "Panel" to mapOf(
+                        Panel.themeVars.panel to NinePatchDrawable(panel9p)
+                    )
+                ),
+                defaultFont = pixelFont
+            )
+
+            Theme.defaultTheme = theme
         }
     }
 
