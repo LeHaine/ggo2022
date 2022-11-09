@@ -137,15 +137,14 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
                     }
 
                     1 -> {
-
-                        cd("attackCD", 1000.milliseconds) {
+                        cd("attackCD", 500.milliseconds) {
                             attackCombo++
                         }
                         swipeAttack(true)
                     }
 
                     2 -> {
-                        cd("attackCD", 750.milliseconds) {
+                        cd("attackCD", 1000.milliseconds) {
                             attackCombo++
                         }
                         doubleStabAttack()

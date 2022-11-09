@@ -36,7 +36,7 @@ class StabProjectile(val hero: Hero) : Entity(Config.GRID_CELL_SIZE.toFloat()), 
             cd("attacked", Assets.stabAttack1.duration)
             attacked = true
             Mob.ALL.fastForEach {
-                val colliding = isCollidingWith(it)
+                val colliding = isCollidingWith(it, true)
                 if (it.enabled && colliding) {
                     it.hit(hero.damage, hero.angleTo(it))
 
