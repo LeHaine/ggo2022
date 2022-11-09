@@ -69,14 +69,14 @@ class GameScene(context: Context) :
         controller.addBinding(GameInput.MOVE_DOWN, listOf(Key.S, Key.ARROW_DOWN), axes = listOf(GameAxis.LY))
 
         controller.addBinding(
-            GameInput.ATTACK,
+            GameInput.SWING,
             buttons = listOf(GameButton.XBOX_X),
-            pointers = listOf(Pointer.MOUSE_LEFT)
+            pointers = listOf(Pointer.MOUSE_RIGHT)
         )
         controller.addBinding(
             GameInput.SOAR,
             buttons = listOf(GameButton.XBOX_A),
-            pointers = listOf(Pointer.MOUSE_RIGHT)
+            keys = listOf(Key.SHIFT_LEFT, Key.SPACE)
         )
         controller.addBinding(
             GameInput.HAND_OF_DEATH,
@@ -87,6 +87,11 @@ class GameScene(context: Context) :
             GameInput.BONE_SPEAR,
             buttons = listOf(GameButton.XBOX_B),
             keys = listOf(Key.E)
+        )
+        controller.addBinding(
+            GameInput.SHOOT,
+            buttons = listOf(GameButton.RIGHT_TRIGGER),
+            pointers = listOf(Pointer.MOUSE_LEFT)
         )
 
         controller.addAxis(GameInput.HORIZONTAL, GameInput.MOVE_RIGHT, GameInput.MOVE_LEFT)

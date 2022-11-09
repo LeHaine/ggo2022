@@ -15,7 +15,8 @@ enum class GameInput {
     UI_FOCUS_NEXT,
     UI_FOCUS_PREV,
 
-    ATTACK,
+    SHOOT,
+    SWING,
     SOAR,
     HAND_OF_DEATH,
     BONE_SPEAR,

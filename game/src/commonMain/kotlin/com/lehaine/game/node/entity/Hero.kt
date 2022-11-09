@@ -51,6 +51,11 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
     private var health = 10f
     private var attackCombo = 0
 
+    private val orbProjectilePool: Pool<OrbProjectile> by lazy {
+        Pool(10) {
+            OrbProjectile(this, level).apply { enabled = false }.addTo(projectiles)
+        }
+    }
     private val swipeProjectilePool: Pool<SwipeProjectile> by lazy {
         Pool(2) {
             SwipeProjectile(this).apply { enabled = false }.addTo(projectiles)
@@ -123,40 +128,45 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
         xMoveStrength = 0f
         yMoveStrength = 0f
 
-        if (!hasEffect(Effect.Stun)) {
-            val movement = controller.vector(GameInput.MOVEMENT)
-            xMoveStrength = movement.x
-            yMoveStrength = movement.y
-            dir = dirToMouse
-        }
 
+        if (controller.down(GameInput.SHOOT)) {
+            if (!cd.has("shootCD")) {
+                cd("shootCD", 250.milliseconds)
+                orbAttack()
+            }
+        } else if (!hasEffect(Effect.Stun)) {
+                val movement = controller.vector(GameInput.MOVEMENT)
+                xMoveStrength = movement.x
+                yMoveStrength = movement.y
+                dir = dirToMouse
+            }
 
-        if (controller.down(GameInput.ATTACK)) {
+        if (controller.down(GameInput.SWING)) {
             if (!cd.has("attackCD")) {
                 when (attackCombo) {
                     0 -> {
-                        cd("attackCD", 1000.milliseconds) {
+                        cd("attackCD", 500.milliseconds) {
                             attackCombo++
                         }
                         swipeAttack()
                     }
 
                     1 -> {
-                        cd("attackCD", 1000.milliseconds) {
+                        cd("attackCD", 750.milliseconds) {
                             attackCombo++
                         }
                         doubleStabAttack()
                     }
 
                     2 -> {
-                        cd("attackCD", 1500.milliseconds) {
+                        cd("attackCD", 1000.milliseconds) {
                             attackCombo = 0
                         }
                         swipeBigAttack()
                     }
                 }
 
-                cd("swipeCombo", 1300.milliseconds) {
+                cd("swipeCombo", 850.milliseconds) {
                     attackCombo = 0
                 }
             }
@@ -210,6 +220,14 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
     fun hit(damage: Float) {
         if (hasEffect(Effect.Invincible)) return
         health -= damage
+    }
+
+    fun orbAttack() {
+        val angle = angleToMouse
+        val projectile = orbProjectilePool.alloc()
+        projectile.enabled = true
+        projectile.globalPosition(centerX + 10f * angle.cosine, centerY + 10f * angle.sine)
+        projectile.moveTowardsAngle(angle)
     }
 
     fun swipeAttack() {

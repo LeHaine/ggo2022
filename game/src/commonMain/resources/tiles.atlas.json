@@ -1799,6 +1799,27 @@
             }
         },
         {
+            "filename": "spiritOrb0",
+            "frame": {
+                "x": 631,
+                "y": 502,
+                "w": 6,
+                "h": 6
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 6,
+                "h": 6
+            },
+            "sourceSize": {
+                "w": 6,
+                "h": 6
+            }
+        },
+        {
             "filename": "stabAttack10",
             "frame": {
                 "x": 111,

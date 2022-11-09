@@ -83,6 +83,18 @@ class Fx(val game: GameScene) {
         }
     }
 
+    fun spiritBallExplode(x: Float, y: Float) {
+        create(10) {
+            val p = allocTopNormal(Assets.atlas.getByPrefix("fxDot").slice, x, y)
+            p.color.set(pickOne(LIGHT_PURPLE, DARK_PURPLE, LIGHT_MEAT_RED))
+            p.xDelta = (0.5f..0.7f).random().asRandomSign
+            p.yDelta = (0.5f..0.7f).random().asRandomSign
+            p.friction = 0.97f.about(0.05f).coerceAtMost(1f)
+            p.rotationDelta = (0f..PI2_F).random()
+            p.life = (0.5f..0.75f).random().seconds
+        }
+    }
+
     fun meatBallExplode(x: Float, y: Float) {
         fun setParticle(p: Particle) {
             p.xDelta = (0..2).random().asRandomSign
@@ -238,5 +250,8 @@ class Fx(val game: GameScene) {
         private val MEAT_RED = Color.fromHex("#994551")
         private val LIGHT_MEAT_RED = Color.fromHex("#a25d64")
         private val DARK_MEAT_RED = Color.fromHex("#703d57")
+        private val LIGHT_PURPLE = DARK_MEAT_RED
+        private val DARK_PURPLE = Color.fromHex("#422e37")
+        private val BLACK = Color.fromHex("#332e30")
     }
 }
