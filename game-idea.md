@@ -2,74 +2,18 @@
 
 ### Idea: Glutton for Punishment
 
-A take on some sort of "being" (death? something else) to work (kill / fight something in hell? underworld? something
-reddish and gorey)
-by slaying mobs and collecting bones. The work starts out "easy" by handing a few mobs.
-But as the hero continues slaying they may hit a threshold of some kind, either running out of health by being hit (or
-something else)
-and they are presented to the Bone Collector, (a tall handsome skeleton-y? being in a tux) that either rewards you (
-really punishes)
-you with more work, or sends you off and you lose.
+The hero plays as a death-like being. They must slay these humanoid monsters in purgatory to send them on their way and collect
+their soul (orbs?). Either after every X amount of souls collected or when death "dies" - they see the bone man. If they meet
+his quota he offers his "reward" by choosing one of three choices that will improve the hero but also punish the hero.
+E.g the hero can select "gain 15% more souls per kill but monsters increase respawn time". The idea is the hero is punished
+to improve their power.
 
-### Style:
+If the hero dies before meeting the bone mans quota - he does not give you a reward but instead gives you a random punishment 
+and then sends the hero on their way back to the arena starting at the current amount of souls they died with to allow them
+to reach the reward a bit faster.
 
-Top-down, with a reddish palette, pixel.
+If the hero fails to the meet the bone mans quota after 3 times the bone man will fire the death-like being and the player
+loses and must restart.
 
-### Screens:
-
-- Menu Screen
-- The hero arena where the hero slays and collects bones.
-- The bone man's office (think Hades game where Zagreus talks to Hades at his desk)
-- Possible upgrades screen...
-
-### Mechanics:
-
-### Upgrades
-
-- Possible upgrades from collecting bones when talking to the bone man.
-    - Character abilities changes (stronger, aoe, etc)
-    - Maybe something more roguelite-y and more passive upgrades like faster attacks, more HP, lower cooldowns, etc
-    - Passive auto attacks (think vampire survivors)
-    - Add abilities:
-        - Dash: to dodge enemies and quickly get to enemies
-        - Soul drain: drain the soul of an enemy which instantly kills them
-        - Hands of Death: select & pull down enemies which instantly kill.
-        - Combo attacks on main attack?
-
-#### Hero
-
-- Swing / Attack ability
-- Dash / Dodge ability
-- Something to do with bones ability
-- Uses a lantern instead of dagger off hand to light up levels that are dark.
-
-#### Mobs
-
-- Range
-- Melee
-- ?
-
-### Game Loop
-
-Player starts the game -> meets in bone mans office (cut scene) and he gives speech / yells / demands -> game starts
-
-Hero is in a smallish arena and mobs start appearing randomly around. Hero attacks mobs manually with the swing / dash
-attacks. Mobs die and bones drop and hero must collect. Hero takes too much damage and "dies" and reappears in front
-of the bone man in his office. Depending on the amount of mobs & mobs collected the hero is either banished or rewarded
-with more work and can use bones to upgrade.
-
-If rewarded with more work, hero goes back into small arena, stronger mobs appear, hero fights mobs with new upgrades,
-hero dies, rinse and repeat.
-
-### 11/6 Setting update
-
-Instead of collecting bones - the bone man can still be the bone man but instead the mobs being slayed in the arena
-are "people" stuck and transformed into weird beasts while some are still humanoid-y. These souls are refusing to move
-on to the underworld so death is forced to slay.
-
-The goal is too collect enough souls every time before getting back to the bone man to satisfy his need. Update
-collecting enough souls then death is
-punished with more work by needing to claim harder souls.
-
-Also as a secondary cliché we can add some dude named Pete (For Pete's Sake) somewhere in the office where each time
-death fails something happens to Pete. So the for Pete's sake we want succeed and be punished.
+If the hero reaches a certain amount of souls to buy the final choice (the 4th ranked choice on every reward) this will
+end the game in some sort of fashion. How that happens is TBD.
