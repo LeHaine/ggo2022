@@ -56,6 +56,11 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
             SwipeProjectile(this).apply { enabled = false }.addTo(projectiles)
         }
     }
+    private val swipeBigProjectilePool: Pool<SwipeBigProjectile> by lazy {
+        Pool(1) {
+            SwipeBigProjectile(this).apply { enabled = false }.addTo(projectiles)
+        }
+    }
 
     private val stabProjectilePool: Pool<StabProjectile> by lazy {
         Pool(2) {
@@ -133,28 +138,21 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
                         cd("attackCD", 1000.milliseconds) {
                             attackCombo++
                         }
-                        swipeAttack(false)
+                        swipeAttack()
                     }
 
                     1 -> {
-                        cd("attackCD", 500.milliseconds) {
-                            attackCombo++
-                        }
-                        swipeAttack(true)
-                    }
-
-                    2 -> {
                         cd("attackCD", 1000.milliseconds) {
                             attackCombo++
                         }
                         doubleStabAttack()
                     }
 
-                    3 -> {
+                    2 -> {
                         cd("attackCD", 1500.milliseconds) {
                             attackCombo = 0
                         }
-                        swipeAttack(false)
+                        swipeBigAttack()
                     }
                 }
 
@@ -214,18 +212,19 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
         health -= damage
     }
 
-    fun swipeAttack(flipY: Boolean) {
-        val projectile = swipeProjectilePool.alloc()
-        val offset = 20f
+    fun swipeAttack() {
+        cd("delay", 200.milliseconds) {
+            val projectile = swipeProjectilePool.alloc()
+            val offset = 20f
 
-        val angle = angleToMouse
-        projectile.sprite.flipY = if (flipY) dir == 1 else dir == -1
-        projectile.rotation = angle
-        projectile.globalPosition(globalX + offset * angle.cosine, globalY + offset * angle.sine)
-        projectile.enabled = true
-        addEffect(Effect.Stun, 250.milliseconds)
-        velocityX += 0.1f * angleToMouse.cosine
-        velocityY += 0.1f * angleToMouse.sine
+            val angle = angleToMouse
+            projectile.sprite.flipY = dir == -1
+            projectile.rotation = angle
+            projectile.globalPosition(globalX + offset * angle.cosine, globalY + offset * angle.sine)
+            projectile.enabled = true
+        }
+        sprite.playOnce(Assets.heroSwing)
+        addEffect(Effect.Stun, Assets.heroSwing.duration)
     }
 
     fun doubleStabAttack(attackNum: Int = 1) {
@@ -242,10 +241,20 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
             cd("doubleStabDelay", 250.milliseconds) {
                 doubleStabAttack(2)
             }
-            velocityX += 0.1f * angleToMouse.cosine
-            velocityY += 0.1f * angleToMouse.sine
             addEffect(Effect.Stun, 250.milliseconds)
         }
+    }
+
+    fun swipeBigAttack() {
+        val projectile = swipeBigProjectilePool.alloc()
+
+        val angle = angleToMouse
+        projectile.sprite.flipY = dir == -1
+        projectile.rotation = angle
+        projectile.globalPosition(globalX, globalY)
+        projectile.enabled = true
+        sprite.playOnce(Assets.heroSwing)
+        addEffect(Effect.Stun, Assets.heroSwing.duration)
     }
 
     fun boneSpearAttack(tx: Float, ty: Float) {
@@ -277,6 +286,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
     fun projectileFinished(projectile: Projectile) {
         when (projectile) {
             is SwipeProjectile -> swipeProjectilePool.free(projectile)
+            is SwipeBigProjectile -> swipeBigProjectilePool.free(projectile)
             is BoneSpearProjectile -> boneSpearProjectile.free(projectile)
             is StabProjectile -> stabProjectilePool.free(projectile)
         }
