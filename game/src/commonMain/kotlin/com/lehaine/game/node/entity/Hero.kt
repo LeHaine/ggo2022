@@ -135,42 +135,15 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
                 orbAttack()
             }
         } else if (!hasEffect(Effect.Stun)) {
-                val movement = controller.vector(GameInput.MOVEMENT)
-                xMoveStrength = movement.x
-                yMoveStrength = movement.y
-                dir = dirToMouse
-            }
+            val movement = controller.vector(GameInput.MOVEMENT)
+            xMoveStrength = movement.x
+            yMoveStrength = movement.y
+            dir = dirToMouse
+        }
 
-        if (controller.down(GameInput.SWING)) {
-            if (!cd.has("attackCD")) {
-                when (attackCombo) {
-                    0 -> {
-                        cd("attackCD", 500.milliseconds) {
-                            attackCombo++
-                        }
-                        swipeAttack()
-                    }
-
-                    1 -> {
-                        cd("attackCD", 750.milliseconds) {
-                            attackCombo++
-                        }
-                        doubleStabAttack()
-                    }
-
-                    2 -> {
-                        cd("attackCD", 1000.milliseconds) {
-                            attackCombo = 0
-                        }
-                        swipeBigAttack()
-                    }
-                }
-
-                cd("swipeCombo", 850.milliseconds) {
-                    attackCombo = 0
-                }
-            }
-
+        if (controller.down(GameInput.SWING) && !cd.has("swipeCD")) {
+            cd("swipeCD", 5.seconds)
+            swipeAttack()
         } else if (controller.pressed(GameInput.SOAR) && !cd.has("soarAttack") && !cd.has("soar")) {
             val angle = angleToMouse
             xMoveStrength = angle.cosine
@@ -186,12 +159,14 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
                 scaleX = 1f
                 scaleY = 1f
             }
-        } else if (controller.pressed(GameInput.HAND_OF_DEATH)) {
+        } else if (controller.pressed(GameInput.HAND_OF_DEATH) && !cd.has("handOfDeathCD")) {
+            cd("handOfDeathCD", 30.seconds)
             performHandOfDeath()
-        } else if (controller.pressed(GameInput.BONE_SPEAR)) {
+        } else if (controller.pressed(GameInput.BONE_SPEAR) && !cd.has("boneSpearCD")) {
             val tcx = (mouseX / Config.GRID_CELL_SIZE).toInt()
             val tcy = (mouseY / Config.GRID_CELL_SIZE).toInt()
             if (castRayTo(tcx, tcy) { cx, cy -> !level.hasCollision(cx, cy) }) {
+                cd("boneSpearCD", 15.seconds)
                 boneSpearAttack(mouseX, mouseY)
             }
         }

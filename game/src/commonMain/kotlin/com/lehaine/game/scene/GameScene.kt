@@ -13,13 +13,12 @@ import com.lehaine.littlekt.file.vfs.readPixmap
 import com.lehaine.littlekt.graph.node.Node
 import com.lehaine.littlekt.graph.node.addTo
 import com.lehaine.littlekt.graph.node.canvasLayer
+import com.lehaine.littlekt.graph.node.component.AlignMode
 import com.lehaine.littlekt.graph.node.component.NinePatchDrawable
 import com.lehaine.littlekt.graph.node.node
 import com.lehaine.littlekt.graph.node.node2d.Node2D
 import com.lehaine.littlekt.graph.node.node2d.node2d
-import com.lehaine.littlekt.graph.node.ui.Control
-import com.lehaine.littlekt.graph.node.ui.control
-import com.lehaine.littlekt.graph.node.ui.panel
+import com.lehaine.littlekt.graph.node.ui.*
 import com.lehaine.littlekt.graphics.Color
 import com.lehaine.littlekt.graphics.Cursor
 import com.lehaine.littlekt.graphics.NinePatch
@@ -34,6 +33,7 @@ import com.lehaine.rune.engine.node.EntityCamera2D
 import com.lehaine.rune.engine.node.entityCamera2D
 import com.lehaine.rune.engine.node.pixelPerfectSlice
 import com.lehaine.rune.engine.node.pixelSmoothFrameBuffer
+import com.lehaine.rune.engine.node.renderable.entity.cd
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 import kotlin.time.Duration
@@ -208,6 +208,74 @@ class GameScene(context: Context) :
                 anchorBottom = 1f
             }
 
+
+            control {
+                anchorTop = 1f
+                anchorRight = 0.5f
+                anchorLeft = 0.5f
+                anchorBottom = 1f
+                marginTop = -40f
+                marginLeft = -100f
+                marginRight = -100f
+
+                ninePatchRect {
+                    texture = Assets.atlas.getByPrefix("uiBarPanel").slice
+                    left = 15
+                    right = 15
+                    top = 14
+                    bottom = 14
+                    minWidth = 200f
+                }
+
+
+                val uiBarItem = Assets.atlas.getByPrefix("uiBarItem").slice
+                hBoxContainer {
+                    separation = 10
+                    align = AlignMode.CENTER
+                    minWidth = 200f
+
+                    repeat(4) {
+                        textureRect {
+                            slice = uiBarItem
+                        }
+                    }
+                }
+
+                hBoxContainer {
+                    separation = 10
+                    align = AlignMode.CENTER
+                    minWidth = 200f
+
+                    textureProgress {
+                        background = Assets.atlas.getByPrefix("uiSwipeIcon").slice
+                        progressBar = Assets.atlas.getByPrefix("uiCooldownBg").slice
+
+                        onUpdate += {
+                            ratio = hero.cd.ratio("swipeCD")
+                        }
+                    }
+                    textureProgress {
+                        background = Assets.atlas.getByPrefix("uiBoneSpearIcon").slice
+                        progressBar = Assets.atlas.getByPrefix("uiCooldownBg").slice
+
+                        onUpdate += {
+                            ratio = hero.cd.ratio("boneSpearCD")
+                        }
+                    }
+                    textureProgress {
+                        background = Assets.atlas.getByPrefix("uiHandOfDeathIcon").slice
+                        progressBar = Assets.atlas.getByPrefix("uiCooldownBg").slice
+
+                        onUpdate += {
+                            ratio = hero.cd.ratio("handOfDeathCD")
+                        }
+                    }
+                    textureProgress {
+                        background = Assets.atlas.getByPrefix("uiLockedIcon").slice
+                        progressBar = Assets.atlas.getByPrefix("uiCooldownBg").slice
+                    }
+                }
+            }
         }
 
         fx.createParticleBatchNodes()
@@ -236,6 +304,9 @@ class GameScene(context: Context) :
 
         if (input.isKeyJustPressed(Key.P)) {
             println(stats)
+        }
+        if (input.isKeyJustPressed(Key.ENTER)) {
+            showDebugInfo = !showDebugInfo
         }
     }
 
