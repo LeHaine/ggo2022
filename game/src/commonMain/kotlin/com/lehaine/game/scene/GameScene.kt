@@ -216,8 +216,8 @@ class GameScene(context: Context) :
                 anchorLeft = 0.5f
                 anchorBottom = 1f
                 marginTop = -40f
-                marginLeft = -100f
-                marginRight = -100f
+                marginLeft = -125f
+                marginRight = -125f
 
                 ninePatchRect {
                     texture = Assets.atlas.getByPrefix("uiBarPanel").slice
@@ -225,7 +225,7 @@ class GameScene(context: Context) :
                     right = 15
                     top = 14
                     bottom = 14
-                    minWidth = 200f
+                    minWidth = 250f
                 }
 
 
@@ -233,9 +233,9 @@ class GameScene(context: Context) :
                 hBoxContainer {
                     separation = 10
                     align = AlignMode.CENTER
-                    minWidth = 200f
+                    minWidth = 250f
 
-                    repeat(4) {
+                    repeat(5) {
                         textureRect {
                             slice = uiBarItem
                         }
@@ -245,8 +245,21 @@ class GameScene(context: Context) :
                 hBoxContainer {
                     separation = 10
                     align = AlignMode.CENTER
-                    minWidth = 200f
+                    minWidth = 250f
 
+                    textureProgress {
+                        background = Assets.atlas.getByPrefix("uiSpiritOrbIcon").slice
+                        progressBar = Assets.atlas.getByPrefix("uiCooldownBg").slice
+
+                        onUpdate += {
+                            ratio = hero.cd.ratio("shootCD")
+                        }
+
+                        textureRect {
+                            slice = Assets.atlas.getByPrefix("uiLmbIcon").slice
+                            y -= slice?.height ?: 0
+                        }
+                    }
 
                     textureProgress {
                         background = Assets.atlas.getByPrefix("uiDashIcon").slice
@@ -294,12 +307,7 @@ class GameScene(context: Context) :
                     textureProgress {
                         background = Assets.atlas.getByPrefix("uiBoneSpearIcon").slice
                         progressBar = Assets.atlas.getByPrefix("uiCooldownBg").slice
-                        onUiInput += {
-                            if (it.type == InputEvent.Type.TOUCH_DOWN) {
-                                hero.attemptBoneSpearAttack()
-                                it.handle()
-                            }
-                        }
+
                         onUpdate += {
                             ratio = hero.cd.ratio("boneSpearCD")
                         }
