@@ -75,7 +75,7 @@ class GameScene(context: Context) :
             pointers = listOf(Pointer.MOUSE_RIGHT)
         )
         controller.addBinding(
-            GameInput.SOAR,
+            GameInput.DASH,
             buttons = listOf(GameButton.XBOX_A),
             keys = listOf(Key.SHIFT_LEFT, Key.SPACE)
         )
@@ -247,6 +247,29 @@ class GameScene(context: Context) :
                     align = AlignMode.CENTER
                     minWidth = 200f
 
+
+                    textureProgress {
+                        background = Assets.atlas.getByPrefix("uiDashIcon").slice
+                        progressBar = Assets.atlas.getByPrefix("uiCooldownBg").slice
+
+
+                        onUiInput += {
+                            if (it.type == InputEvent.Type.TOUCH_DOWN) {
+                                hero.attemptDash()
+                                it.handle()
+                            }
+                        }
+
+                        onUpdate += {
+                            ratio = hero.cd.ratio("dashCD")
+                        }
+
+                        textureRect {
+                            slice = Assets.atlas.getByPrefix("uiShiftSpaceIcon").slice
+                            y -= slice?.height ?: 0
+                        }
+                    }
+
                     textureProgress {
                         background = Assets.atlas.getByPrefix("uiSwipeIcon").slice
                         progressBar = Assets.atlas.getByPrefix("uiCooldownBg").slice
@@ -261,6 +284,12 @@ class GameScene(context: Context) :
                         onUpdate += {
                             ratio = hero.cd.ratio("swipeCD")
                         }
+
+
+                        textureRect {
+                            slice = Assets.atlas.getByPrefix("uiRmbIcon").slice
+                            y -= slice?.height ?: 0
+                        }
                     }
                     textureProgress {
                         background = Assets.atlas.getByPrefix("uiBoneSpearIcon").slice
@@ -273,6 +302,11 @@ class GameScene(context: Context) :
                         }
                         onUpdate += {
                             ratio = hero.cd.ratio("boneSpearCD")
+                        }
+
+                        textureRect {
+                            slice = Assets.atlas.getByPrefix("uiEIcon").slice
+                            y -= slice?.height ?: 0
                         }
                     }
                     textureProgress {
@@ -287,10 +321,11 @@ class GameScene(context: Context) :
                         onUpdate += {
                             ratio = hero.cd.ratio("handOfDeathCD")
                         }
-                    }
-                    textureProgress {
-                        background = Assets.atlas.getByPrefix("uiLockedIcon").slice
-                        progressBar = Assets.atlas.getByPrefix("uiCooldownBg").slice
+
+                        textureRect {
+                            slice = Assets.atlas.getByPrefix("uiQIcon").slice
+                            y -= slice?.height ?: 0
+                        }
                     }
                 }
             }

@@ -105,7 +105,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
         anchorY = data.pivotY
         toGridPosition(data.cx, data.cy)
         sprite.apply {
-            registerState(Assets.heroSoar, 15) { cd.has("soar") }
+            registerState(Assets.heroDash, 15) { cd.has("dash") }
             registerState(Assets.heroWalk, 5) {
                 !velocityX.isFuzzyZero(0.05f) || !velocityY.isFuzzyZero(
                     0.05f
@@ -123,7 +123,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
         super.update(dt)
 
         updateEffects(dt)
-        if (cd.has("soar") || !canMove) return
+        if (cd.has("dash") || !canMove) return
 
         xMoveStrength = 0f
         yMoveStrength = 0f
@@ -144,7 +144,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
         if (controller.down(GameInput.SWING)) {
             attemptSwipeAttack()
         }
-        if (controller.pressed(GameInput.SOAR)) {
+        if (controller.pressed(GameInput.DASH)) {
             attemptDash()
         }
         if (controller.pressed(GameInput.HAND_OF_DEATH)) {
@@ -163,7 +163,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
     }
 
     fun attemptDash() {
-        if (!cd.has("soarAttack") && !cd.has("soar")) {
+        if (!cd.has("dashCD") && !cd.has("dash")) {
             val angle = angleToMouse
             xMoveStrength = angle.cosine
             yMoveStrength = angle.sine
@@ -171,9 +171,9 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
             sprite.color.a = 0.5f
             scaleX = 1.25f
             scaleY = 0.9f
-            cd("soarAttack", 2.seconds)
+            cd("dashCD", 2.seconds)
             addEffect(Effect.Invincible, 350.milliseconds)
-            cd("soar", 250.milliseconds) {
+            cd("dash", 250.milliseconds) {
                 speedMultiplier = 1f
                 scaleX = 1f
                 scaleY = 1f

@@ -17,7 +17,7 @@ enum class GameInput {
 
     SHOOT,
     SWING,
-    SOAR,
+    DASH,
     HAND_OF_DEATH,
     BONE_SPEAR,
 
