@@ -141,10 +141,29 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
             dir = dirToMouse
         }
 
-        if (controller.down(GameInput.SWING) && !cd.has("swipeCD")) {
+        if (controller.down(GameInput.SWING)) {
+            attemptSwipeAttack()
+        }
+        if (controller.pressed(GameInput.SOAR)) {
+            attemptDash()
+        }
+        if (controller.pressed(GameInput.HAND_OF_DEATH)) {
+            attemptHandOfDeath()
+        }
+        if (controller.pressed(GameInput.BONE_SPEAR)) {
+            attemptBoneSpearAttack()
+        }
+    }
+
+    fun attemptSwipeAttack() {
+        if (!cd.has("swipeCD")) {
             cd("swipeCD", 5.seconds)
             swipeAttack()
-        } else if (controller.pressed(GameInput.SOAR) && !cd.has("soarAttack") && !cd.has("soar")) {
+        }
+    }
+
+    fun attemptDash() {
+        if (!cd.has("soarAttack") && !cd.has("soar")) {
             val angle = angleToMouse
             xMoveStrength = angle.cosine
             yMoveStrength = angle.sine
@@ -159,10 +178,18 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
                 scaleX = 1f
                 scaleY = 1f
             }
-        } else if (controller.pressed(GameInput.HAND_OF_DEATH) && !cd.has("handOfDeathCD")) {
+        }
+    }
+
+    fun attemptHandOfDeath() {
+        if (!cd.has("handOfDeathCD")) {
             cd("handOfDeathCD", 30.seconds)
             performHandOfDeath()
-        } else if (controller.pressed(GameInput.BONE_SPEAR) && !cd.has("boneSpearCD")) {
+        }
+    }
+
+    fun attemptBoneSpearAttack() {
+        if (!cd.has("boneSpearCD")) {
             val tcx = (mouseX / Config.GRID_CELL_SIZE).toInt()
             val tcy = (mouseY / Config.GRID_CELL_SIZE).toInt()
             if (castRayTo(tcx, tcy) { cx, cy -> !level.hasCollision(cx, cy) }) {
@@ -197,7 +224,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
         health -= damage
     }
 
-    fun orbAttack() {
+    private fun orbAttack() {
         val angle = angleToMouse
         val projectile = orbProjectilePool.alloc()
         projectile.enabled = true
@@ -205,7 +232,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
         projectile.moveTowardsAngle(angle)
     }
 
-    fun swipeAttack() {
+    private fun swipeAttack() {
         cd("delay", 200.milliseconds) {
             val projectile = swipeProjectilePool.alloc()
             val offset = 20f
@@ -220,7 +247,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
         addEffect(Effect.Stun, Assets.heroSwing.duration)
     }
 
-    fun doubleStabAttack(attackNum: Int = 1) {
+    private fun doubleStabAttack(attackNum: Int = 1) {
         val projectile = stabProjectilePool.alloc()
         val offsetX = (20..40).random()
         val offsetY = (20..40).random()
@@ -238,7 +265,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
         }
     }
 
-    fun swipeBigAttack() {
+    private fun swipeBigAttack() {
         val projectile = swipeBigProjectilePool.alloc()
 
         val angle = angleToMouse

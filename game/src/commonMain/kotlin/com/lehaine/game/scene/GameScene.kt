@@ -14,6 +14,7 @@ import com.lehaine.littlekt.graph.node.Node
 import com.lehaine.littlekt.graph.node.addTo
 import com.lehaine.littlekt.graph.node.canvasLayer
 import com.lehaine.littlekt.graph.node.component.AlignMode
+import com.lehaine.littlekt.graph.node.component.InputEvent
 import com.lehaine.littlekt.graph.node.component.NinePatchDrawable
 import com.lehaine.littlekt.graph.node.node
 import com.lehaine.littlekt.graph.node.node2d.Node2D
@@ -250,6 +251,13 @@ class GameScene(context: Context) :
                         background = Assets.atlas.getByPrefix("uiSwipeIcon").slice
                         progressBar = Assets.atlas.getByPrefix("uiCooldownBg").slice
 
+                        onUiInput += {
+                            if (it.type == InputEvent.Type.TOUCH_DOWN) {
+                                hero.attemptSwipeAttack()
+                                it.handle()
+                            }
+                        }
+
                         onUpdate += {
                             ratio = hero.cd.ratio("swipeCD")
                         }
@@ -257,7 +265,12 @@ class GameScene(context: Context) :
                     textureProgress {
                         background = Assets.atlas.getByPrefix("uiBoneSpearIcon").slice
                         progressBar = Assets.atlas.getByPrefix("uiCooldownBg").slice
-
+                        onUiInput += {
+                            if (it.type == InputEvent.Type.TOUCH_DOWN) {
+                                hero.attemptBoneSpearAttack()
+                                it.handle()
+                            }
+                        }
                         onUpdate += {
                             ratio = hero.cd.ratio("boneSpearCD")
                         }
@@ -265,7 +278,12 @@ class GameScene(context: Context) :
                     textureProgress {
                         background = Assets.atlas.getByPrefix("uiHandOfDeathIcon").slice
                         progressBar = Assets.atlas.getByPrefix("uiCooldownBg").slice
-
+                        onUiInput += {
+                            if (it.type == InputEvent.Type.TOUCH_DOWN) {
+                                hero.attemptHandOfDeath()
+                                it.handle()
+                            }
+                        }
                         onUpdate += {
                             ratio = hero.cd.ratio("handOfDeathCD")
                         }
