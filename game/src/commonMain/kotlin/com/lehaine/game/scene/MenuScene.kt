@@ -21,10 +21,8 @@ class MenuScene(
 
             panelContainer {
                 paddedContainer {
+                    padding(10)
                     paddingTop = 25
-                    paddingLeft = 10
-                    paddingBottom = 10
-                    paddingRight = 10
                     vBoxContainer {
                         separation = 10
 

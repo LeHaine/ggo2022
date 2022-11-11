@@ -7,6 +7,8 @@ import com.lehaine.game.node.entity.SoulCollectible
 import com.lehaine.game.node.entity.hero
 import com.lehaine.game.node.level.TestSpawner
 import com.lehaine.game.node.ui.actionBar
+import com.lehaine.game.node.ui.fadeMask
+import com.lehaine.game.node.ui.upgradesDialog
 import com.lehaine.littlekt.Context
 import com.lehaine.littlekt.async.KtScope
 import com.lehaine.littlekt.file.ldtk.LDtkMapLoader
@@ -15,9 +17,7 @@ import com.lehaine.littlekt.file.vfs.readPixmap
 import com.lehaine.littlekt.graph.node.Node
 import com.lehaine.littlekt.graph.node.addTo
 import com.lehaine.littlekt.graph.node.canvasLayer
-import com.lehaine.littlekt.graph.node.component.AlignMode
 import com.lehaine.littlekt.graph.node.component.HAlign
-import com.lehaine.littlekt.graph.node.component.InputEvent
 import com.lehaine.littlekt.graph.node.component.NinePatchDrawable
 import com.lehaine.littlekt.graph.node.node
 import com.lehaine.littlekt.graph.node.node2d.Node2D
@@ -38,10 +38,11 @@ import com.lehaine.rune.engine.node.EntityCamera2D
 import com.lehaine.rune.engine.node.entityCamera2D
 import com.lehaine.rune.engine.node.pixelPerfectSlice
 import com.lehaine.rune.engine.node.pixelSmoothFrameBuffer
-import com.lehaine.rune.engine.node.renderable.entity.cd
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.seconds
 
 
 class GameScene(context: Context) :
@@ -235,7 +236,12 @@ class GameScene(context: Context) :
             }
 
             actionBar()
+
+            upgradesDialog { levelIdx == 1 }
+
+            fadeMask(delay = 250.milliseconds, fadeTime = 1.seconds)
         }
+
 
         fx.createParticleBatchNodes()
     }

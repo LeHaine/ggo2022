@@ -770,6 +770,27 @@
             }
         },
         {
+            "filename": "fxPixel0",
+            "frame": {
+                "x": 463,
+                "y": 448,
+                "w": 1,
+                "h": 1
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 1,
+                "h": 1
+            },
+            "sourceSize": {
+                "w": 1,
+                "h": 1
+            }
+        },
+        {
             "filename": "fxSmallCircle0",
             "frame": {
                 "x": 373,
