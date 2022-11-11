@@ -6,6 +6,7 @@ import com.lehaine.game.node.entity.Hero
 import com.lehaine.game.node.entity.SoulCollectible
 import com.lehaine.game.node.entity.hero
 import com.lehaine.game.node.level.TestSpawner
+import com.lehaine.game.node.ui.actionBar
 import com.lehaine.littlekt.Context
 import com.lehaine.littlekt.async.KtScope
 import com.lehaine.littlekt.file.ldtk.LDtkMapLoader
@@ -233,135 +234,7 @@ class GameScene(context: Context) :
                 anchorBottom = 1f
             }
 
-
-            control {
-                anchorTop = 1f
-                anchorRight = 0.5f
-                anchorLeft = 0.5f
-                anchorBottom = 1f
-                marginTop = -40f
-                marginLeft = -125f
-                marginRight = -125f
-
-                ninePatchRect {
-                    texture = Assets.atlas.getByPrefix("uiBarPanel").slice
-                    left = 15
-                    right = 15
-                    top = 14
-                    bottom = 14
-                    minWidth = 250f
-                }
-
-
-                val uiBarItem = Assets.atlas.getByPrefix("uiBarItem").slice
-                hBoxContainer {
-                    separation = 10
-                    align = AlignMode.CENTER
-                    minWidth = 250f
-
-                    repeat(5) {
-                        textureRect {
-                            slice = uiBarItem
-                        }
-                    }
-                }
-
-                hBoxContainer {
-                    separation = 10
-                    align = AlignMode.CENTER
-                    minWidth = 250f
-
-                    textureProgress {
-                        background = Assets.atlas.getByPrefix("uiSwipeIcon").slice
-                        progressBar = Assets.atlas.getByPrefix("uiCooldownBg").slice
-
-                        onUiInput += {
-                            if (it.type == InputEvent.Type.TOUCH_DOWN) {
-                                hero.attemptSwipeAttack()
-                                it.handle()
-                            }
-                        }
-
-                        onUpdate += {
-                            ratio = hero.cd.ratio("swipeCD")
-                        }
-
-
-                        textureRect {
-                            slice = Assets.atlas.getByPrefix("uiLmbIcon").slice
-                            y -= slice?.height ?: 0
-                        }
-                    }
-
-                    textureProgress {
-                        background = Assets.atlas.getByPrefix("uiSpiritOrbIcon").slice
-                        progressBar = Assets.atlas.getByPrefix("uiCooldownBg").slice
-
-                        onUpdate += {
-                            ratio = hero.cd.ratio("shootCD")
-                        }
-
-                        textureRect {
-                            slice = Assets.atlas.getByPrefix("uiRmbIcon").slice
-                            y -= slice?.height ?: 0
-                        }
-                    }
-
-                    textureProgress {
-                        background = Assets.atlas.getByPrefix("uiDashIcon").slice
-                        progressBar = Assets.atlas.getByPrefix("uiCooldownBg").slice
-
-
-                        onUiInput += {
-                            if (it.type == InputEvent.Type.TOUCH_DOWN) {
-                                hero.attemptDash()
-                                it.handle()
-                            }
-                        }
-
-                        onUpdate += {
-                            ratio = hero.cd.ratio("dashCD")
-                        }
-
-                        textureRect {
-                            slice = Assets.atlas.getByPrefix("uiShiftSpaceIcon").slice
-                            y -= slice?.height ?: 0
-                        }
-                    }
-
-                    textureProgress {
-                        background = Assets.atlas.getByPrefix("uiBoneSpearIcon").slice
-                        progressBar = Assets.atlas.getByPrefix("uiCooldownBg").slice
-
-                        onUpdate += {
-                            ratio = hero.cd.ratio("boneSpearCD")
-                        }
-
-                        textureRect {
-                            slice = Assets.atlas.getByPrefix("uiEIcon").slice
-                            y -= slice?.height ?: 0
-                        }
-                    }
-                    textureProgress {
-                        background = Assets.atlas.getByPrefix("uiHandOfDeathIcon").slice
-                        progressBar = Assets.atlas.getByPrefix("uiCooldownBg").slice
-                        onUiInput += {
-                            if (it.type == InputEvent.Type.TOUCH_DOWN) {
-                                hero.attemptHandOfDeath()
-                                it.handle()
-                            }
-                        }
-                        onUpdate += {
-                            ratio = hero.cd.ratio("handOfDeathCD")
-                        }
-
-                        textureRect {
-                            slice = Assets.atlas.getByPrefix("uiQIcon").slice
-                            y -= slice?.height ?: 0
-                        }
-                    }
-                }
-            }
+            actionBar()
         }
 
         fx.createParticleBatchNodes()

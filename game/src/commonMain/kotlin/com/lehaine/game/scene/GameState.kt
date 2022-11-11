@@ -6,7 +6,17 @@ package com.lehaine.game.scene
  */
 class GameState {
 
+    var monsterHealthMultiplier = 1f
+    var monsterRespawnMultiplier = 1f
+    var soulCollectibleDropMultiplier = 1f
+    var monsterDamageMultiplier = 1f
+    var monsterSpeedMultiplier = 1f
+
     var quotasFailed = 0
     var soulsCaptured = 0
-    var skillsUnlocked = Array(4) { false }
+
+    var shootingUnlocked = false
+    var dashUnlocked = false
+    var boneSpearUnlocked = false
+    var handOfDeathUnlocked = false
 }

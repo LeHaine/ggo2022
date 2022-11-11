@@ -6,9 +6,11 @@ import com.lehaine.game.GameInput
 import com.lehaine.game.node.controller
 import com.lehaine.game.node.entity.mob.Effect
 import com.lehaine.game.node.entity.mob.Mob
+import com.lehaine.game.node.game
 import com.lehaine.littlekt.graph.node.Node
 import com.lehaine.littlekt.graph.node.addTo
 import com.lehaine.littlekt.graph.node.annotation.SceneGraphDslMarker
+import com.lehaine.littlekt.graph.node.node
 import com.lehaine.littlekt.graph.node.node2d.Node2D
 import com.lehaine.littlekt.graphics.tilemap.ldtk.LDtkEntity
 import com.lehaine.littlekt.math.geom.cosine
@@ -19,26 +21,22 @@ import com.lehaine.littlekt.util.datastructure.Pool
 import com.lehaine.littlekt.util.fastForEach
 import com.lehaine.rune.engine.GameLevel
 import com.lehaine.rune.engine.node.EntityCamera2D
-import com.lehaine.rune.engine.node.renderable.entity.*
+import com.lehaine.rune.engine.node.renderable.entity.ObliqueEntity
+import com.lehaine.rune.engine.node.renderable.entity.castRayTo
+import com.lehaine.rune.engine.node.renderable.entity.cd
+import com.lehaine.rune.engine.node.renderable.entity.toGridPosition
 import com.lehaine.rune.engine.node.renderable.sprite
-import kotlin.contracts.ExperimentalContracts
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
-@OptIn(ExperimentalContracts::class)
 fun Node.hero(
     data: LDtkEntity,
     level: GameLevel<*>,
     camera: EntityCamera2D,
     projectiles: Node2D,
     callback: @SceneGraphDslMarker Hero.() -> Unit = {}
-): Hero {
-    contract { callsInPlace(callback, InvocationKind.EXACTLY_ONCE) }
-    return Hero(data, level, camera, projectiles).also(callback).addTo(this)
-}
+) = node(Hero(data, level, camera, projectiles), callback)
 
 
 /**
@@ -153,6 +151,8 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
     }
 
     fun attemptOrbAttack() {
+        if (!game.state.shootingUnlocked) return
+
         if (!cd.has("shootCD")) {
             cd("shootCD", 3.seconds)
             orbAttack()
@@ -161,6 +161,8 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
     }
 
     fun attemptDash() {
+        if (!game.state.dashUnlocked) return
+
         if (!cd.has("dashCD") && !cd.has("dash")) {
             val angle = angleToMouse
             xMoveStrength = angle.cosine
@@ -181,6 +183,8 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
     }
 
     fun attemptHandOfDeath() {
+        if (!game.state.handOfDeathUnlocked) return
+
         if (!cd.has("handOfDeathCD")) {
             cd("handOfDeathCD", 30.seconds)
             performHandOfDeath()
@@ -188,6 +192,8 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
     }
 
     fun attemptBoneSpearAttack() {
+        if (!game.state.boneSpearUnlocked) return
+
         if (!cd.has("boneSpearCD")) {
             val tcx = (mouseX / Config.GRID_CELL_SIZE).toInt()
             val tcy = (mouseY / Config.GRID_CELL_SIZE).toInt()
