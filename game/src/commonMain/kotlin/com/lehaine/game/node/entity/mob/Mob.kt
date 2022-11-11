@@ -78,6 +78,7 @@ abstract class Mob(val hero: Hero, override val level: Level) : ObliqueEntity(le
             die()
         }
 
+        shadow.globalY = (cy + yr) * Config.GRID_CELL_SIZE - Config.GRID_CELL_SIZE + 2
     }
 
     open fun hit(damage: Int, from: Angle) {

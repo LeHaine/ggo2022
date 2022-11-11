@@ -11,6 +11,7 @@ import com.lehaine.littlekt.math.geom.sine
 import com.lehaine.littlekt.math.random
 import com.lehaine.littlekt.util.datastructure.Pool
 import com.lehaine.rune.engine.node.renderable.entity.*
+import com.lehaine.rune.engine.node.renderable.sprite
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -23,6 +24,12 @@ class SoulCollectible(level: Level) : ObliqueEntity(level, Config.GRID_CELL_SIZE
     private val speed = 0.075f
     private var xMoveStrength = 0f
     private var yMoveStrength = 0f
+
+    private val shadow = sprite {
+        name = "Shadow"
+        slice = Assets.atlas.getByPrefix("shadowXSmall").slice
+        x -= slice?.width?.times(0.5f) ?: 0f
+    }.also { moveChild(it, 0) }
 
     init {
         sprite.slice = Assets.atlas.getByPrefix("soulBlob").slice
@@ -49,12 +56,21 @@ class SoulCollectible(level: Level) : ObliqueEntity(level, Config.GRID_CELL_SIZE
                 pool.free(this)
             }
         }
+
+        shadow.globalY = (cy + yr) * Config.GRID_CELL_SIZE
     }
 
     override fun fixedUpdate() {
         super.fixedUpdate()
         velocityX += speed * xMoveStrength
         velocityY += speed * yMoveStrength
+    }
+
+    override fun onLand() {
+        super.onLand()
+        if (velocityZ <= 0.07f) {
+            velocityZ = 0f
+        }
     }
 
     fun spawn(tx: Float, ty: Float) {

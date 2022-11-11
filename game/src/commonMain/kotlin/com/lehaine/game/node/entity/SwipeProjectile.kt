@@ -20,7 +20,7 @@ class SwipeProjectile(val hero: Hero) : Entity(Config.GRID_CELL_SIZE.toFloat()),
     private var swiped = false
 
 
-    val knockbackPower = 0.1f
+    val knockbackPower = 0.5f
 
     init {
         anchorX = 0.5f
@@ -44,6 +44,7 @@ class SwipeProjectile(val hero: Hero) : Entity(Config.GRID_CELL_SIZE.toFloat()),
                     val angle = hero.angleTo(it)
                     it.velocityX += knockbackPower * angle.cosine
                     it.velocityY += knockbackPower * angle.sine
+                    it.velocityZ += knockbackPower * 0.5f
                 }
             }
         }

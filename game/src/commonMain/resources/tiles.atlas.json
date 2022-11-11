@@ -583,8 +583,8 @@
         {
             "filename": "fxDot0",
             "frame": {
-                "x": 77,
-                "y": 505,
+                "x": 430,
+                "y": 363,
                 "w": 3,
                 "h": 3
             },
@@ -1796,6 +1796,27 @@
             "sourceSize": {
                 "w": 7,
                 "h": 5
+            }
+        },
+        {
+            "filename": "shadowXSmall",
+            "frame": {
+                "x": 77,
+                "y": 505,
+                "w": 4,
+                "h": 3
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 4,
+                "h": 3
+            },
+            "sourceSize": {
+                "w": 4,
+                "h": 3
             }
         },
         {
