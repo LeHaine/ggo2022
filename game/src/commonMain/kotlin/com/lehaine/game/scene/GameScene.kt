@@ -237,7 +237,7 @@ class GameScene(context: Context) :
 
             actionBar()
 
-            upgradesDialog { levelIdx == 1 }
+            upgradesDialog { false }
 
             fadeMask(delay = 250.milliseconds, fadeTime = 1.seconds)
         }
@@ -272,6 +272,13 @@ class GameScene(context: Context) :
         }
         if (input.isKeyJustPressed(Key.ENTER)) {
             showDebugInfo = !showDebugInfo
+        }
+
+        if (input.isKeyPressed(Key.SHIFT_LEFT) && input.isKeyJustPressed(Key.U)) {
+            state.boneSpearUnlocked = true
+            state.dashUnlocked = true
+            state.shootingUnlocked = true
+            state.handOfDeathUnlocked = true
         }
     }
 
