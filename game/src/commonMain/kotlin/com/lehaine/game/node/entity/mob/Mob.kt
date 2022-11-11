@@ -89,6 +89,7 @@ abstract class Mob(val hero: Hero, override val level: Level) : ObliqueEntity(le
         sprite.color.r = 1f
         sprite.color.g = 0f
         sprite.color.b = 0f
+        stretchY = 1.25f
         cd.timeout("hit", 250.milliseconds)
     }
 
