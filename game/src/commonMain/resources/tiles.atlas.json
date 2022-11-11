@@ -1799,6 +1799,27 @@
             }
         },
         {
+            "filename": "soulBlob",
+            "frame": {
+                "x": 519,
+                "y": 286,
+                "w": 4,
+                "h": 5
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 4,
+                "h": 5
+            },
+            "sourceSize": {
+                "w": 4,
+                "h": 5
+            }
+        },
+        {
             "filename": "spiritOrb0",
             "frame": {
                 "x": 620,

@@ -83,11 +83,12 @@ class MeatBall(hero: Hero, level: Level) : Mob(hero, level) {
         cd("shake", 700.milliseconds) {
             hero.camera.shake(100.milliseconds, 2f)
             fx.meatBallExplode(globalX, globalY)
+            spawnDrop()
         }
         addEffect(Effect.Stun, Assets.meatBallHandOfDeath.duration)
         addEffect(Effect.Invincible, Assets.meatBallHandOfDeath.duration)
         cd("stun", Assets.meatBallHandOfDeath.duration) {
-            die()
+            die(false)
         }
     }
 

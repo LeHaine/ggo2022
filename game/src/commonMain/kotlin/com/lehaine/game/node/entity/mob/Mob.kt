@@ -5,9 +5,9 @@ import com.lehaine.game.Config
 import com.lehaine.game.Level
 import com.lehaine.game.node.entity.Effectible
 import com.lehaine.game.node.entity.Hero
+import com.lehaine.game.node.entity.SoulCollectible
 import com.lehaine.littlekt.math.geom.Angle
 import com.lehaine.littlekt.util.signal1v
-import com.lehaine.rune.engine.node.renderable.entity.LevelEntity
 import com.lehaine.rune.engine.node.renderable.entity.ObliqueEntity
 import com.lehaine.rune.engine.node.renderable.entity.cd
 import com.lehaine.rune.engine.node.renderable.entity.toGridPosition
@@ -21,6 +21,9 @@ import kotlin.time.Duration.Companion.milliseconds
  */
 abstract class Mob(val hero: Hero, override val level: Level) : ObliqueEntity(level, Config.GRID_CELL_SIZE.toFloat()),
     Effectible {
+
+    open var minSoulsDrop = 0
+    open var maxSoulsDrop = 10
 
     open var speed = 0.003f
     var speedMul = 1f
@@ -98,19 +101,23 @@ abstract class Mob(val hero: Hero, override val level: Level) : ObliqueEntity(le
 
     fun die(spawnDrop: Boolean = true) {
         if (spawnDrop) {
-            onSpawnDrop()
+            spawnDrop()
         }
         onDeath.emit(this)
         enabled = false
         ALL -= this
         velocityX = 0f
         velocityY = 0f
+
         reset()
     }
 
     abstract fun explode()
-    open fun onSpawnDrop() {
-        // TODO
+    protected fun spawnDrop() {
+        val totalDropped = (minSoulsDrop..maxSoulsDrop).random()
+        repeat(totalDropped) {
+            SoulCollectible.pool.alloc().spawn(globalX, globalY)
+        }
     }
 
     fun teleportToRandomSpotAroundHero() {

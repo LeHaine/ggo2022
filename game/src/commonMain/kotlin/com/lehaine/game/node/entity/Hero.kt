@@ -49,7 +49,6 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
 
     val damage = 5
     private var health = 10f
-    private var attackCombo = 0
 
     private val orbProjectilePool: Pool<OrbProjectile> by lazy {
         Pool(10) {

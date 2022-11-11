@@ -3,6 +3,7 @@ package com.lehaine.game.scene
 import com.lehaine.game.*
 import com.lehaine.game.node.entity.BoneMan
 import com.lehaine.game.node.entity.Hero
+import com.lehaine.game.node.entity.SoulCollectible
 import com.lehaine.game.node.entity.hero
 import com.lehaine.game.node.level.TestSpawner
 import com.lehaine.littlekt.Context
@@ -46,6 +47,9 @@ class GameScene(context: Context) :
         ExtendViewport(Config.VIRTUAL_WIDTH, Config.VIRTUAL_HEIGHT),
         uiInputSignals = createUiGameInputSignals()
     ) {
+
+    val state = GameState()
+
     lateinit var background: Node
     lateinit var fxBackground: Node
     lateinit var main: Node
@@ -167,6 +171,8 @@ class GameScene(context: Context) :
                         }
                     }
 
+                    SoulCollectible.initPool(level, entities)
+
                     projectiles.addTo(this)
 
                     if (ldtkLevel.entitiesByIdentifier.contains("MonsterSpawner")) {
@@ -262,6 +268,28 @@ class GameScene(context: Context) :
                     }
 
                     textureProgress {
+                        background = Assets.atlas.getByPrefix("uiSwipeIcon").slice
+                        progressBar = Assets.atlas.getByPrefix("uiCooldownBg").slice
+
+                        onUiInput += {
+                            if (it.type == InputEvent.Type.TOUCH_DOWN) {
+                                hero.attemptSwipeAttack()
+                                it.handle()
+                            }
+                        }
+
+                        onUpdate += {
+                            ratio = hero.cd.ratio("swipeCD")
+                        }
+
+
+                        textureRect {
+                            slice = Assets.atlas.getByPrefix("uiRmbIcon").slice
+                            y -= slice?.height ?: 0
+                        }
+                    }
+
+                    textureProgress {
                         background = Assets.atlas.getByPrefix("uiDashIcon").slice
                         progressBar = Assets.atlas.getByPrefix("uiCooldownBg").slice
 
@@ -283,27 +311,6 @@ class GameScene(context: Context) :
                         }
                     }
 
-                    textureProgress {
-                        background = Assets.atlas.getByPrefix("uiSwipeIcon").slice
-                        progressBar = Assets.atlas.getByPrefix("uiCooldownBg").slice
-
-                        onUiInput += {
-                            if (it.type == InputEvent.Type.TOUCH_DOWN) {
-                                hero.attemptSwipeAttack()
-                                it.handle()
-                            }
-                        }
-
-                        onUpdate += {
-                            ratio = hero.cd.ratio("swipeCD")
-                        }
-
-
-                        textureRect {
-                            slice = Assets.atlas.getByPrefix("uiRmbIcon").slice
-                            y -= slice?.height ?: 0
-                        }
-                    }
                     textureProgress {
                         background = Assets.atlas.getByPrefix("uiBoneSpearIcon").slice
                         progressBar = Assets.atlas.getByPrefix("uiCooldownBg").slice
