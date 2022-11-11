@@ -75,6 +75,11 @@ class GameScene(context: Context) :
 
         controller.addBinding(
             GameInput.SWING,
+            buttons = listOf(GameButton.RIGHT_TRIGGER),
+            pointers = listOf(Pointer.MOUSE_LEFT)
+        )
+        controller.addBinding(
+            GameInput.SHOOT,
             buttons = listOf(GameButton.XBOX_X),
             pointers = listOf(Pointer.MOUSE_RIGHT)
         )
@@ -92,11 +97,6 @@ class GameScene(context: Context) :
             GameInput.BONE_SPEAR,
             buttons = listOf(GameButton.XBOX_B),
             keys = listOf(Key.E)
-        )
-        controller.addBinding(
-            GameInput.SHOOT,
-            buttons = listOf(GameButton.RIGHT_TRIGGER),
-            pointers = listOf(Pointer.MOUSE_LEFT)
         )
 
         controller.addAxis(GameInput.HORIZONTAL, GameInput.MOVE_RIGHT, GameInput.MOVE_LEFT)
@@ -254,20 +254,6 @@ class GameScene(context: Context) :
                     minWidth = 250f
 
                     textureProgress {
-                        background = Assets.atlas.getByPrefix("uiSpiritOrbIcon").slice
-                        progressBar = Assets.atlas.getByPrefix("uiCooldownBg").slice
-
-                        onUpdate += {
-                            ratio = hero.cd.ratio("shootCD")
-                        }
-
-                        textureRect {
-                            slice = Assets.atlas.getByPrefix("uiLmbIcon").slice
-                            y -= slice?.height ?: 0
-                        }
-                    }
-
-                    textureProgress {
                         background = Assets.atlas.getByPrefix("uiSwipeIcon").slice
                         progressBar = Assets.atlas.getByPrefix("uiCooldownBg").slice
 
@@ -282,6 +268,20 @@ class GameScene(context: Context) :
                             ratio = hero.cd.ratio("swipeCD")
                         }
 
+
+                        textureRect {
+                            slice = Assets.atlas.getByPrefix("uiLmbIcon").slice
+                            y -= slice?.height ?: 0
+                        }
+                    }
+
+                    textureProgress {
+                        background = Assets.atlas.getByPrefix("uiSpiritOrbIcon").slice
+                        progressBar = Assets.atlas.getByPrefix("uiCooldownBg").slice
+
+                        onUpdate += {
+                            ratio = hero.cd.ratio("shootCD")
+                        }
 
                         textureRect {
                             slice = Assets.atlas.getByPrefix("uiRmbIcon").slice

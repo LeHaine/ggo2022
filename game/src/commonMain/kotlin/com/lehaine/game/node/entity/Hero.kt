@@ -60,17 +60,6 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
             SwipeProjectile(this).apply { enabled = false }.addTo(projectiles)
         }
     }
-    private val swipeBigProjectilePool: Pool<SwipeBigProjectile> by lazy {
-        Pool(1) {
-            SwipeBigProjectile(this).apply { enabled = false }.addTo(projectiles)
-        }
-    }
-
-    private val stabProjectilePool: Pool<StabProjectile> by lazy {
-        Pool(2) {
-            StabProjectile(this).apply { enabled = false }.addTo(projectiles)
-        }
-    }
 
     private val boneSpearProjectile: Pool<BoneSpearProjectile> by lazy {
         Pool(1) {
@@ -127,6 +116,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
         xMoveStrength = 0f
         yMoveStrength = 0f
 
+        dir = dirToMouse
 
         if (controller.down(GameInput.SHOOT)) {
             if (!cd.has("shootCD")) {
@@ -137,7 +127,6 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
             val movement = controller.vector(GameInput.MOVEMENT)
             xMoveStrength = movement.x
             yMoveStrength = movement.y
-            dir = dirToMouse
         }
 
         if (controller.down(GameInput.SWING)) {
@@ -156,7 +145,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
 
     fun attemptSwipeAttack() {
         if (!cd.has("swipeCD")) {
-            cd("swipeCD", 5.seconds)
+            cd("swipeCD", (750.1100).milliseconds)
             swipeAttack()
         }
     }
@@ -246,36 +235,6 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
         addEffect(Effect.Stun, Assets.heroSwing.duration)
     }
 
-    private fun doubleStabAttack(attackNum: Int = 1) {
-        val projectile = stabProjectilePool.alloc()
-        val offsetX = (20..40).random()
-        val offsetY = (20..40).random()
-
-        val angle = angleToMouse
-        projectile.sprite.flipY = dir == -1
-        projectile.rotation = angle
-        projectile.globalPosition(globalX + offsetX * angle.cosine, globalY + offsetY * angle.sine)
-        projectile.enabled = true
-        if (attackNum == 1) {
-            cd("doubleStabDelay", 250.milliseconds) {
-                doubleStabAttack(2)
-            }
-            addEffect(Effect.Stun, 250.milliseconds)
-        }
-    }
-
-    private fun swipeBigAttack() {
-        val projectile = swipeBigProjectilePool.alloc()
-
-        val angle = angleToMouse
-        projectile.sprite.flipY = dir == -1
-        projectile.rotation = angle
-        projectile.globalPosition(globalX, globalY)
-        projectile.enabled = true
-        sprite.playOnce(Assets.heroSwing)
-        addEffect(Effect.Stun, Assets.heroSwing.duration)
-    }
-
     fun boneSpearAttack(tx: Float, ty: Float) {
         val projectile = boneSpearProjectile.alloc()
         projectile.globalX = tx
@@ -305,9 +264,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
     fun projectileFinished(projectile: Projectile) {
         when (projectile) {
             is SwipeProjectile -> swipeProjectilePool.free(projectile)
-            is SwipeBigProjectile -> swipeBigProjectilePool.free(projectile)
             is BoneSpearProjectile -> boneSpearProjectile.free(projectile)
-            is StabProjectile -> stabProjectilePool.free(projectile)
         }
     }
 

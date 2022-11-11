@@ -25,15 +25,16 @@ class SwipeProjectile(val hero: Hero) : Entity(Config.GRID_CELL_SIZE.toFloat()),
     init {
         anchorX = 0.5f
         anchorY = 0.5f
-        width = 64f
-        height = 64f
+        width = 48f
+        height = 48f
     }
 
     override fun update(dt: Duration) {
         super.update(dt)
         if (!swiped) {
-            sprite.playOnce(Assets.swipeAttack1)
-            cd("swipe", Assets.swipeAttack1.duration)
+            val swipeAnim = swipeAttacks.random()
+            sprite.playOnce(swipeAnim)
+            cd("swipe", swipeAnim.duration)
             swiped = true
             Mob.ALL.fastForEach {
                 val dist = outerRadius + it.outerRadius
@@ -53,5 +54,9 @@ class SwipeProjectile(val hero: Hero) : Entity(Config.GRID_CELL_SIZE.toFloat()),
             enabled = false
             hero.projectileFinished(this)
         }
+    }
+
+    companion object {
+        private val swipeAttacks by lazy {  listOf(Assets.swipeAttack1, Assets.swipeAttack2, Assets.swipeAttack3) }
     }
 }

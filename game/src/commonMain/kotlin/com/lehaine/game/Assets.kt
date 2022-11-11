@@ -33,8 +33,8 @@ class Assets private constructor(context: Context) : Disposable {
     private val heroSwing by assets.prepare { atlas.getAnimation("heroSwing") }
 
     private val swipeAttack1 by assets.prepare { atlas.getAnimation("swipeAttack1", 75.milliseconds) }
-    private val swipeBigAttack1 by assets.prepare { atlas.getAnimation("swipeBigAttack1", 250.milliseconds) }
-    private val stabAttack1 by assets.prepare { atlas.getAnimation("stabAttack1", 75.milliseconds) }
+    private val swipeAttack2 by assets.prepare { atlas.getAnimation("swipeAttack2", 75.milliseconds) }
+    private val swipeAttack3 by assets.prepare { atlas.getAnimation("swipeAttack3", 75.milliseconds) }
     private val boneSpearAttack by assets.prepare { atlas.getAnimation("boneSpearAttack", 75.milliseconds) }
 
     private val meatBallStandUp by assets.prepare { atlas.getAnimation("meatBallStandUp") }
@@ -103,8 +103,8 @@ class Assets private constructor(context: Context) : Disposable {
         val heroSwing: Animation<TextureSlice> get() = INSTANCE.heroSwing
 
         val swipeAttack1: Animation<TextureSlice> get() = INSTANCE.swipeAttack1
-        val swipeBigAttack1: Animation<TextureSlice> get() = INSTANCE.swipeBigAttack1
-        val stabAttack1: Animation<TextureSlice> get() = INSTANCE.stabAttack1
+        val swipeAttack2: Animation<TextureSlice> get() = INSTANCE.swipeAttack2
+        val swipeAttack3: Animation<TextureSlice> get() = INSTANCE.swipeAttack3
         val boneSpearAttack: Animation<TextureSlice> get() = INSTANCE.boneSpearAttack
 
         val meatBallStandUp: Animation<TextureSlice> get() = INSTANCE.meatBallStandUp
