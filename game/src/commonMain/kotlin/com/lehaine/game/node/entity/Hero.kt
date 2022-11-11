@@ -122,9 +122,13 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
 
         if (controller.down(GameInput.SWING)) {
             attemptSwipeAttack()
-        } else if (controller.down(GameInput.SHOOT)) {
+        }
+
+        if (controller.down(GameInput.SHOOT)) {
             attemptOrbAttack()
-        } else if (!hasEffect(Effect.Stun)) {
+        }
+
+        if (!controller.down(GameInput.SWING) && !controller.down(GameInput.SHOOT) && !hasEffect(Effect.Stun)) {
             val movement = controller.vector(GameInput.MOVEMENT)
             xMoveStrength = movement.x
             yMoveStrength = movement.y

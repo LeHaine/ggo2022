@@ -15,6 +15,7 @@ import com.lehaine.littlekt.graph.node.Node
 import com.lehaine.littlekt.graph.node.addTo
 import com.lehaine.littlekt.graph.node.canvasLayer
 import com.lehaine.littlekt.graph.node.component.AlignMode
+import com.lehaine.littlekt.graph.node.component.HAlign
 import com.lehaine.littlekt.graph.node.component.InputEvent
 import com.lehaine.littlekt.graph.node.component.NinePatchDrawable
 import com.lehaine.littlekt.graph.node.node
@@ -29,6 +30,7 @@ import com.lehaine.littlekt.input.GameAxis
 import com.lehaine.littlekt.input.GameButton
 import com.lehaine.littlekt.input.Key
 import com.lehaine.littlekt.input.Pointer
+import com.lehaine.littlekt.util.toString
 import com.lehaine.littlekt.util.viewport.ExtendViewport
 import com.lehaine.rune.engine.RuneScene
 import com.lehaine.rune.engine.node.EntityCamera2D
@@ -207,6 +209,22 @@ class GameScene(context: Context) :
             name = "UI"
             anchorRight = 1f
             anchorBottom = 1f
+
+            paddedContainer {
+                padding(10)
+                paddingTop = 20
+                anchor(Control.AnchorLayout.TOP_RIGHT)
+                label {
+                    horizontalAlign = HAlign.RIGHT
+                    onUpdate += {
+                        text = if (showDebugInfo) {
+                            stats.fps.toString(1)
+                        } else {
+                            ""
+                        }
+                    }
+                }
+            }
             panel {
                 name = "Border"
                 val border9p = NinePatch(Assets.atlas.getByPrefix("uiArenaBorder").slice, 16, 16, 15, 15)

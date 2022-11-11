@@ -21,7 +21,7 @@ import kotlin.time.Duration.Companion.milliseconds
  */
 class OrbProjectile(val hero: Hero, level: GameLevel<*>) : ObliqueEntity(level, Config.GRID_CELL_SIZE.toFloat()),
     Projectile {
-    private val speed = 0.25f
+    private val speed = 0.6f
     private val knockbackPower = 0.1f
     private var attacked = false
 
