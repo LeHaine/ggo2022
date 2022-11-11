@@ -12,6 +12,7 @@ import com.lehaine.littlekt.graph.node.annotation.SceneGraphDslMarker
 import com.lehaine.littlekt.graph.node.node2d.Node2D
 import com.lehaine.littlekt.graphics.tilemap.ldtk.LDtkEntity
 import com.lehaine.littlekt.math.geom.cosine
+import com.lehaine.littlekt.math.geom.degrees
 import com.lehaine.littlekt.math.geom.sine
 import com.lehaine.littlekt.math.isFuzzyZero
 import com.lehaine.littlekt.util.datastructure.Pool
@@ -118,20 +119,17 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
 
         dir = dirToMouse
 
-        if (controller.down(GameInput.SHOOT)) {
-            if (!cd.has("shootCD")) {
-                cd("shootCD", 250.milliseconds)
-                orbAttack()
-            }
+
+        if (controller.down(GameInput.SWING)) {
+            attemptSwipeAttack()
+        } else if (controller.down(GameInput.SHOOT)) {
+            attemptOrbAttack()
         } else if (!hasEffect(Effect.Stun)) {
             val movement = controller.vector(GameInput.MOVEMENT)
             xMoveStrength = movement.x
             yMoveStrength = movement.y
         }
 
-        if (controller.down(GameInput.SWING)) {
-            attemptSwipeAttack()
-        }
         if (controller.pressed(GameInput.DASH)) {
             attemptDash()
         }
@@ -150,6 +148,14 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
         }
     }
 
+    fun attemptOrbAttack() {
+        if (!cd.has("shootCD")) {
+            cd("shootCD", 3.seconds)
+            orbAttack()
+            camera.shake(100.milliseconds, 0.5f)
+        }
+    }
+
     fun attemptDash() {
         if (!cd.has("dashCD") && !cd.has("dash")) {
             val angle = angleToMouse
@@ -159,7 +165,8 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
             sprite.color.a = 0.5f
             scaleX = 1.25f
             scaleY = 0.9f
-            cd("dashCD", 2.seconds)
+            camera.shake(50.milliseconds, 0.5f)
+            cd("dashCD", 1.seconds)
             addEffect(Effect.Invincible, 350.milliseconds)
             cd("dash", 250.milliseconds) {
                 speedMultiplier = 1f
@@ -213,11 +220,20 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
     }
 
     private fun orbAttack() {
-        val angle = angleToMouse
-        val projectile = orbProjectilePool.alloc()
-        projectile.enabled = true
-        projectile.globalPosition(centerX + 10f * angle.cosine, centerY + 10f * angle.sine)
-        projectile.moveTowardsAngle(angle)
+        val straightAngle = angleToMouse
+
+        val straightProjectile = orbProjectilePool.alloc()
+        straightProjectile.enabled = true
+        straightProjectile.globalPosition(centerX + 10f * straightAngle.cosine, centerY + 10f * straightAngle.sine)
+        straightProjectile.moveTowardsAngle(straightAngle)
+
+        repeat(2) {
+            val sideAngle = angleToMouse + 20.degrees * if (it % 2 == 0) 1 else -1
+            val sideProjectile = orbProjectilePool.alloc()
+            sideProjectile.enabled = true
+            sideProjectile.globalPosition(centerX + 10f * sideAngle.cosine, centerY + 10f * sideAngle.sine)
+            sideProjectile.moveTowardsAngle(sideAngle)
+        }
     }
 
     private fun swipeAttack() {
@@ -232,7 +248,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
             projectile.enabled = true
         }
         sprite.playOnce(Assets.heroSwing)
-        addEffect(Effect.Stun, Assets.heroSwing.duration)
+        addEffect(Effect.Stun, 300.milliseconds)
     }
 
     fun boneSpearAttack(tx: Float, ty: Float) {

@@ -11,6 +11,7 @@ import com.lehaine.rune.engine.node.renderable.entity.Entity
 import com.lehaine.rune.engine.node.renderable.entity.angleTo
 import com.lehaine.rune.engine.node.renderable.entity.cd
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
 
 /**
  * @author Colton Daily
@@ -46,6 +47,7 @@ class SwipeProjectile(val hero: Hero) : Entity(Config.GRID_CELL_SIZE.toFloat()),
                     it.velocityX += knockbackPower * angle.cosine
                     it.velocityY += knockbackPower * angle.sine
                     it.velocityZ += knockbackPower * 0.5f
+                    hero.camera.shake(100.milliseconds, 0.5f)
                 }
             }
         }
@@ -57,6 +59,6 @@ class SwipeProjectile(val hero: Hero) : Entity(Config.GRID_CELL_SIZE.toFloat()),
     }
 
     companion object {
-        private val swipeAttacks by lazy {  listOf(Assets.swipeAttack1, Assets.swipeAttack2, Assets.swipeAttack3) }
+        private val swipeAttacks by lazy { listOf(Assets.swipeAttack1, Assets.swipeAttack2, Assets.swipeAttack3) }
     }
 }
