@@ -5,9 +5,10 @@ import com.lehaine.littlekt.graphics.Color
 
 fun main() {
     createLittleKtApp {
-        width = 960
-        height = 800
+        width = 1000
+        height = 900
         backgroundColor = Color.DARK_GRAY
+        resizeable = false
         title = "Glutton for Punishment"
     }.start {
         GameCore(it)

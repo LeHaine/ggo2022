@@ -9,6 +9,7 @@ import com.lehaine.game.node.entity.SoulCollectible
 import com.lehaine.littlekt.math.geom.Angle
 import com.lehaine.littlekt.util.signal1v
 import com.lehaine.rune.engine.node.renderable.entity.ObliqueEntity
+import com.lehaine.rune.engine.node.renderable.entity.angleTo
 import com.lehaine.rune.engine.node.renderable.entity.cd
 import com.lehaine.rune.engine.node.renderable.entity.toGridPosition
 import com.lehaine.rune.engine.node.renderable.sprite
@@ -30,7 +31,6 @@ abstract class Mob(val hero: Hero, override val level: Level) : ObliqueEntity(le
     open val baseHealth = 10
     var health = 10
     open val baseDamage = 1f
-    var damage = 0f
     var avoidOtherMobs = true
 
     val onDeath = signal1v<Mob>()
@@ -49,7 +49,7 @@ abstract class Mob(val hero: Hero, override val level: Level) : ObliqueEntity(le
     override fun update(dt: Duration) {
         super.update(dt)
         if (isCollidingWithInnerCircle(hero) && !cd.has("damageCooldown")) {
-            hero.hit(damage)
+            hero.hit(angleTo(hero))
             cd.timeout("damageCooldown", 100.milliseconds)
         }
         if (cd.has("hit")) {
@@ -141,7 +141,6 @@ abstract class Mob(val hero: Hero, override val level: Level) : ObliqueEntity(le
 
     open fun reset() {
         health = baseHealth
-        damage = baseDamage
         globalScaleX = 1f
         globalScaleY = 1f
     }

@@ -562,8 +562,8 @@
         {
             "filename": "fxCircle0",
             "frame": {
-                "x": 611,
-                "y": 279,
+                "x": 612,
+                "y": 349,
                 "w": 16,
                 "h": 16
             },
@@ -583,8 +583,8 @@
         {
             "filename": "fxDot0",
             "frame": {
-                "x": 53,
-                "y": 505,
+                "x": 606,
+                "y": 202,
                 "w": 3,
                 "h": 3
             },
@@ -935,6 +935,90 @@
             "sourceSize": {
                 "w": 33,
                 "h": 11
+            }
+        },
+        {
+            "filename": "heartBeating0",
+            "frame": {
+                "x": 571,
+                "y": 452,
+                "w": 19,
+                "h": 17
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 1,
+                "y": 1,
+                "w": 19,
+                "h": 17
+            },
+            "sourceSize": {
+                "w": 21,
+                "h": 19
+            }
+        },
+        {
+            "filename": "heartBeating1",
+            "frame": {
+                "x": 579,
+                "y": 211,
+                "w": 20,
+                "h": 18
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 20,
+                "h": 18
+            },
+            "sourceSize": {
+                "w": 21,
+                "h": 19
+            }
+        },
+        {
+            "filename": "heartBeating2",
+            "frame": {
+                "x": 605,
+                "y": 211,
+                "w": 20,
+                "h": 18
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 1,
+                "y": 0,
+                "w": 20,
+                "h": 18
+            },
+            "sourceSize": {
+                "w": 21,
+                "h": 19
+            }
+        },
+        {
+            "filename": "heartDead0",
+            "frame": {
+                "x": 606,
+                "y": 179,
+                "w": 19,
+                "h": 17
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 1,
+                "y": 1,
+                "w": 19,
+                "h": 17
+            },
+            "sourceSize": {
+                "w": 21,
+                "h": 19
             }
         },
         {
@@ -1297,8 +1381,8 @@
         {
             "filename": "heroSwing4",
             "frame": {
-                "x": 604,
-                "y": 233,
+                "x": 611,
+                "y": 303,
                 "w": 14,
                 "h": 17
             },
@@ -1612,8 +1696,8 @@
         {
             "filename": "meatBallSitting0",
             "frame": {
-                "x": 571,
-                "y": 452,
+                "x": 579,
+                "y": 235,
                 "w": 19,
                 "h": 15
             },
@@ -1633,8 +1717,8 @@
         {
             "filename": "meatBallSitting1",
             "frame": {
-                "x": 579,
-                "y": 211,
+                "x": 604,
+                "y": 235,
                 "w": 19,
                 "h": 16
             },
@@ -1654,8 +1738,8 @@
         {
             "filename": "meatBallStandUp0",
             "frame": {
-                "x": 571,
-                "y": 452,
+                "x": 579,
+                "y": 235,
                 "w": 19,
                 "h": 15
             },
@@ -1675,8 +1759,8 @@
         {
             "filename": "meatBallStandUp1",
             "frame": {
-                "x": 579,
-                "y": 233,
+                "x": 605,
+                "y": 257,
                 "w": 19,
                 "h": 15
             },
@@ -1696,8 +1780,8 @@
         {
             "filename": "meatBallStandUp2",
             "frame": {
-                "x": 604,
-                "y": 211,
+                "x": 629,
+                "y": 235,
                 "w": 19,
                 "h": 16
             },
@@ -1717,8 +1801,8 @@
         {
             "filename": "meatBallStandUp3",
             "frame": {
-                "x": 606,
-                "y": 179,
+                "x": 611,
+                "y": 278,
                 "w": 19,
                 "h": 19
             },
@@ -2011,8 +2095,8 @@
         {
             "filename": "swipeAttack16",
             "frame": {
-                "x": 605,
-                "y": 256,
+                "x": 612,
+                "y": 326,
                 "w": 13,
                 "h": 17
             },
@@ -2179,8 +2263,8 @@
         {
             "filename": "swipeAttack26",
             "frame": {
-                "x": 611,
-                "y": 301,
+                "x": 630,
+                "y": 257,
                 "w": 14,
                 "h": 15
             },
@@ -2515,8 +2599,8 @@
         {
             "filename": "uiEIcon",
             "frame": {
-                "x": 427,
-                "y": 494,
+                "x": 612,
+                "y": 371,
                 "w": 12,
                 "h": 12
             },
@@ -2557,8 +2641,8 @@
         {
             "filename": "uiLmbIcon",
             "frame": {
-                "x": 611,
-                "y": 322,
+                "x": 406,
+                "y": 494,
                 "w": 15,
                 "h": 12
             },
@@ -2662,7 +2746,7 @@
         {
             "filename": "uiRmbIcon",
             "frame": {
-                "x": 406,
+                "x": 427,
                 "y": 494,
                 "w": 15,
                 "h": 12

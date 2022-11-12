@@ -38,6 +38,8 @@ class SoulCollectible(level: Level) : ObliqueEntity(level, Config.GRID_CELL_SIZE
     override fun update(dt: Duration) {
         super.update(dt)
 
+        shadow.globalY = (cy + yr) * Config.GRID_CELL_SIZE
+
         if (cd.has("delay")) return
 
         xMoveStrength = 0f
@@ -57,7 +59,6 @@ class SoulCollectible(level: Level) : ObliqueEntity(level, Config.GRID_CELL_SIZE
             }
         }
 
-        shadow.globalY = (cy + yr) * Config.GRID_CELL_SIZE
     }
 
     override fun fixedUpdate() {

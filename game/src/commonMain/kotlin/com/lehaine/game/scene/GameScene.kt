@@ -23,9 +23,7 @@ import com.lehaine.littlekt.graph.node.node
 import com.lehaine.littlekt.graph.node.node2d.Node2D
 import com.lehaine.littlekt.graph.node.node2d.node2d
 import com.lehaine.littlekt.graph.node.ui.*
-import com.lehaine.littlekt.graphics.Color
-import com.lehaine.littlekt.graphics.Cursor
-import com.lehaine.littlekt.graphics.NinePatch
+import com.lehaine.littlekt.graphics.*
 import com.lehaine.littlekt.graphics.tilemap.ldtk.LDtkLevel
 import com.lehaine.littlekt.input.GameAxis
 import com.lehaine.littlekt.input.GameButton
@@ -38,6 +36,7 @@ import com.lehaine.rune.engine.node.EntityCamera2D
 import com.lehaine.rune.engine.node.entityCamera2D
 import com.lehaine.rune.engine.node.pixelPerfectSlice
 import com.lehaine.rune.engine.node.pixelSmoothFrameBuffer
+import com.lehaine.rune.engine.node.renderable.animatedSprite
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 import kotlin.time.Duration
@@ -143,7 +142,6 @@ class GameScene(context: Context) :
                     camera = canvasCamera
                 }
 
-
                 background = node {
                     name = "Background"
 
@@ -204,7 +202,6 @@ class GameScene(context: Context) :
                     scaledDistY = entityCamera.scaledDistY
                 }
             }
-
         }
 
         ui = control {
@@ -236,6 +233,24 @@ class GameScene(context: Context) :
             }
 
             actionBar()
+
+            vBoxContainer {
+                marginLeft = 15f
+                marginTop = 25f
+                separation = 30
+                val deadHeart = Assets.atlas.getAnimation("heartDead")
+                repeat(4) {
+                    control {
+                        animatedSprite {
+                            val idx = it
+                            onReady += {
+                                registerState(Assets.heartBeating, priority = 5) { hero.health >= idx - 1 }
+                                registerState(deadHeart, 0)
+                            }
+                        }
+                    }
+                }
+            }
 
             upgradesDialog { false }
 

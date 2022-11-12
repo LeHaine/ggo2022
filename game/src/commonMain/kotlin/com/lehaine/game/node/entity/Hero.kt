@@ -13,6 +13,7 @@ import com.lehaine.littlekt.graph.node.annotation.SceneGraphDslMarker
 import com.lehaine.littlekt.graph.node.node
 import com.lehaine.littlekt.graph.node.node2d.Node2D
 import com.lehaine.littlekt.graphics.tilemap.ldtk.LDtkEntity
+import com.lehaine.littlekt.math.geom.Angle
 import com.lehaine.littlekt.math.geom.cosine
 import com.lehaine.littlekt.math.geom.degrees
 import com.lehaine.littlekt.math.geom.sine
@@ -47,7 +48,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
     ObliqueEntity(level, Config.GRID_CELL_SIZE.toFloat()), Effectible {
 
     val damage = 5
-    private var health = 10f
+    var health = 4
 
     private val orbProjectilePool: Pool<OrbProjectile> by lazy {
         Pool(10) {
@@ -108,15 +109,23 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
 
     override fun update(dt: Duration) {
         super.update(dt)
+        shadow.globalY = (cy + yr) * Config.GRID_CELL_SIZE - Config.GRID_CELL_SIZE + 2
 
         updateEffects(dt)
+
+        if (cd.has("hit")) {
+            val hitRatio = 1f - cd.ratio("hit")
+            sprite.color.r = 1f
+            sprite.color.g = hitRatio
+            sprite.color.b = hitRatio
+        }
+
         if (cd.has("dash") || !canMove) return
 
         xMoveStrength = 0f
         yMoveStrength = 0f
 
         dir = dirToMouse
-
 
         if (controller.down(GameInput.SWING)) {
             attemptSwipeAttack()
@@ -224,9 +233,18 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
         velocityY += speed * speedMultiplier * yMoveStrength
     }
 
-    fun hit(damage: Float) {
+    fun hit(from: Angle) {
         if (hasEffect(Effect.Invincible)) return
-        health -= damage
+        health--
+        addEffect(Effect.Invincible, 2.seconds)
+        velocityX += 0.25f * from.cosine
+        velocityY += 0.25f * from.sine
+        velocityZ += 0.25f
+        sprite.color.r = 1f
+        sprite.color.g = 0f
+        sprite.color.b = 0f
+        stretchY = 1.25f
+        cd.timeout("hit", 250.milliseconds)
     }
 
     private fun orbAttack() {
