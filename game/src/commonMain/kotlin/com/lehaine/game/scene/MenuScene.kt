@@ -17,6 +17,7 @@ class MenuScene(
     context: Context
 ) : RuneSceneDefault(context, ExtendViewport(Config.VIRTUAL_WIDTH, Config.VIRTUAL_HEIGHT)) {
 
+    private var switchingScenes = false
     override suspend fun Node.initialize() {
         centerContainer {
             anchorRight = 1f
@@ -38,12 +39,11 @@ class MenuScene(
                         }
 
                         button {
-                            var startingGame = false
                             text = "Start Game"
 
                             onPressed += {
-                                if (!startingGame) {
-                                    startingGame = true
+                                if (!switchingScenes) {
+                                    switchingScenes = true
                                     changeTo(GameScene(context))
                                 }
                             }
@@ -51,6 +51,12 @@ class MenuScene(
 
                         button {
                             text = "Settings"
+                            onPressed += {
+                                if (!switchingScenes) {
+                                    switchingScenes = true
+                                    changeTo(SettingsScene(context))
+                                }
+                            }
                         }
                     }
                 }

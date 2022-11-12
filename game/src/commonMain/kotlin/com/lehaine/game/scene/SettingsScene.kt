@@ -1,6 +1,5 @@
 package com.lehaine.game.scene
 
-import com.lehaine.game.Assets
 import com.lehaine.game.Config
 import com.lehaine.game.node.ui.fadeMask
 import com.lehaine.littlekt.Context
@@ -17,11 +16,12 @@ import kotlin.time.Duration.Companion.seconds
  * @author Colton Daily
  * @date 11/11/2022
  */
-class KeyboardSelectScene(
+class SettingsScene(
     context: Context
 ) : RuneSceneDefault(context, ExtendViewport(Config.VIRTUAL_WIDTH, Config.VIRTUAL_HEIGHT)) {
 
     private var switchingScenes = false
+
     override suspend fun Node.initialize() {
         centerContainer {
             anchorRight = 1f
@@ -32,32 +32,49 @@ class KeyboardSelectScene(
                     padding(10)
                     vBoxContainer {
                         separation = 10
-                        align = AlignMode.CENTER
                         label {
-                            text = "Select your keyboard type\nor update in settings later:"
-                            font = Assets.pixelFont
+                            text = "Settings"
                             horizontalAlign = HAlign.CENTER
                         }
 
+                        label {
+                            text = "Keyboard Type:"
+                        }
                         hBoxContainer {
                             separation = 10
                             align = AlignMode.CENTER
+
+                            val keyboardButtonGroup = ButtonGroup()
                             button {
                                 text = "QWERTY"
-
-                                onReady += {
-                                    requestFocus(this)
-                                }
+                                toggleMode = true
+                                buttonGroup = keyboardButtonGroup
+                                buttonGroup.buttons += this
+                                pressed = Config.keyboardType == Config.KeyboardType.QWERTY
                                 onPressed += {
-                                    selectKeyboard(Config.KeyboardType.QWERTY)
+                                    Config.keyboardType = Config.KeyboardType.QWERTY
                                 }
                             }
 
                             button {
                                 text = "AZERTY"
-
+                                toggleMode = true
+                                pressed = Config.keyboardType == Config.KeyboardType.AZERTY
+                                buttonGroup = keyboardButtonGroup
+                                buttonGroup.buttons += this
+                                pressed = Config.keyboardType == Config.KeyboardType.AZERTY
                                 onPressed += {
-                                    selectKeyboard(Config.KeyboardType.AZERTY)
+                                    Config.keyboardType = Config.KeyboardType.AZERTY
+                                }
+                            }
+                        }
+
+                        button {
+                            text = "Back"
+                            onPressed += {
+                                if (!switchingScenes) {
+                                    switchingScenes = true
+                                    changeTo(MenuScene(context))
                                 }
                             }
                         }
@@ -66,13 +83,5 @@ class KeyboardSelectScene(
             }
         }
         fadeMask(delay = 250.milliseconds, fadeTime = 1.seconds)
-    }
-
-    private fun selectKeyboard(keyboardType: Config.KeyboardType) {
-        Config.keyboardType = keyboardType
-        if (!switchingScenes) {
-            switchingScenes = true
-            changeTo(MenuScene(context))
-        }
     }
 }
