@@ -27,8 +27,10 @@ import com.lehaine.littlekt.input.GameAxis
 import com.lehaine.littlekt.input.GameButton
 import com.lehaine.littlekt.input.Key
 import com.lehaine.littlekt.input.Pointer
+import com.lehaine.littlekt.math.floor
 import com.lehaine.littlekt.util.toString
 import com.lehaine.littlekt.util.viewport.ExtendViewport
+import com.lehaine.rune.engine.ActionCreator
 import com.lehaine.rune.engine.RuneScene
 import com.lehaine.rune.engine.node.EntityCamera2D
 import com.lehaine.rune.engine.node.entityCamera2D
@@ -37,10 +39,11 @@ import com.lehaine.rune.engine.node.pixelSmoothFrameBuffer
 import com.lehaine.rune.engine.node.renderable.animatedSprite
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
-import kotlin.random.Random
+import kotlin.ranges.random
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
+import com.lehaine.littlekt.math.random as randomf
 
 
 class GameScene(context: Context) :
@@ -73,6 +76,8 @@ class GameScene(context: Context) :
     lateinit var hero: Hero
     lateinit var level: Level
     private var levelIdx = 0
+
+    private var actionCreator: ActionCreator? = null
 
     val fx = Fx(this)
 
@@ -320,6 +325,7 @@ class GameScene(context: Context) :
     override fun update(dt: Duration) {
         if (gameCanvas.updateInterval == 1) {
             fx.update(dt)
+            actionCreator?.execute(dt)
         }
         super.update(dt)
 
@@ -341,9 +347,7 @@ class GameScene(context: Context) :
             loadLevel(0)
 
         } else if (input.isKeyJustPressed(Key.NUM2)) {
-            loadLevel(1)
-            upgradesDialog.refresh()
-            upgradesDialog.enabled = true
+            loadLevel(1) { onEnterBoneMansOffice() }
         }
 
         if (input.isKeyJustPressed(Key.T)) {
@@ -370,8 +374,45 @@ class GameScene(context: Context) :
         }
     }
 
+    private fun onEnterBoneMansOffice() {
+        val label = Label().apply {
+            text = "Punishment\nUpgraded!"
+            horizontalAlign = HAlign.CENTER
+            fontScaleX = 3f
+            fontScaleY = 3f
+            onReady += {
+                x = gameCanvas.width * 0.5f - width * 0.5f
+            }
+            fontColor = Color.fromHex("#f2e6e6")
+        }.addTo(gameCanvas)
 
-    private fun loadLevel(idx: Int) {
+        actionCreator = ActionCreator {
+            wait(1200.milliseconds) {
+                label.fontScaleX = 1f
+                label.fontScaleY = 1f
+            }
+
+            repeat(15) {
+                wait((150..300).random().milliseconds) {
+                    var scale = (2..4).random().toFloat()
+                    label.x = (gameCanvas.width * 0.5f - label.width * 0.5f).about(0.1f).floor()
+                    label.y = (gameCanvas.height * 0.5f - label.height * 0.5f).about(0.1f).floor()
+                    if (it % 3 == 0) scale = -scale
+                    label.scaleX = scale
+                    label.scaleY = scale
+                }
+            }
+            action { label.destroy() }
+            wait(1000.milliseconds)
+            action {
+                upgradesDialog.refresh()
+                upgradesDialog.enabled = true
+            }
+
+        }
+    }
+
+    private fun loadLevel(idx: Int, onLaunch: () -> Unit = {}) {
         levelIdx = idx
         mapLoader?.let {
             KtScope.launch {
@@ -381,7 +422,12 @@ class GameScene(context: Context) :
                 destroyRoot()
                 root.createNodes()
                 resize(graphics.width, graphics.height)
+                onLaunch()
             }
         }
+    }
+
+    private fun Float.about(variance: Float = 0.1f): Float {
+        return this * (1 + (0..(variance * 100).toInt() / 100).randomf())
     }
 }
