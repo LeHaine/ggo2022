@@ -9,6 +9,7 @@ import com.lehaine.littlekt.graph.node.component.Theme
 import com.lehaine.littlekt.graph.node.component.createDefaultTheme
 import com.lehaine.littlekt.graph.node.ui.Button
 import com.lehaine.littlekt.graph.node.ui.Panel
+import com.lehaine.littlekt.graph.node.ui.ProgressBar
 import com.lehaine.littlekt.graphics.*
 import com.lehaine.littlekt.graphics.font.BitmapFont
 import kotlin.jvm.Volatile
@@ -56,6 +57,7 @@ class Assets private constructor(context: Context) : Disposable {
             val buttonHighlight9p = NinePatch(atlas.getByPrefix("uiButtonHighlight").slice, 1, 1, 1, 1)
             val panel9p = NinePatch(atlas.getByPrefix("uiPanel").slice, 15, 15, 15, 1)
             val outline9p = NinePatch(atlas.getByPrefix("uiOutline").slice, 1, 1, 1, 1)
+            val pixel9p = NinePatch(atlas.getByPrefix("fxPixel").slice, 0, 0, 0, 0)
 
             val theme = createDefaultTheme(
                 extraDrawables = mapOf(
@@ -70,9 +72,16 @@ class Assets private constructor(context: Context) : Disposable {
                             modulate = Color.WHITE.toMutableColor().scaleRgb(0.6f)
                         }
                     ),
-
                     "Panel" to mapOf(
                         Panel.themeVars.panel to NinePatchDrawable(panel9p)
+                    ),
+                    "ProgressBar" to mapOf(
+                        ProgressBar.themeVars.bg to NinePatchDrawable(pixel9p).apply {
+                            modulate = Color.fromHex("#422e37")
+                        },
+                        ProgressBar.themeVars.fg to NinePatchDrawable(pixel9p).apply {
+                            modulate = Color.fromHex("#994551")
+                        }
                     )
                 ),
                 defaultFont = pixelFont
