@@ -1,5 +1,6 @@
 package com.lehaine.game
 
+import com.lehaine.game.scene.KeyboardSelectScene
 import com.lehaine.rune.engine.Rune
 import com.lehaine.game.scene.MenuScene
 import com.lehaine.littlekt.Context
@@ -20,7 +21,7 @@ class GameCore(context: Context) : Rune(context) {
 
     override suspend fun Context.create() {
         Assets.createInstance(this) {
-            scene = MenuScene(context)
+            scene = KeyboardSelectScene(context)
         }
 
         onRender {

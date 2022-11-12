@@ -23,7 +23,10 @@ import com.lehaine.littlekt.graph.node.node
 import com.lehaine.littlekt.graph.node.node2d.Node2D
 import com.lehaine.littlekt.graph.node.node2d.node2d
 import com.lehaine.littlekt.graph.node.ui.*
-import com.lehaine.littlekt.graphics.*
+import com.lehaine.littlekt.graphics.Color
+import com.lehaine.littlekt.graphics.Cursor
+import com.lehaine.littlekt.graphics.NinePatch
+import com.lehaine.littlekt.graphics.getAnimation
 import com.lehaine.littlekt.graphics.tilemap.ldtk.LDtkLevel
 import com.lehaine.littlekt.input.GameAxis
 import com.lehaine.littlekt.input.GameButton
@@ -71,9 +74,22 @@ class GameScene(context: Context) :
     val fx = Fx(this)
 
     init {
-        controller.addBinding(GameInput.MOVE_LEFT, listOf(Key.A, Key.ARROW_LEFT), axes = listOf(GameAxis.LX))
+        val isQwerty = Config.keyboardType == Config.KeyboardType.QWERTY
+        controller.addBinding(
+            GameInput.MOVE_LEFT,
+            listOf(
+                if (isQwerty) Key.A else Key.Q,
+                Key.ARROW_LEFT
+            ),
+            axes = listOf(GameAxis.LX)
+        )
         controller.addBinding(GameInput.MOVE_RIGHT, listOf(Key.D, Key.ARROW_RIGHT), axes = listOf(GameAxis.LX))
-        controller.addBinding(GameInput.MOVE_UP, listOf(Key.W, Key.ARROW_UP), axes = listOf(GameAxis.LY))
+        controller.addBinding(
+            GameInput.MOVE_UP, listOf(
+                if (isQwerty) Key.W else Key.Z,
+                Key.ARROW_UP
+            ), axes = listOf(GameAxis.LY)
+        )
         controller.addBinding(GameInput.MOVE_DOWN, listOf(Key.S, Key.ARROW_DOWN), axes = listOf(GameAxis.LY))
 
         controller.addBinding(
@@ -94,7 +110,7 @@ class GameScene(context: Context) :
         controller.addBinding(
             GameInput.HAND_OF_DEATH,
             buttons = listOf(GameButton.XBOX_Y),
-            keys = listOf(Key.Q)
+            keys = if (Config.keyboardType == Config.KeyboardType.QWERTY) listOf(Key.Q) else listOf(Key.A)
         )
         controller.addBinding(
             GameInput.BONE_SPEAR,
@@ -244,7 +260,7 @@ class GameScene(context: Context) :
                         animatedSprite {
                             val idx = it
                             onReady += {
-                                registerState(Assets.heartBeating, priority = 5) { hero.health >= idx - 1 }
+                                registerState(Assets.heartBeating, priority = 5) { hero.health >= idx + 1 }
                                 registerState(deadHeart, 0)
                             }
                         }

@@ -8,4 +8,12 @@ object Config {
     const val VIRTUAL_WIDTH = 480
     const val VIRTUAL_HEIGHT = 270
     const val GRID_CELL_SIZE = 16
+
+
+    var keyboardType = KeyboardType.QWERTY
+
+    enum class KeyboardType {
+        QWERTY,
+        AZERTY
+    }
 }

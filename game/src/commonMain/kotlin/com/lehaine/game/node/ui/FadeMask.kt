@@ -22,6 +22,8 @@ class FadeMask(delay: Duration, fadeTime: Duration) : TextureRect() {
         anchorBottom = 1f
         stretchMode = StretchMode.SCALE
 
+        mouseFilter = MouseFilter.IGNORE
+
         val fadeColor = Color.BLACK.toMutableColor()
         color = fadeColor
         val cd = Cooldown()
