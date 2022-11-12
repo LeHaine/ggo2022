@@ -26,7 +26,7 @@ class SettingsDialog : CenterContainer() {
         panelContainer {
             paddedContainer {
                 padding(10)
-                vBoxContainer {
+                column {
                     separation = 10
                     label {
                         text = "Settings"
@@ -34,9 +34,41 @@ class SettingsDialog : CenterContainer() {
                     }
 
                     label {
+                        text = "Camera Shake:"
+                    }
+
+                    row {
+                        separation = 5
+                        align = AlignMode.CENTER
+                        val progressBar = ProgressBar()
+                        button {
+                            text = "-"
+                            onUpdate += {
+                                if (pressed) {
+                                    progressBar.value -= progressBar.step
+                                }
+                            }
+                        }
+                        node(progressBar) {
+                            ratio = Config.cameraShakeMultiplier
+                            minWidth = 100f
+                            onValueChanged += {
+                                Config.cameraShakeMultiplier = ratio
+                            }
+                        }
+                        button {
+                            text = "+"
+                            onUpdate += {
+                                if (pressed) {
+                                    progressBar.value += progressBar.step
+                                }
+                            }
+                        }
+                    }
+                    label {
                         text = "Keyboard Type:"
                     }
-                    hBoxContainer {
+                    row {
                         separation = 10
                         align = AlignMode.CENTER
 

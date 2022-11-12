@@ -27,7 +27,7 @@ class MenuScene(
                 paddedContainer {
                     padding(10)
                     paddingTop = 25
-                    vBoxContainer {
+                    column {
                         separation = 10
 
                         label {

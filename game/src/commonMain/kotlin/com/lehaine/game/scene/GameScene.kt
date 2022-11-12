@@ -256,7 +256,7 @@ class GameScene(context: Context) :
 
             actionBar()
 
-            vBoxContainer {
+            column {
                 marginLeft = 15f
                 marginTop = 25f
                 separation = 30
@@ -277,10 +277,10 @@ class GameScene(context: Context) :
             upgradesDialog { false }
 
             settingsDialog = settingsDialog {
-                visible = false
+                enabled = false
                 onBack += {
-                    pauseDialog.visible = true
-                    visible = false
+                    pauseDialog.enabled = true
+                    enabled = false
                 }
 
                 onKeyboardChange += {
@@ -289,15 +289,15 @@ class GameScene(context: Context) :
             }
 
             pauseDialog = pauseDialog {
-                visible = false
+                enabled = false
                 onResume += {
-                    visible = false
+                    enabled = false
                     gameCanvas.updateInterval = 1
                 }
 
                 onSettings += {
-                    visible = false
-                    settingsDialog.visible = true
+                    enabled = false
+                    settingsDialog.enabled = true
                 }
             }
 
@@ -315,10 +315,10 @@ class GameScene(context: Context) :
         super.update(dt)
 
         if (controller.pressed(GameInput.PAUSE) && gameCanvas.updateInterval == 1) {
-            pauseDialog.visible = true
+            pauseDialog.enabled = true
             gameCanvas.updateInterval = Int.MAX_VALUE // TODO set this to 0 when new runekt build finishes
-        } else if (controller.pressed(GameInput.PAUSE) && gameCanvas.updateInterval != 1 && pauseDialog.visible) {
-            pauseDialog.visible = false
+        } else if (controller.pressed(GameInput.PAUSE) && gameCanvas.updateInterval != 1 && pauseDialog.enabled) {
+            pauseDialog.enabled = false
             gameCanvas.updateInterval = 1
         }
 

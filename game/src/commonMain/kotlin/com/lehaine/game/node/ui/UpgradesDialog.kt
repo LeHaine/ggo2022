@@ -23,7 +23,7 @@ class UpgradesDialog(private val shouldDisplay: () -> Boolean) : Control() {
                 paddedContainer {
                     padding(10)
                     paddingTop = 25
-                    vBoxContainer {
+                    column {
                         separation = 10
                         button {
                             text = "Option 1"

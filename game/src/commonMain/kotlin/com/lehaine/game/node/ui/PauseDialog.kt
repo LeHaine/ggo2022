@@ -26,7 +26,7 @@ class PauseDialog : CenterContainer() {
         panelContainer {
             paddedContainer {
                 padding(10)
-                vBoxContainer {
+                column {
                     separation = 10
                     label {
                         text = "Paused"
@@ -36,6 +36,9 @@ class PauseDialog : CenterContainer() {
 
                     button {
                         text = "Resume"
+                        onReady += {
+                            scene?.requestFocus(this)
+                        }
                         onPressed += {
                             onResume.emit()
                         }

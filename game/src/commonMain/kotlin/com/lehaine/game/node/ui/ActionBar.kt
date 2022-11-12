@@ -42,7 +42,7 @@ class ActionBar : Control() {
 
 
         val uiBarItem = Assets.atlas.getByPrefix("uiBarItem").slice
-        hBoxContainer {
+        row {
             separation = 10
             align = AlignMode.CENTER
             minWidth = 250f
@@ -54,7 +54,7 @@ class ActionBar : Control() {
             }
         }
 
-        hBoxContainer {
+        row {
             separation = 10
             align = AlignMode.CENTER
             minWidth = 250f

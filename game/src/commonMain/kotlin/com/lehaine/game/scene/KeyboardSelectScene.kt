@@ -30,7 +30,7 @@ class KeyboardSelectScene(
             panelContainer {
                 paddedContainer {
                     padding(10)
-                    vBoxContainer {
+                    column {
                         separation = 10
                         align = AlignMode.CENTER
                         label {
@@ -39,7 +39,7 @@ class KeyboardSelectScene(
                             horizontalAlign = HAlign.CENTER
                         }
 
-                        hBoxContainer {
+                        row {
                             separation = 10
                             align = AlignMode.CENTER
                             button {
