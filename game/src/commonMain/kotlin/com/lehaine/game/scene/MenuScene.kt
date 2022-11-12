@@ -40,7 +40,7 @@ class MenuScene(
 
                         button {
                             text = "Start Game"
-
+                            requestFocus(this)
                             onPressed += {
                                 if (!switchingScenes) {
                                     switchingScenes = true

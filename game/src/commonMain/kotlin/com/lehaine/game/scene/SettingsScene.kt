@@ -48,8 +48,7 @@ class SettingsScene(
                             button {
                                 text = "QWERTY"
                                 toggleMode = true
-                                buttonGroup = keyboardButtonGroup
-                                buttonGroup.buttons += this
+                                setButtonGroup(keyboardButtonGroup)
                                 pressed = Config.keyboardType == Config.KeyboardType.QWERTY
                                 onPressed += {
                                     Config.keyboardType = Config.KeyboardType.QWERTY
@@ -60,8 +59,7 @@ class SettingsScene(
                                 text = "AZERTY"
                                 toggleMode = true
                                 pressed = Config.keyboardType == Config.KeyboardType.AZERTY
-                                buttonGroup = keyboardButtonGroup
-                                buttonGroup.buttons += this
+                                setButtonGroup(keyboardButtonGroup)
                                 pressed = Config.keyboardType == Config.KeyboardType.AZERTY
                                 onPressed += {
                                     Config.keyboardType = Config.KeyboardType.AZERTY
