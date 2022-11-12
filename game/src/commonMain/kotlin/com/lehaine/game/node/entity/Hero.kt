@@ -187,6 +187,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
                 speedMultiplier = 1f
                 scaleX = 1f
                 scaleY = 1f
+                shadow.globalY // forces to update global position if its dirty just by getting
             }
         }
     }
