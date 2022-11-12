@@ -1,6 +1,7 @@
 package com.lehaine.game.node.ui
 
 import com.lehaine.game.Assets
+import com.lehaine.game.Config
 import com.lehaine.game.node.game
 import com.lehaine.game.node.hero
 import com.lehaine.littlekt.graph.node.Node
@@ -75,7 +76,7 @@ class ActionBar : Control() {
                 unlockedIcon = Assets.atlas.getByPrefix("uiDashIcon").slice,
                 keybindIcon = Assets.atlas.getByPrefix("uiShiftSpaceIcon").slice,
                 itemName = "dashCD"
-            ) { game.state.dashUnlocked}
+            ) { game.state.dashUnlocked }
 
             actionBarItem(
                 unlockedIcon = Assets.atlas.getByPrefix("uiBoneSpearIcon").slice,
@@ -85,7 +86,13 @@ class ActionBar : Control() {
 
             actionBarItem(
                 unlockedIcon = Assets.atlas.getByPrefix("uiHandOfDeathIcon").slice,
-                keybindIcon = Assets.atlas.getByPrefix("uiQIcon").slice,
+                keybindIcon = if (Config.keyboardType == Config.KeyboardType.QWERTY) {
+                    Assets.atlas.getByPrefix("uiQIcon").slice
+                } else {
+                    Assets.atlas.getByPrefix(
+                        "uiAIcon"
+                    ).slice
+                },
                 itemName = "handOfDeathCD"
             ) { game.state.handOfDeathUnlocked }
         }

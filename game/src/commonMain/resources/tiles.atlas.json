@@ -2429,6 +2429,27 @@
             }
         },
         {
+            "filename": "uiAIcon",
+            "frame": {
+                "x": 612,
+                "y": 371,
+                "w": 14,
+                "h": 12
+            },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {
+                "x": 0,
+                "y": 0,
+                "w": 14,
+                "h": 12
+            },
+            "sourceSize": {
+                "w": 14,
+                "h": 12
+            }
+        },
+        {
             "filename": "uiArenaBorder",
             "frame": {
                 "x": 4,
@@ -2599,8 +2620,8 @@
         {
             "filename": "uiEIcon",
             "frame": {
-                "x": 612,
-                "y": 371,
+                "x": 613,
+                "y": 389,
                 "w": 12,
                 "h": 12
             },
