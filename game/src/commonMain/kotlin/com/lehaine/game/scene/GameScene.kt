@@ -6,20 +6,15 @@ import com.lehaine.game.node.entity.Hero
 import com.lehaine.game.node.entity.SoulCollectible
 import com.lehaine.game.node.entity.hero
 import com.lehaine.game.node.level.TestSpawner
-import com.lehaine.game.node.ui.actionBar
-import com.lehaine.game.node.ui.fadeMask
-import com.lehaine.game.node.ui.upgradesDialog
+import com.lehaine.game.node.ui.*
 import com.lehaine.littlekt.Context
 import com.lehaine.littlekt.async.KtScope
 import com.lehaine.littlekt.file.ldtk.LDtkMapLoader
 import com.lehaine.littlekt.file.vfs.readLDtkMapLoader
 import com.lehaine.littlekt.file.vfs.readPixmap
-import com.lehaine.littlekt.graph.node.Node
-import com.lehaine.littlekt.graph.node.addTo
-import com.lehaine.littlekt.graph.node.canvasLayer
+import com.lehaine.littlekt.graph.node.*
 import com.lehaine.littlekt.graph.node.component.HAlign
 import com.lehaine.littlekt.graph.node.component.NinePatchDrawable
-import com.lehaine.littlekt.graph.node.node
 import com.lehaine.littlekt.graph.node.node2d.Node2D
 import com.lehaine.littlekt.graph.node.node2d.node2d
 import com.lehaine.littlekt.graph.node.ui.*
@@ -54,6 +49,11 @@ class GameScene(context: Context) :
         uiInputSignals = createUiGameInputSignals()
     ) {
 
+    lateinit var pauseDialog: PauseDialog
+    lateinit var settingsDialog: SettingsDialog
+    lateinit var gameCanvas: CanvasLayer
+    private var setupController = false
+
     val state = GameState()
 
     lateinit var background: Node
@@ -74,6 +74,11 @@ class GameScene(context: Context) :
     val fx = Fx(this)
 
     init {
+        setupController()
+        clearColor = Color.fromHex("#422e37")
+    }
+
+    private fun setupController() {
         val isQwerty = Config.keyboardType == Config.KeyboardType.QWERTY
         controller.addBinding(
             GameInput.MOVE_LEFT,
@@ -129,7 +134,8 @@ class GameScene(context: Context) :
             GameInput.MOVE_UP
         )
 
-        clearColor = Color.fromHex("#422e37")
+        controller.addBinding(GameInput.PAUSE, keys = listOf(Key.ESCAPE), buttons = listOf(GameButton.START))
+
     }
 
 
@@ -146,7 +152,7 @@ class GameScene(context: Context) :
     }
 
     private fun Node.createNodes() {
-        canvasLayer {
+        gameCanvas = canvasLayer {
             val entityCamera: EntityCamera2D
 
             val fbo = pixelSmoothFrameBuffer {
@@ -270,6 +276,31 @@ class GameScene(context: Context) :
 
             upgradesDialog { false }
 
+            settingsDialog = settingsDialog {
+                visible = false
+                onBack += {
+                    pauseDialog.visible = true
+                    visible = false
+                }
+
+                onKeyboardChange += {
+                    setupController = true
+                }
+            }
+
+            pauseDialog = pauseDialog {
+                visible = false
+                onResume += {
+                    visible = false
+                    gameCanvas.updateInterval = 1
+                }
+
+                onSettings += {
+                    visible = false
+                    settingsDialog.visible = true
+                }
+            }
+
             fadeMask(delay = 250.milliseconds, fadeTime = 1.seconds)
         }
 
@@ -278,8 +309,18 @@ class GameScene(context: Context) :
     }
 
     override fun update(dt: Duration) {
-        fx.update(dt)
+        if (gameCanvas.updateInterval == 1) {
+            fx.update(dt)
+        }
         super.update(dt)
+
+        if (controller.pressed(GameInput.PAUSE) && gameCanvas.updateInterval == 1) {
+            pauseDialog.visible = true
+            gameCanvas.updateInterval = Int.MAX_VALUE // TODO set this to 0 when new runekt build finishes
+        } else if (controller.pressed(GameInput.PAUSE) && gameCanvas.updateInterval != 1 && pauseDialog.visible) {
+            pauseDialog.visible = false
+            gameCanvas.updateInterval = 1
+        }
 
         if (input.isKeyJustPressed(Key.R)) {
             destroyRoot()
@@ -311,7 +352,13 @@ class GameScene(context: Context) :
             state.shootingUnlocked = true
             state.handOfDeathUnlocked = true
         }
+
+        if (setupController) {
+            setupController()
+            setupController = false
+        }
     }
+
 
     private fun loadLevel(idx: Int) {
         levelIdx = idx

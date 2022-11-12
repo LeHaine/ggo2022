@@ -165,7 +165,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
         if (!cd.has("shootCD")) {
             cd("shootCD", 3.seconds)
             orbAttack()
-            camera.shake(100.milliseconds, 0.5f)
+            camera.shake(100.milliseconds, 0.5f * Config.cameraShakeMultiplier)
         }
     }
 
@@ -180,7 +180,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
             sprite.color.a = 0.5f
             scaleX = 1.25f
             scaleY = 0.9f
-            camera.shake(50.milliseconds, 0.5f)
+            camera.shake(50.milliseconds, 0.5f * Config.cameraShakeMultiplier)
             cd("dashCD", 1.seconds)
             addEffect(Effect.Invincible, 350.milliseconds)
             cd("dash", 250.milliseconds) {

@@ -1,15 +1,10 @@
 package com.lehaine.game
 
 import com.lehaine.game.scene.KeyboardSelectScene
-import com.lehaine.rune.engine.Rune
-import com.lehaine.game.scene.MenuScene
 import com.lehaine.littlekt.Context
-import com.lehaine.littlekt.async.KtScope
-import com.lehaine.littlekt.graphics.Color
-import com.lehaine.littlekt.graphics.gl.ClearBufferMask
 import com.lehaine.littlekt.input.Key
 import com.lehaine.littlekt.log.Logger
-import kotlinx.coroutines.launch
+import com.lehaine.rune.engine.Rune
 
 class GameCore(context: Context) : Rune(context) {
 
@@ -25,7 +20,7 @@ class GameCore(context: Context) : Rune(context) {
         }
 
         onRender {
-            if (input.isKeyJustPressed(Key.ESCAPE)) {
+            if (platform == Context.Platform.DESKTOP && input.isKeyPressed(Key.CTRL_LEFT) && input.isKeyJustPressed(Key.W)) {
                 close()
             }
         }

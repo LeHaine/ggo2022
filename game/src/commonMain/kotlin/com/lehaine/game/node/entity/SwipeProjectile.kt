@@ -47,7 +47,7 @@ class SwipeProjectile(val hero: Hero) : Entity(Config.GRID_CELL_SIZE.toFloat()),
                     it.velocityX += knockbackPower * angle.cosine
                     it.velocityY += knockbackPower * angle.sine
                     it.velocityZ += knockbackPower * 0.5f
-                    hero.camera.shake(100.milliseconds, 0.5f)
+                    hero.camera.shake(100.milliseconds, 0.5f * Config.cameraShakeMultiplier)
                 }
             }
         }

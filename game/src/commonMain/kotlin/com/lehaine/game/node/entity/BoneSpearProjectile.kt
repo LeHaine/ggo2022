@@ -27,7 +27,7 @@ class BoneSpearProjectile(val hero: Hero) : Entity(Config.GRID_CELL_SIZE.toFloat
         sprite.onFrameChanged += { frameIdx ->
             if (frameIdx == 9) {
                 fx.groundParticles(globalX, globalY)
-                hero.camera.shake(100.milliseconds)
+                hero.camera.shake(100.milliseconds, 1f * Config.cameraShakeMultiplier)
                 Mob.ALL.fastForEach {
                     val dist = outerRadius + it.outerRadius
                     val colliding = distSqr(px, py, it.px, it.py) <= dist * dist

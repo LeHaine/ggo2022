@@ -29,7 +29,9 @@ enum class GameInput {
     HORIZONTAL,
     VERTICAL,
 
-    MOVEMENT
+    MOVEMENT,
+
+    PAUSE
 }
 
 fun createUiGameInputSignals() = SceneGraph.UiInputSignals(

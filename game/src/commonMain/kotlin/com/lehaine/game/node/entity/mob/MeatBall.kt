@@ -1,6 +1,7 @@
 package com.lehaine.game.node.entity.mob
 
 import com.lehaine.game.Assets
+import com.lehaine.game.Config
 import com.lehaine.game.Level
 import com.lehaine.game.node.entity.Hero
 import com.lehaine.game.node.fx
@@ -81,7 +82,7 @@ class MeatBall(hero: Hero, level: Level) : Mob(hero, level) {
     override fun handleHandOfDeath() {
         sprite.playOnce(Assets.meatBallHandOfDeath)
         cd("shake", 700.milliseconds) {
-            hero.camera.shake(100.milliseconds, 2f)
+            hero.camera.shake(100.milliseconds, 2f * Config.cameraShakeMultiplier)
             fx.meatBallExplode(globalX, globalY)
             spawnDrop()
         }
