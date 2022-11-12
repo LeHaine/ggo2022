@@ -1,6 +1,7 @@
 package com.lehaine.game
 
 import com.lehaine.game.scene.KeyboardSelectScene
+import com.lehaine.game.scene.MenuScene
 import com.lehaine.littlekt.Context
 import com.lehaine.littlekt.input.Key
 import com.lehaine.littlekt.log.Logger
@@ -15,8 +16,9 @@ class GameCore(context: Context) : Rune(context) {
 
 
     override suspend fun Context.create() {
+        val firstRun = storageVfs["firstRun"].readKeystore() == null
         Assets.createInstance(this) {
-            scene = KeyboardSelectScene(context)
+            scene = if (firstRun) KeyboardSelectScene(context) else MenuScene(context)
         }
 
         onRender {

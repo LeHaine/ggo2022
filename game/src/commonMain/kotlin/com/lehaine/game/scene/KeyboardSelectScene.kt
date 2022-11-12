@@ -4,12 +4,14 @@ import com.lehaine.game.Assets
 import com.lehaine.game.Config
 import com.lehaine.game.node.ui.fadeMask
 import com.lehaine.littlekt.Context
+import com.lehaine.littlekt.async.KtScope
 import com.lehaine.littlekt.graph.node.Node
 import com.lehaine.littlekt.graph.node.component.AlignMode
 import com.lehaine.littlekt.graph.node.component.HAlign
 import com.lehaine.littlekt.graph.node.ui.*
 import com.lehaine.littlekt.util.viewport.ExtendViewport
 import com.lehaine.rune.engine.RuneSceneDefault
+import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
@@ -72,6 +74,9 @@ class KeyboardSelectScene(
         Config.keyboardType = keyboardType
         if (!switchingScenes) {
             switchingScenes = true
+            KtScope.launch {
+                storageVfs["firstRun"].writeKeystore("true")
+            }
             changeTo(MenuScene(context))
         }
     }
