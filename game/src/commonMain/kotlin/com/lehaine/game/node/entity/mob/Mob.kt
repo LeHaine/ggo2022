@@ -6,6 +6,7 @@ import com.lehaine.game.Level
 import com.lehaine.game.node.entity.Effectible
 import com.lehaine.game.node.entity.Hero
 import com.lehaine.game.node.entity.SoulCollectible
+import com.lehaine.game.node.game
 import com.lehaine.littlekt.math.geom.Angle
 import com.lehaine.littlekt.util.signal1v
 import com.lehaine.rune.engine.node.renderable.entity.ObliqueEntity
@@ -30,7 +31,6 @@ abstract class Mob(val hero: Hero, override val level: Level) : ObliqueEntity(le
     var speedMul = 1f
     open val baseHealth = 10
     var health = 10
-    open val baseDamage = 1f
     var avoidOtherMobs = true
 
     val onDeath = signal1v<Mob>()
@@ -45,6 +45,12 @@ abstract class Mob(val hero: Hero, override val level: Level) : ObliqueEntity(le
         x -= Config.GRID_CELL_SIZE * 0.5f
         y -= Config.GRID_CELL_SIZE - 2f
     }.also { moveChild(it, 0) }
+
+    init {
+        onReady += {
+            health = (baseHealth * game.state.monsterHealthMultiplier).toInt()
+        }
+    }
 
     override fun update(dt: Duration) {
         super.update(dt)
@@ -116,7 +122,8 @@ abstract class Mob(val hero: Hero, override val level: Level) : ObliqueEntity(le
 
     abstract fun explode()
     protected fun spawnDrop() {
-        val totalDropped = (minSoulsDrop..maxSoulsDrop).random()
+        val multiplier = game.state.soulCollectibleDropMultiplier
+        val totalDropped = ((minSoulsDrop..maxSoulsDrop).random() * multiplier).toInt()
         repeat(totalDropped) {
             SoulCollectible.pool.alloc().spawn(globalX, globalY)
         }
@@ -140,7 +147,7 @@ abstract class Mob(val hero: Hero, override val level: Level) : ObliqueEntity(le
     override fun isEffectible(): Boolean = health > 0
 
     open fun reset() {
-        health = baseHealth
+        health = (baseHealth * game.state.monsterHealthMultiplier).toInt()
         globalScaleX = 1f
         globalScaleY = 1f
     }

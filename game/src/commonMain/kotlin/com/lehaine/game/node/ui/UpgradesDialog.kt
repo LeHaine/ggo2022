@@ -1,18 +1,25 @@
 package com.lehaine.game.node.ui
 
+import com.lehaine.game.data.createUpgrades
+import com.lehaine.game.scene.GameState
 import com.lehaine.littlekt.graph.node.Node
 import com.lehaine.littlekt.graph.node.node
 import com.lehaine.littlekt.graph.node.ui.*
-import kotlin.time.Duration
+import com.lehaine.littlekt.util.signal
 
-fun Node.upgradesDialog(shouldDisplay: () -> Boolean) = node(UpgradesDialog(shouldDisplay))
+fun Node.upgradesDialog(state: GameState, callback: UpgradesDialog.() -> Unit = {}) =
+    node(UpgradesDialog(state), callback)
 
 /**
  * @author Colton Daily
  * @date 11/11/2022
  */
-class UpgradesDialog(private val shouldDisplay: () -> Boolean) : Control() {
-    private var lastVisibility = shouldDisplay()
+class UpgradesDialog(private val state: GameState) : Control() {
+
+    private val upgrades = createUpgrades(state)
+    private val buttonColumn: VBoxContainer
+
+    val onUpgradeSelect = signal()
 
     init {
         anchor(AnchorLayout.CENTER)
@@ -23,37 +30,29 @@ class UpgradesDialog(private val shouldDisplay: () -> Boolean) : Control() {
                 paddedContainer {
                     padding(10)
                     paddingTop = 25
-                    column {
+                    buttonColumn = column {
                         separation = 10
-                        button {
-                            text = "Option 1"
-                        }
-
-                        button {
-                            text = "Option 2"
-                        }
-
-                        button {
-                            text = "Option 3"
-                        }
-
-                        button {
-                            text = "Final Option"
-                        }
                     }
                 }
             }
         }
     }
 
-
-    override fun update(dt: Duration) {
-        super.update(dt)
-
-        visible = shouldDisplay()
-        if (lastVisibility != visible) {
-            // TODO generate options
+    fun refresh() {
+        while (buttonColumn.childCount > 0) {
+            buttonColumn.removeChildAt(0)
         }
-        lastVisibility = visible
+        buttonColumn.apply {
+            repeat(3) {
+                val upgrade = upgrades.random()
+                button {
+                    text = "${upgrade.title}: ${upgrade.description}"
+                    onPressed += {
+                        upgrade.collect()
+                        onUpgradeSelect.emit()
+                    }
+                }
+            }
+        }
     }
 }

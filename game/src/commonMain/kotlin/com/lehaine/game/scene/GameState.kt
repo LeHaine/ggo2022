@@ -6,12 +6,13 @@ package com.lehaine.game.scene
  */
 class GameState {
 
+    var totalMonstersSpawnMultiplier = 1f
     var monsterHealthMultiplier = 1f
     var monsterRespawnMultiplier = 1f
-    var soulCollectibleDropMultiplier = 1f
-    var monsterDamageMultiplier = 1f
     var monsterSpeedMultiplier = 1f
 
+    var soulCollectibleDropMultiplier = 1f
+    
     var quotasFailed = 0
     var soulsCaptured = 0
 

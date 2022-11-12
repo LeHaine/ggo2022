@@ -37,6 +37,7 @@ import com.lehaine.rune.engine.node.pixelSmoothFrameBuffer
 import com.lehaine.rune.engine.node.renderable.animatedSprite
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
+import kotlin.random.Random
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
@@ -49,9 +50,11 @@ class GameScene(context: Context) :
         uiInputSignals = createUiGameInputSignals()
     ) {
 
+    lateinit var upgradesDialog: UpgradesDialog
     lateinit var pauseDialog: PauseDialog
     lateinit var settingsDialog: SettingsDialog
     lateinit var gameCanvas: CanvasLayer
+
     private var setupController = false
 
     val state = GameState()
@@ -274,7 +277,13 @@ class GameScene(context: Context) :
                 }
             }
 
-            upgradesDialog { false }
+            upgradesDialog = upgradesDialog(state) {
+                enabled = false
+                onUpgradeSelect += {
+                    enabled = false
+                    loadLevel(0)
+                }
+            }
 
             settingsDialog = settingsDialog {
                 enabled = false
@@ -333,6 +342,8 @@ class GameScene(context: Context) :
 
         } else if (input.isKeyJustPressed(Key.NUM2)) {
             loadLevel(1)
+            upgradesDialog.refresh()
+            upgradesDialog.enabled = true
         }
 
         if (input.isKeyJustPressed(Key.T)) {

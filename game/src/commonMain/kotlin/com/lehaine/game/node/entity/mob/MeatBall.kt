@@ -5,6 +5,7 @@ import com.lehaine.game.Config
 import com.lehaine.game.Level
 import com.lehaine.game.node.entity.Hero
 import com.lehaine.game.node.fx
+import com.lehaine.game.node.game
 import com.lehaine.littlekt.graph.node.Node
 import com.lehaine.littlekt.graph.node.addTo
 import com.lehaine.littlekt.graph.node.annotation.SceneGraphDslMarker
@@ -75,8 +76,8 @@ class MeatBall(hero: Hero, level: Level) : Mob(hero, level) {
         if (hasEffect(Effect.Stun)) return
         if (cd.has("stun") || cd.has("stand") || cd.has("sit")) return
 
-        velocityX += speed * speedMul * xDir
-        velocityY += speed * speedMul * yDir
+        velocityX += speed * speedMul * game.state.monsterSpeedMultiplier * xDir
+        velocityY += speed * speedMul * game.state.monsterSpeedMultiplier * yDir
     }
 
     override fun handleHandOfDeath() {
