@@ -4,7 +4,7 @@
  */
 package com.lehaine.game.data
 
-import com.lehaine.game.scene.GameState
+import com.lehaine.game.GameState
 
 
 sealed class Upgrade(

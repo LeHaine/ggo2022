@@ -1,4 +1,4 @@
-package com.lehaine.game.scene
+package com.lehaine.game
 
 /**
  * @author Colton Daily

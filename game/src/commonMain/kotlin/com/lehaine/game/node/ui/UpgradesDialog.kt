@@ -1,7 +1,7 @@
 package com.lehaine.game.node.ui
 
 import com.lehaine.game.data.createUpgrades
-import com.lehaine.game.scene.GameState
+import com.lehaine.game.GameState
 import com.lehaine.littlekt.graph.node.Node
 import com.lehaine.littlekt.graph.node.node
 import com.lehaine.littlekt.graph.node.ui.*
