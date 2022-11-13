@@ -4,8 +4,9 @@ plugin-kotlin = "1.7.20"
 
 kotlinx-html = "0.7.2"
 kotlinx-coroutines = "1.6.4"
-
+# c50f2bc
 littlekt = "0.6.0.921d4a5-SNAPSHOT"
+# ba73b65
 rune="0.0.1.59bbfa3-SNAPSHOT"
 
 [libraries]

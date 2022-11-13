@@ -362,7 +362,7 @@ class GameScene(context: Context) :
 
         if (controller.pressed(GameInput.PAUSE) && gameCanvas.updateInterval == 1) {
             pauseDialog.enabled = true
-            gameCanvas.updateInterval = Int.MAX_VALUE // TODO set this to 0 when new runekt build finishes
+            gameCanvas.updateInterval = 0
         } else if (controller.pressed(GameInput.PAUSE) && gameCanvas.updateInterval != 1 && pauseDialog.enabled) {
             pauseDialog.enabled = false
             gameCanvas.updateInterval = 1

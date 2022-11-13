@@ -262,10 +262,6 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
         sprite.color.b = 0f
         stretchY = 1.25f
         cd.timeout("hit", 250.milliseconds)
-        if (health <= 0) {
-            velocityX += 0.5f * -dir
-            velocityZ += 0.5f
-        }
     }
 
     private fun orbAttack() {
