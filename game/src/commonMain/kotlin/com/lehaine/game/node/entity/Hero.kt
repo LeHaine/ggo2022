@@ -6,6 +6,7 @@ import com.lehaine.game.GameInput
 import com.lehaine.game.node.controller
 import com.lehaine.game.node.entity.mob.Effect
 import com.lehaine.game.node.entity.mob.Mob
+import com.lehaine.game.node.fx
 import com.lehaine.game.node.game
 import com.lehaine.littlekt.graph.node.Node
 import com.lehaine.littlekt.graph.node.addTo
@@ -22,6 +23,7 @@ import com.lehaine.littlekt.util.datastructure.Pool
 import com.lehaine.littlekt.util.fastForEach
 import com.lehaine.rune.engine.GameLevel
 import com.lehaine.rune.engine.node.EntityCamera2D
+import com.lehaine.rune.engine.node.renderable.animatedSprite
 import com.lehaine.rune.engine.node.renderable.entity.ObliqueEntity
 import com.lehaine.rune.engine.node.renderable.entity.castRayTo
 import com.lehaine.rune.engine.node.renderable.entity.cd
@@ -79,16 +81,26 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
     private var xMoveStrength = 0f
     private var yMoveStrength = 0f
 
+    private val levelUp = animatedSprite {
+        anchorX = 0.5f
+        anchorY = 1f
+
+        onFrameChanged += {
+            if(it % 4 == 0) {
+                fx.levelUp(centerX, attachY)
+            }
+        }
+    }.also { sendChildToTop(it) }
+
     private val shadow = sprite {
         name = "Shadow"
         slice = Assets.atlas.getByPrefix("shadow").slice
         x -= Config.GRID_CELL_SIZE * data.pivotX
         y -= Config.GRID_CELL_SIZE * data.pivotY - 2f
-    }
+    }.also { sendChildToTop(it) }
 
 
     init {
-        moveChild(shadow, 0)
         anchorX = data.pivotX
         anchorY = data.pivotY
         toGridPosition(data.cx, data.cy)
@@ -314,4 +326,9 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
     }
 
     override fun isEffectible(): Boolean = health > 0
+
+    fun levelUp() {
+        levelUp.playOnce(Assets.levelUp)
+        fx.levelUp(centerX, attachY)
+    }
 }

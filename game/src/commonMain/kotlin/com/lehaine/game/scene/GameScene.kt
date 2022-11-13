@@ -42,7 +42,6 @@ import kotlin.math.roundToInt
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
-import com.lehaine.littlekt.math.random as randomf
 
 
 class GameScene(context: Context) :
@@ -67,6 +66,8 @@ class GameScene(context: Context) :
     lateinit var foreground: Node
     lateinit var fxForeground: Node
     lateinit var top: Node
+
+    lateinit var actionBar: ActionBar
     lateinit var ui: Control
 
     lateinit var entities: Node2D
@@ -74,6 +75,7 @@ class GameScene(context: Context) :
     lateinit var ldtkLevel: LDtkLevel
     lateinit var hero: Hero
     lateinit var level: Level
+    var boneMan: BoneMan? = null
     private var levelIdx = 0
 
     private var actionCreator: ActionCreator? = null
@@ -197,7 +199,7 @@ class GameScene(context: Context) :
 
                         if (ldtkLevel.entitiesByIdentifier.contains("BoneMan")) {
                             ldtkLevel.entities("BoneMan").firstOrNull()?.let {
-                                BoneMan(it).addTo(this)
+                                boneMan = BoneMan(it).addTo(this)
                             }
                         }
                     }
@@ -261,7 +263,7 @@ class GameScene(context: Context) :
                 anchorBottom = 1f
             }
 
-            actionBar()
+            actionBar = actionBar()
 
             column {
                 marginLeft = 15f
@@ -374,8 +376,8 @@ class GameScene(context: Context) :
     }
 
     private fun onEnterBoneMansOffice() {
-        //   performQuotaMetAnimation()
-        performQuotaFailedAnimation()
+        performQuotaMetAnimation()
+        //performQuotaFailedAnimation()
     }
 
     private fun performQuotaMetAnimation() {
@@ -415,9 +417,16 @@ class GameScene(context: Context) :
                 hero.camera.shake(100.milliseconds, 1f * Config.cameraShakeMultiplier)
             }
 
+            wait(3.seconds) { container.destroy() }
+            wait(1000.milliseconds) {
+                boneMan?.sprite?.playOnce(Assets.boneManPunish)
+            }
+            wait(Assets.boneManPunish.duration) {
+                state.shootingUnlocked = true
+                hero.levelUp()
+                hero.camera.shake(100.milliseconds, 1f * Config.cameraShakeMultiplier)
+            }
             wait(3.seconds)
-            action { container.destroy() }
-            wait(1000.milliseconds)
             action {
                 upgradesDialog.refresh()
                 upgradesDialog.enabled = true
@@ -464,8 +473,9 @@ class GameScene(context: Context) :
                 hero.camera.shake(100.milliseconds, 1f * Config.cameraShakeMultiplier)
             }
 
-            wait(3.seconds)
-            action { container.destroy() }
+            wait(3.seconds) {
+                container.destroy()
+            }
             wait(1000.milliseconds)
             action {
                 upgradesDialog.refresh()
@@ -487,9 +497,5 @@ class GameScene(context: Context) :
                 onLaunch()
             }
         }
-    }
-
-    private fun Float.about(variance: Float = 0.1f): Float {
-        return this * (1 + (0..(variance * 100).toInt() / 100).randomf())
     }
 }

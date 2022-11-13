@@ -9,8 +9,14 @@ import com.lehaine.littlekt.graph.node.annotation.SceneGraphDslMarker
 import com.lehaine.littlekt.graph.node.component.AlignMode
 import com.lehaine.littlekt.graph.node.node
 import com.lehaine.littlekt.graph.node.ui.*
+import com.lehaine.littlekt.graphics.Color
 import com.lehaine.littlekt.graphics.TextureSlice
+import com.lehaine.rune.engine.ActionCreator
+import com.lehaine.rune.engine.actionCreator
 import com.lehaine.rune.engine.node.renderable.entity.cd
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.seconds
 
 fun Node.actionBar(
     callback: @SceneGraphDslMarker ActionBar.() -> Unit = {}
@@ -21,6 +27,9 @@ fun Node.actionBar(
  * @date 11/11/2022
  */
 class ActionBar : Control() {
+
+    private val _actionItems = mutableListOf<ActionBarItem>()
+    val actionItems: List<ActionBarItem> get() = _actionItems
 
     init {
         anchorTop = 1f
@@ -60,31 +69,31 @@ class ActionBar : Control() {
             minWidth = 250f
 
 
-            actionBarItem(
+            _actionItems += actionBarItem(
                 unlockedIcon = Assets.atlas.getByPrefix("uiSwipeIcon").slice,
                 keybindIcon = Assets.atlas.getByPrefix("uiLmbIcon").slice,
                 itemName = "swipeCD"
             ) { true }
 
-            actionBarItem(
+            _actionItems += actionBarItem(
                 unlockedIcon = Assets.atlas.getByPrefix("uiSpiritOrbIcon").slice,
                 keybindIcon = Assets.atlas.getByPrefix("uiRmbIcon").slice,
                 itemName = "shootCD"
             ) { game.state.shootingUnlocked }
 
-            actionBarItem(
+            _actionItems += actionBarItem(
                 unlockedIcon = Assets.atlas.getByPrefix("uiDashIcon").slice,
                 keybindIcon = Assets.atlas.getByPrefix("uiShiftSpaceIcon").slice,
                 itemName = "dashCD"
             ) { game.state.dashUnlocked }
 
-            actionBarItem(
+            _actionItems += actionBarItem(
                 unlockedIcon = Assets.atlas.getByPrefix("uiBoneSpearIcon").slice,
                 keybindIcon = Assets.atlas.getByPrefix("uiEIcon").slice,
                 itemName = "boneSpearCD"
             ) { game.state.boneSpearUnlocked }
 
-            actionBarItem(
+            _actionItems += actionBarItem(
                 unlockedIcon = Assets.atlas.getByPrefix("uiHandOfDeathIcon").slice,
                 keybindIcon = if (Config.keyboardType == Config.KeyboardType.QWERTY) {
                     Assets.atlas.getByPrefix("uiQIcon").slice
@@ -107,17 +116,17 @@ private fun Node.actionBarItem(
     isUnlocked: () -> Boolean,
 ) = node(ActionBarItem(unlockedIcon, keybindIcon, itemName, isUnlocked))
 
-private class ActionBarItem(
-    unlockedIcon: TextureSlice,
+class ActionBarItem(
+    private val unlockedIcon: TextureSlice,
     keybindIcon: TextureSlice,
     itemName: String,
     isUnlocked: () -> Boolean
 ) : TextureProgress() {
 
-    init {
-        val lockedIcon = Assets.atlas.getByPrefix("uiLockedIcon").slice
-        val cooldownIcon = Assets.atlas.getByPrefix("uiCooldownBg").slice
+    private val lockedIcon = Assets.atlas.getByPrefix("uiLockedIcon").slice
+    private val cooldownIcon = Assets.atlas.getByPrefix("uiCooldownBg").slice
 
+    init {
         background = lockedIcon
         progressBar = cooldownIcon
 

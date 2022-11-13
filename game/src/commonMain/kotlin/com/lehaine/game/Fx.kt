@@ -60,6 +60,18 @@ class Fx(val game: GameScene) {
         particleSimulator.update(dt, tmod)
     }
 
+    fun levelUp(x: Float, y: Float) {
+        create(25) {
+            val p = allocBotNormal(Assets.atlas.getByPrefix("fxPixel").slice, x, y)
+            p.xDelta = (0f..0.7f).random().asRandomSign
+            p.yDelta = -(1..2).random()
+            p.life = (0.2f..0.3f).random().seconds
+            p.color.set(pickOne(LIGHT_MEAT_RED, BONE_WHITE))
+            p.friction = 0.97f.about(0.05f).coerceAtMost(1f)
+        }
+    }
+
+
     fun shadowSmall(x: Float, y: Float, duration: Duration) {
         create(1) {
             val shadowSlice = Assets.atlas.getByPrefix("shadowSmall").slice
@@ -230,10 +242,18 @@ class Fx(val game: GameScene) {
     }
 
     private fun <T> pickOne(one: T, two: T, three: T): T {
-        val r = Random.nextInt(2)
+        val r = Random.nextInt(3)
         if (r == 0) return one
         if (r == 1) return two
         return three
+    }
+
+    private fun <T> pickOne(one: T, two: T, three: T, four: T): T {
+        val r = Random.nextInt(4)
+        if (r == 0) return one
+        if (r == 1) return two
+        if (r == 2) return three
+        return four
     }
 
     private fun <T> pickOne(one: T, two: T): T {
@@ -251,6 +271,7 @@ class Fx(val game: GameScene) {
         private val LIGHT_MEAT_RED = Color.fromHex("#a25d64")
         private val DARK_MEAT_RED = Color.fromHex("#703d57")
         private val LIGHT_PURPLE = DARK_MEAT_RED
+        private val BONE_WHITE = Color.fromHex("#e3d3cf")
         private val DARK_PURPLE = Color.fromHex("#422e37")
         private val BLACK = Color.fromHex("#332e30")
     }

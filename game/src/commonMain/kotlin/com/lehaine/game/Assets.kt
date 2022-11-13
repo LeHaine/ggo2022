@@ -27,8 +27,10 @@ class Assets private constructor(context: Context) : Disposable {
     }
 
     private val heartBeating by assets.prepare { atlas.getAnimation("heartBeating") }
+    private val levelUp by assets.prepare { atlas.getAnimation("levelUp") }
 
     private val boneManIdle by assets.prepare { atlas.getAnimation("boneManIdle", 250.milliseconds) }
+    private val boneManPunish by assets.prepare { atlas.getAnimation("boneManPunish", 150.milliseconds) }
 
     private val heroIdle by assets.prepare { atlas.getAnimation("heroIdle") }
     private val heroWalk by assets.prepare { atlas.getAnimation("heroWalk") }
@@ -118,8 +120,10 @@ class Assets private constructor(context: Context) : Disposable {
         val pixelFont: BitmapFont get() = INSTANCE.pixelFont
 
         val heartBeating: Animation<TextureSlice> get() = INSTANCE.heartBeating
+        val levelUp: Animation<TextureSlice> get() = INSTANCE.levelUp
 
         val boneManIdle: Animation<TextureSlice> get() = INSTANCE.boneManIdle
+        val boneManPunish: Animation<TextureSlice> get() = INSTANCE.boneManPunish
 
         val heroIdle: Animation<TextureSlice> get() = INSTANCE.heroIdle
         val heroWalk: Animation<TextureSlice> get() = INSTANCE.heroWalk
