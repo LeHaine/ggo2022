@@ -384,11 +384,14 @@ class GameScene(context: Context) :
             showDebugInfo = !showDebugInfo
         }
 
+        // TODO remove this before final release
         if (input.isKeyPressed(Key.SHIFT_LEFT) && input.isKeyJustPressed(Key.U)) {
             state.boneSpearUnlocked = true
             state.dashUnlocked = true
             state.shootingUnlocked = true
             state.handOfDeathUnlocked = true
+            state.soulsCaptured = 10000
+            state.unlockIdx = 3
         }
 
         if (setupController) {
@@ -444,18 +447,26 @@ class GameScene(context: Context) :
             }
 
             wait(3.seconds) { container.destroy() }
-            wait(1000.milliseconds) {
-                boneMan?.sprite?.playOnce(Assets.boneManPunish)
-            }
-            wait(Assets.boneManPunish.duration) {
-                state.unlockNextSkill()
-                hero.levelUp()
-                hero.camera.shake(100.milliseconds, 1f * Config.cameraShakeMultiplier)
-            }
-            wait(3.seconds)
-            action {
-                upgradesDialog.refresh()
-                upgradesDialog.enabled = true
+
+            if (state.unlockIdx < 3) {
+                wait(1000.milliseconds) {
+                    boneMan?.sprite?.playOnce(Assets.boneManPunish)
+                }
+                wait(Assets.boneManPunish.duration) {
+                    state.unlockNextSkill()
+                    hero.levelUp()
+                    hero.camera.shake(100.milliseconds, 1f * Config.cameraShakeMultiplier)
+
+                }
+                wait(3.seconds)
+                action {
+                    upgradesDialog.refresh()
+                    upgradesDialog.enabled = true
+                }
+            } else {
+                action {
+                    changeTo(GameOverScene(true, context))
+                }
             }
         }
     }
@@ -509,16 +520,16 @@ class GameScene(context: Context) :
             }
             wait(1500.milliseconds) {
                 // TODO destroy these when lib updates
-//                quotaLabel.destroy()
-//                metaLabel.destroy()
                 quotaLabel.enabled = false
                 metaLabel.enabled = false
+                quotaLabel.destroy()
+                metaLabel.destroy()
                 quotasFailed.addTo(labelColumn)
             }
             wait(3.seconds) {
                 container.destroy()
                 if (state.quotasFailed == 4) {
-                    changeTo(MenuScene(context))
+                    changeTo(GameOverScene(false, context))
                 } else {
                     loadLevel(0) { actionCreator = null }
                 }

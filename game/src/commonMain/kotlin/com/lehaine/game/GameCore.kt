@@ -9,11 +9,9 @@ import com.lehaine.rune.engine.Rune
 
 class GameCore(context: Context) : Rune(context) {
 
-
     init {
         Logger.setLevels(Logger.Level.DEBUG)
     }
-
 
     override suspend fun Context.create() {
         val firstRun = storageVfs["firstRun"].readKeystore() == null
