@@ -37,6 +37,7 @@ import com.lehaine.rune.engine.node.entityCamera2D
 import com.lehaine.rune.engine.node.pixelPerfectSlice
 import com.lehaine.rune.engine.node.pixelSmoothFrameBuffer
 import com.lehaine.rune.engine.node.renderable.animatedSprite
+import com.lehaine.rune.engine.node.renderable.entity.cd
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 import kotlin.time.Duration
@@ -194,7 +195,30 @@ class GameScene(context: Context) :
                         name = "Entities"
                         ySort = true
 
-                        hero = hero(ldtkLevel.entities("Hero")[0], level, entityCamera, projectiles)
+                        hero = hero(ldtkLevel.entities("Hero")[0], level, entityCamera, projectiles) {
+                            onDeath += {
+                                parent = foreground
+                                ui.apply {
+                                    fadeMask(
+                                        250.milliseconds,
+                                        1.seconds,
+                                        Color.fromHex("#994551"),
+                                        FadeMask.Fade.IN
+                                    ) {
+                                        onUpdate += {
+                                            if (width == 0f && height == 0f) {
+                                                // TODO quick hack to get around child not being measured
+                                                anchorRight = 0f
+                                                anchorRight = 1f
+                                            }
+                                        }
+                                    }
+                                }
+                                cd("fade", 2500.milliseconds) {
+                                    loadLevel(1) { onEnterBoneMansOffice() }
+                                }
+                            }
+                        }
                         entityCamera.follow(hero, true)
 
                         if (ldtkLevel.entitiesByIdentifier.contains("BoneMan")) {
@@ -316,7 +340,13 @@ class GameScene(context: Context) :
                 }
             }
 
-            fadeMask(delay = 250.milliseconds, fadeTime = 1.seconds)
+            fadeMask(
+                delay = 250.milliseconds,
+                fadeTime = 1.seconds,
+                fadeColor = if (levelIdx == 1) Color.fromHex("#994551") else Color.fromHex("#332e30")
+            ) {
+                onFinish += { destroy() }
+            }
         }
 
 

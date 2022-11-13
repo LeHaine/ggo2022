@@ -67,7 +67,7 @@ class KeyboardSelectScene(
                 }
             }
         }
-        fadeMask(delay = 250.milliseconds, fadeTime = 1.seconds)
+        fadeMask(delay = 250.milliseconds, fadeTime = 1.seconds) { onFinish += { destroy() } }
     }
 
     private fun selectKeyboard(keyboardType: Config.KeyboardType) {

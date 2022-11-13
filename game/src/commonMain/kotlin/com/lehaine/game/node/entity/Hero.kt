@@ -21,6 +21,7 @@ import com.lehaine.littlekt.math.geom.sine
 import com.lehaine.littlekt.math.isFuzzyZero
 import com.lehaine.littlekt.util.datastructure.Pool
 import com.lehaine.littlekt.util.fastForEach
+import com.lehaine.littlekt.util.signal
 import com.lehaine.rune.engine.GameLevel
 import com.lehaine.rune.engine.node.EntityCamera2D
 import com.lehaine.rune.engine.node.renderable.animatedSprite
@@ -49,8 +50,9 @@ fun Node.hero(
 class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, projectiles: Node2D) :
     ObliqueEntity(level, Config.GRID_CELL_SIZE.toFloat()), Effectible {
 
+    val onDeath = signal()
     val damage = 5
-    var health = 4
+    var health = 1
 
     private val orbProjectilePool: Pool<OrbProjectile> by lazy {
         Pool(10) {
@@ -86,7 +88,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
         anchorY = 1f
 
         onFrameChanged += {
-            if(it % 4 == 0) {
+            if (it % 4 == 0) {
                 fx.levelUp(centerX, attachY)
             }
         }
@@ -105,6 +107,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
         anchorY = data.pivotY
         toGridPosition(data.cx, data.cy)
         sprite.apply {
+            registerState(Assets.heroAir, 110) { health <= 0 && !velocityZ.isFuzzyZero(0.05f) }
             registerState(Assets.heroDash, 15) { cd.has("dash") }
             registerState(Assets.heroWalk, 5) {
                 !velocityX.isFuzzyZero(0.05f) || !velocityY.isFuzzyZero(
@@ -137,6 +140,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
         xMoveStrength = 0f
         yMoveStrength = 0f
 
+        if (health <= 0) return
         dir = dirToMouse
 
         if (controller.down(GameInput.SWING)) {
@@ -247,7 +251,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
     }
 
     fun hit(from: Angle) {
-        if (hasEffect(Effect.Invincible)) return
+        if (hasEffect(Effect.Invincible) || health <= 0) return
         health--
         addEffect(Effect.Invincible, 2.seconds)
         velocityX += 0.25f * from.cosine
@@ -258,6 +262,10 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
         sprite.color.b = 0f
         stretchY = 1.25f
         cd.timeout("hit", 250.milliseconds)
+        if (health <= 0) {
+            velocityX += 0.5f * -dir
+            velocityZ += 0.5f
+        }
     }
 
     private fun orbAttack() {
@@ -292,7 +300,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
         addEffect(Effect.Stun, 300.milliseconds)
     }
 
-    fun boneSpearAttack(tx: Float, ty: Float) {
+    private fun boneSpearAttack(tx: Float, ty: Float) {
         val projectile = boneSpearProjectile.alloc()
         projectile.globalX = tx
         projectile.globalY = ty
@@ -300,7 +308,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
     }
 
 
-    fun performHandOfDeath() {
+    private fun performHandOfDeath() {
         if (Mob.ALL.isEmpty()) return
 
         repeat(5) {
@@ -322,6 +330,18 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
         when (projectile) {
             is SwipeProjectile -> swipeProjectilePool.free(projectile)
             is BoneSpearProjectile -> boneSpearProjectile.free(projectile)
+        }
+    }
+
+    override fun onLand() {
+        super.onLand()
+        if (health <= 0) {
+            velocityZ = 0f
+            sprite.playOnce(Assets.heroDie)
+            sprite.play(Assets.heroDead, 5.seconds, true)
+            cd("die", 1.seconds) {
+                onDeath.emit()
+            }
         }
     }
 

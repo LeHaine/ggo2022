@@ -37,6 +37,11 @@ class Assets private constructor(context: Context) : Disposable {
     private val heroAttack by assets.prepare { atlas.getAnimation("heroAttack") }
     private val heroDash by assets.prepare { atlas.getAnimation("heroSoar") }
     private val heroSwing by assets.prepare { atlas.getAnimation("heroSwing") }
+    private val heroDie by assets.prepare { atlas.getAnimation("heroDie") }
+    private val heroDead by assets.prepare {
+        Animation(listOf(atlas.getByPrefix("heroDie1").slice), listOf(0), listOf(100.milliseconds))
+    }
+    private val heroAir by assets.prepare { atlas.getAnimation("heroAir") }
 
     private val swipeAttack1 by assets.prepare { atlas.getAnimation("swipeAttack1", 75.milliseconds) }
     private val swipeAttack2 by assets.prepare { atlas.getAnimation("swipeAttack2", 75.milliseconds) }
@@ -130,6 +135,9 @@ class Assets private constructor(context: Context) : Disposable {
         val heroAttack: Animation<TextureSlice> get() = INSTANCE.heroAttack
         val heroDash: Animation<TextureSlice> get() = INSTANCE.heroDash
         val heroSwing: Animation<TextureSlice> get() = INSTANCE.heroSwing
+        val heroDie: Animation<TextureSlice> get() = INSTANCE.heroDie
+        val heroDead: Animation<TextureSlice> get() = INSTANCE.heroDead
+        val heroAir: Animation<TextureSlice> get() = INSTANCE.heroAir
 
         val swipeAttack1: Animation<TextureSlice> get() = INSTANCE.swipeAttack1
         val swipeAttack2: Animation<TextureSlice> get() = INSTANCE.swipeAttack2
