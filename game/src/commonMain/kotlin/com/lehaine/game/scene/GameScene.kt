@@ -448,7 +448,7 @@ class GameScene(context: Context) :
 
             wait(3.seconds) { container.destroy() }
 
-            if (state.unlockIdx < 3) {
+            if (state.unlockIdx < 4) {
                 wait(1000.milliseconds) {
                     boneMan?.sprite?.playOnce(Assets.boneManPunish)
                 }
