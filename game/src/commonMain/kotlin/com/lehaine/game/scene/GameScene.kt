@@ -13,6 +13,7 @@ import com.lehaine.littlekt.file.ldtk.LDtkMapLoader
 import com.lehaine.littlekt.file.vfs.readLDtkMapLoader
 import com.lehaine.littlekt.file.vfs.readPixmap
 import com.lehaine.littlekt.graph.node.*
+import com.lehaine.littlekt.graph.node.component.AlignMode
 import com.lehaine.littlekt.graph.node.component.HAlign
 import com.lehaine.littlekt.graph.node.component.NinePatchDrawable
 import com.lehaine.littlekt.graph.node.node2d.Node2D
@@ -27,7 +28,6 @@ import com.lehaine.littlekt.input.GameAxis
 import com.lehaine.littlekt.input.GameButton
 import com.lehaine.littlekt.input.Key
 import com.lehaine.littlekt.input.Pointer
-import com.lehaine.littlekt.math.floor
 import com.lehaine.littlekt.util.toString
 import com.lehaine.littlekt.util.viewport.ExtendViewport
 import com.lehaine.rune.engine.ActionCreator
@@ -39,7 +39,6 @@ import com.lehaine.rune.engine.node.pixelSmoothFrameBuffer
 import com.lehaine.rune.engine.node.renderable.animatedSprite
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
-import kotlin.ranges.random
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
@@ -286,7 +285,7 @@ class GameScene(context: Context) :
                 enabled = false
                 onUpgradeSelect += {
                     enabled = false
-                    loadLevel(0)
+                    loadLevel(0) { actionCreator = null }
                 }
             }
 
@@ -344,7 +343,7 @@ class GameScene(context: Context) :
         }
 
         if (input.isKeyJustPressed(Key.NUM1)) {
-            loadLevel(0)
+            loadLevel(0) { actionCreator = null }
 
         } else if (input.isKeyJustPressed(Key.NUM2)) {
             loadLevel(1) { onEnterBoneMansOffice() }
@@ -375,40 +374,103 @@ class GameScene(context: Context) :
     }
 
     private fun onEnterBoneMansOffice() {
-        val label = Label().apply {
-            text = "Punishment\nUpgraded!"
+        //   performQuotaMetAnimation()
+        performQuotaFailedAnimation()
+    }
+
+    private fun performQuotaMetAnimation() {
+        val labelColumn = VBoxContainer().apply {
+            separation = 50
+            align = AlignMode.CENTER
+            anchor(Control.AnchorLayout.CENTER)
+        }
+        val container = CenterContainer().apply {
+            anchorBottom = 1f
+            anchorRight = 1f
+            addChild(labelColumn)
+        }.addTo(ui)
+        val quotaLabel = Label().apply {
+            text = "QUOTA"
+            visible = false
+            fontScaleX = 5f
+            fontScaleY = 5f
             horizontalAlign = HAlign.CENTER
-            fontScaleX = 3f
-            fontScaleY = 3f
-            onReady += {
-                x = gameCanvas.width * 0.5f - width * 0.5f
-            }
-            fontColor = Color.fromHex("#f2e6e6")
-        }.addTo(gameCanvas)
+        }.addTo(labelColumn)
+
+        val metaLabel = Label().apply {
+            text = "MET"
+            visible = false
+            fontScaleX = 5f
+            fontScaleY = 5f
+            horizontalAlign = HAlign.CENTER
+        }.addTo(labelColumn)
 
         actionCreator = ActionCreator {
-            wait(1200.milliseconds) {
-                label.fontScaleX = 1f
-                label.fontScaleY = 1f
+            wait(1000.milliseconds) {
+                quotaLabel.visible = true
+                hero.camera.shake(100.milliseconds, 1f * Config.cameraShakeMultiplier)
+            }
+            wait(1000.milliseconds) {
+                metaLabel.visible = true
+                hero.camera.shake(100.milliseconds, 1f * Config.cameraShakeMultiplier)
             }
 
-            repeat(15) {
-                wait((150..300).random().milliseconds) {
-                    var scale = (2..4).random().toFloat()
-                    label.x = (gameCanvas.width * 0.5f - label.width * 0.5f).about(0.1f).floor()
-                    label.y = (gameCanvas.height * 0.5f - label.height * 0.5f).about(0.1f).floor()
-                    if (it % 3 == 0) scale = -scale
-                    label.scaleX = scale
-                    label.scaleY = scale
-                }
-            }
-            action { label.destroy() }
+            wait(3.seconds)
+            action { container.destroy() }
             wait(1000.milliseconds)
             action {
                 upgradesDialog.refresh()
                 upgradesDialog.enabled = true
             }
+        }
+    }
 
+    private fun performQuotaFailedAnimation() {
+        val labelColumn = VBoxContainer().apply {
+            separation = 50
+            align = AlignMode.CENTER
+            anchor(Control.AnchorLayout.CENTER)
+        }
+        val container = CenterContainer().apply {
+            anchorBottom = 1f
+            anchorRight = 1f
+            addChild(labelColumn)
+        }.addTo(ui)
+        val quotaLabel = Label().apply {
+            text = "QUOTA"
+            visible = false
+            fontScaleX = 5f
+            fontScaleY = 5f
+            fontColor = Color.fromHex("#f2e6e6")
+            horizontalAlign = HAlign.CENTER
+        }.addTo(labelColumn)
+
+        val metaLabel = Label().apply {
+            text = "FAILED"
+            visible = false
+            fontScaleX = 5f
+            fontScaleY = 5f
+            fontColor = Color.fromHex("#994551")
+            horizontalAlign = HAlign.CENTER
+        }.addTo(labelColumn)
+
+        actionCreator = ActionCreator {
+            wait(1000.milliseconds) {
+                quotaLabel.visible = true
+                hero.camera.shake(100.milliseconds, 1f * Config.cameraShakeMultiplier)
+            }
+            wait(1000.milliseconds) {
+                metaLabel.visible = true
+                hero.camera.shake(100.milliseconds, 1f * Config.cameraShakeMultiplier)
+            }
+
+            wait(3.seconds)
+            action { container.destroy() }
+            wait(1000.milliseconds)
+            action {
+                upgradesDialog.refresh()
+                upgradesDialog.enabled = true
+            }
         }
     }
 

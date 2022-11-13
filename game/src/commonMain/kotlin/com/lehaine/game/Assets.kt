@@ -8,6 +8,7 @@ import com.lehaine.littlekt.graph.node.component.NinePatchDrawable
 import com.lehaine.littlekt.graph.node.component.Theme
 import com.lehaine.littlekt.graph.node.component.createDefaultTheme
 import com.lehaine.littlekt.graph.node.ui.Button
+import com.lehaine.littlekt.graph.node.ui.Label
 import com.lehaine.littlekt.graph.node.ui.Panel
 import com.lehaine.littlekt.graph.node.ui.ProgressBar
 import com.lehaine.littlekt.graphics.*
@@ -82,6 +83,17 @@ class Assets private constructor(context: Context) : Disposable {
                         ProgressBar.themeVars.fg to NinePatchDrawable(pixel9p).apply {
                             modulate = Color.fromHex("#994551")
                         }
+                    ),
+                ),
+                extraColors = mapOf(
+                    "Label" to mapOf(
+                        Label.themeVars.fontColor to Color.fromHex("#f2e6e6")
+                    ),
+                    "Button" to mapOf(
+                        Button.themeVars.fontColor to Color.fromHex("#f2e6e6")
+                    ),
+                    "ProgressBar" to mapOf(
+                        ProgressBar.themeVars.fontColor to Color.fromHex("#f2e6e6")
                     )
                 ),
                 defaultFont = pixelFont
