@@ -52,10 +52,10 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
 
     val onDeath = signal()
     val damage = 5
-    var health = 1
+    var health = 4
 
     private val orbProjectilePool: Pool<OrbProjectile> by lazy {
-        Pool(10) {
+        Pool(3) {
             OrbProjectile(this, level).apply { enabled = false }.addTo(projectiles)
         }
     }
