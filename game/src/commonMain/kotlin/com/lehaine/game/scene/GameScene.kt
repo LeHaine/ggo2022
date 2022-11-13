@@ -204,15 +204,7 @@ class GameScene(context: Context) :
                                         1.seconds,
                                         Color.fromHex("#994551"),
                                         FadeMask.Fade.IN
-                                    ) {
-                                        onUpdate += {
-                                            if (width == 0f && height == 0f) {
-                                                // TODO quick hack to get around child not being measured
-                                                anchorRight = 0f
-                                                anchorRight = 1f
-                                            }
-                                        }
-                                    }
+                                    )
                                 }
                                 cd("fade", 2500.milliseconds) {
                                     loadLevel(1) { onEnterBoneMansOffice() }
@@ -406,8 +398,12 @@ class GameScene(context: Context) :
     }
 
     private fun onEnterBoneMansOffice() {
-        performQuotaMetAnimation()
-        //performQuotaFailedAnimation()
+        if (state.soulsCaptured >= state.nextUnlockCost) {
+            performQuotaMetAnimation()
+        } else {
+            state.quotasFailed++
+            performQuotaFailedAnimation()
+        }
     }
 
     private fun performQuotaMetAnimation() {
@@ -452,7 +448,7 @@ class GameScene(context: Context) :
                 boneMan?.sprite?.playOnce(Assets.boneManPunish)
             }
             wait(Assets.boneManPunish.duration) {
-                state.shootingUnlocked = true
+                state.unlockNextSkill()
                 hero.levelUp()
                 hero.camera.shake(100.milliseconds, 1f * Config.cameraShakeMultiplier)
             }
@@ -493,6 +489,15 @@ class GameScene(context: Context) :
             horizontalAlign = HAlign.CENTER
         }.addTo(labelColumn)
 
+        val quotasFailed = Label().apply {
+            name = "quotas"
+            text = "Quotas failed ${state.quotasFailed}/4"
+            fontScaleX = 4f
+            fontScaleY = 4f
+            fontColor = Color.fromHex("#994551")
+            horizontalAlign = HAlign.CENTER
+        }
+
         actionCreator = ActionCreator {
             wait(1000.milliseconds) {
                 quotaLabel.visible = true
@@ -502,14 +507,21 @@ class GameScene(context: Context) :
                 metaLabel.visible = true
                 hero.camera.shake(100.milliseconds, 1f * Config.cameraShakeMultiplier)
             }
-
+            wait(1500.milliseconds) {
+                // TODO destroy these when lib updates
+//                quotaLabel.destroy()
+//                metaLabel.destroy()
+                quotaLabel.enabled = false
+                metaLabel.enabled = false
+                quotasFailed.addTo(labelColumn)
+            }
             wait(3.seconds) {
                 container.destroy()
-            }
-            wait(1000.milliseconds)
-            action {
-                upgradesDialog.refresh()
-                upgradesDialog.enabled = true
+                if (state.quotasFailed == 4) {
+                    changeTo(MenuScene(context))
+                } else {
+                    loadLevel(0) { actionCreator = null }
+                }
             }
         }
     }
