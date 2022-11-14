@@ -15,7 +15,7 @@ sealed class Upgrade(
     open val soulsChange: Float = 0f
 
     fun collect() {
-        state.soulCollectibleDropMultiplier += soulsChange
+        state.soulItemDropMultiplier += soulsChange
         onCollect()
     }
 

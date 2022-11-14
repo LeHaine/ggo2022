@@ -5,7 +5,7 @@ import com.lehaine.game.Config
 import com.lehaine.game.Level
 import com.lehaine.game.node.entity.Effectible
 import com.lehaine.game.node.entity.Hero
-import com.lehaine.game.node.entity.SoulCollectible
+import com.lehaine.game.node.entity.SoulItem
 import com.lehaine.game.node.game
 import com.lehaine.littlekt.math.geom.Angle
 import com.lehaine.littlekt.util.signal1v
@@ -122,10 +122,10 @@ abstract class Mob(val hero: Hero, override val level: Level) : ObliqueEntity(le
 
     abstract fun explode()
     protected fun spawnDrop() {
-        val multiplier = game.state.soulCollectibleDropMultiplier
+        val multiplier = game.state.soulItemDropMultiplier
         val totalDropped = ((minSoulsDrop..maxSoulsDrop).random() * multiplier).toInt()
         repeat(totalDropped) {
-            SoulCollectible.pool.alloc().spawn(globalX, globalY)
+            SoulItem.pool.alloc().spawn(globalX, globalY)
         }
     }
 

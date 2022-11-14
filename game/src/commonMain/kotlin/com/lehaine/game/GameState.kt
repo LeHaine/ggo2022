@@ -1,5 +1,7 @@
 package com.lehaine.game
 
+import com.lehaine.game.data.ExpTable
+
 /**
  * @author Colton Daily
  * @date 11/10/2022
@@ -11,11 +13,12 @@ class GameState {
     var monsterRespawnMultiplier = 1f
     var monsterSpeedMultiplier = 1f
 
-    var soulCollectibleDropMultiplier = 1f
+    var soulItemDropMultiplier = 1f
 
     var quotasFailed = 0
     var soulsCaptured = 0
 
+    val exp = ExpTable()
 
     val soulsRequired = listOf(100, 200, 300, 400)
 

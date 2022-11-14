@@ -3,6 +3,7 @@ package com.lehaine.game.node.entity
 import com.lehaine.game.Assets
 import com.lehaine.game.Config
 import com.lehaine.game.GameInput
+import com.lehaine.game.data.ExpTable
 import com.lehaine.game.node.controller
 import com.lehaine.game.node.entity.mob.Effect
 import com.lehaine.game.node.entity.mob.Mob

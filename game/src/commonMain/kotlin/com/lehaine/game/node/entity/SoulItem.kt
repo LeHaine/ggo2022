@@ -19,7 +19,7 @@ import kotlin.time.Duration.Companion.milliseconds
  * @author Colton Daily
  * @date 11/10/2022
  */
-class SoulCollectible(level: Level) : ObliqueEntity(level, Config.GRID_CELL_SIZE.toFloat()) {
+class SoulItem(level: Level) : ObliqueEntity(level, Config.GRID_CELL_SIZE.toFloat()) {
     private val pickUpRange: Float = 5f
     private val speed = 0.075f
     private var xMoveStrength = 0f
@@ -52,6 +52,7 @@ class SoulCollectible(level: Level) : ObliqueEntity(level, Config.GRID_CELL_SIZE
 
             if (distPxTo(game.hero) < 8f) {
                 game.state.soulsCaptured++
+                game.state.exp.add(3)
                 xMoveStrength = 0f
                 yMoveStrength = 0f
                 enabled = false
@@ -84,12 +85,12 @@ class SoulCollectible(level: Level) : ObliqueEntity(level, Config.GRID_CELL_SIZE
     }
 
     companion object {
-        private var _pool: Pool<SoulCollectible>? = null
+        private var _pool: Pool<SoulItem>? = null
         val pool get() = _pool!!
 
         fun initPool(level: Level, entities: Node2D) {
             _pool = Pool(100) {
-                SoulCollectible(level).apply { enabled = false }.addTo(entities)
+                SoulItem(level).apply { enabled = false }.addTo(entities)
             }
         }
     }

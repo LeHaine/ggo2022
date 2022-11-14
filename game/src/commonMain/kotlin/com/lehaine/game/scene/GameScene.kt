@@ -3,7 +3,7 @@ package com.lehaine.game.scene
 import com.lehaine.game.*
 import com.lehaine.game.node.entity.BoneMan
 import com.lehaine.game.node.entity.Hero
-import com.lehaine.game.node.entity.SoulCollectible
+import com.lehaine.game.node.entity.SoulItem
 import com.lehaine.game.node.entity.hero
 import com.lehaine.game.node.level.TestSpawner
 import com.lehaine.game.node.ui.*
@@ -220,7 +220,7 @@ class GameScene(context: Context) :
                         }
                     }
 
-                    SoulCollectible.initPool(level, entities)
+                    SoulItem.initPool(level, entities)
 
                     projectiles.addTo(this)
 
@@ -299,11 +299,23 @@ class GameScene(context: Context) :
                 }
             }
 
+
+            paddedContainer {
+                padding(10)
+                anchor(Control.AnchorLayout.CENTER_TOP)
+                progressBar {
+                    minWidth = 200f
+                    onUpdate += {
+                        ratio = state.exp.ratioToNextLevel
+                    }
+                }
+            }
+
             upgradesDialog = upgradesDialog(state) {
                 enabled = false
                 onUpgradeSelect += {
                     enabled = false
-                    loadLevel(0) { actionCreator = null }
+                    gameCanvas.updateInterval = 1
                 }
             }
 
@@ -341,6 +353,11 @@ class GameScene(context: Context) :
             }
         }
 
+        state.exp.onLevelUp += { level, gained ->
+            gameCanvas.updateInterval = 0
+            upgradesDialog.enabled = true
+            upgradesDialog.refresh()
+        }
 
         fx.createParticleBatchNodes()
     }
@@ -361,7 +378,7 @@ class GameScene(context: Context) :
         }
 
         if (input.isKeyJustPressed(Key.R)) {
-            destroyRoot()
+            root.destroyAllChildren()
             root.createNodes()
             resize(graphics.width, graphics.height)
         }
@@ -458,10 +475,8 @@ class GameScene(context: Context) :
                     hero.camera.shake(100.milliseconds, 1f * Config.cameraShakeMultiplier)
 
                 }
-                wait(3.seconds)
-                action {
-                    upgradesDialog.refresh()
-                    upgradesDialog.enabled = true
+                wait(1500.milliseconds) {
+                    loadLevel(0) { actionCreator = null }
                 }
             } else {
                 action {
@@ -519,9 +534,6 @@ class GameScene(context: Context) :
                 hero.camera.shake(100.milliseconds, 1f * Config.cameraShakeMultiplier)
             }
             wait(1500.milliseconds) {
-                // TODO destroy these when lib updates
-                quotaLabel.enabled = false
-                metaLabel.enabled = false
                 quotaLabel.destroy()
                 metaLabel.destroy()
                 quotasFailed.addTo(labelColumn)
@@ -544,7 +556,7 @@ class GameScene(context: Context) :
                 val world = it.loadMap(false, idx)
                 ldtkLevel = world.levels[0]
 
-                destroyRoot()
+                root.destroyAllChildren()
                 root.createNodes()
                 resize(graphics.width, graphics.height)
                 onLaunch()

@@ -1,7 +1,7 @@
 package com.lehaine.game.node.ui
 
-import com.lehaine.game.data.createUpgrades
 import com.lehaine.game.GameState
+import com.lehaine.game.data.createUpgrades
 import com.lehaine.littlekt.graph.node.Node
 import com.lehaine.littlekt.graph.node.node
 import com.lehaine.littlekt.graph.node.ui.*
@@ -17,7 +17,7 @@ fun Node.upgradesDialog(state: GameState, callback: UpgradesDialog.() -> Unit = 
 class UpgradesDialog(private val state: GameState) : Control() {
 
     private val upgrades = createUpgrades(state)
-    private val buttonColumn: VBoxContainer
+    private var buttonColumn: VBoxContainer
 
     val onUpgradeSelect = signal()
 
@@ -39,9 +39,7 @@ class UpgradesDialog(private val state: GameState) : Control() {
     }
 
     fun refresh() {
-        while (buttonColumn.childCount > 0) {
-            buttonColumn.removeChildAt(0)
-        }
+        buttonColumn.destroyAllChildren()
         buttonColumn.apply {
             repeat(3) {
                 val upgrade = upgrades.random()

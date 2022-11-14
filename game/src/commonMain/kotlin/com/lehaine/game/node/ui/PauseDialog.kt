@@ -52,10 +52,9 @@ class PauseDialog : CenterContainer() {
                     }
 
                     button {
-                        visible = false
                         onReady += {
-                            if (context.platform == Context.Platform.DESKTOP) {
-                                visible = true
+                            if (context.platform != Context.Platform.DESKTOP) {
+                                enabled = false
                             }
                         }
                         text = "Quit"
