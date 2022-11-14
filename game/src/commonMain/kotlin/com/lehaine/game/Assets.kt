@@ -21,8 +21,14 @@ class Assets private constructor(context: Context) : Disposable {
     private val atlas: TextureAtlas by assets.load(context.resourcesVfs["tiles.atlas.json"])
     private val pixelFont: BitmapFont by assets.prepare {
         assets.loadSuspending<BitmapFont>(
-            context.resourcesVfs["m5x7_16_outline.fnt"],
-            BitmapFontAssetParameter(preloadedTextures = listOf(atlas["m5x7_16_outline_0"].slice))
+            context.resourcesVfs["monogramextended_16.fnt"],
+            BitmapFontAssetParameter(preloadedTextures = listOf(atlas["monogramextended_16_0"].slice))
+        ).content
+    }
+    private val pixelFontOutline: BitmapFont by assets.prepare {
+        assets.loadSuspending<BitmapFont>(
+            context.resourcesVfs["monogramextended_16_outline.fnt"],
+            BitmapFontAssetParameter(preloadedTextures = listOf(atlas["monogramextended_16_outline_0"].slice))
         ).content
     }
 
@@ -123,6 +129,7 @@ class Assets private constructor(context: Context) : Disposable {
 
         val atlas: TextureAtlas get() = INSTANCE.atlas
         val pixelFont: BitmapFont get() = INSTANCE.pixelFont
+        val pixelFontOutline: BitmapFont get() = INSTANCE.pixelFontOutline
 
         val heartBeating: Animation<TextureSlice> get() = INSTANCE.heartBeating
         val levelUp: Animation<TextureSlice> get() = INSTANCE.levelUp

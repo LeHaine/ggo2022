@@ -439,6 +439,7 @@ class GameScene(context: Context) :
         }.addTo(ui)
         val quotaLabel = Label().apply {
             text = "QUOTA"
+            font = Assets.pixelFontOutline
             visible = false
             fontScaleX = 5f
             fontScaleY = 5f
@@ -447,6 +448,7 @@ class GameScene(context: Context) :
 
         val metaLabel = Label().apply {
             text = "MET"
+            font = Assets.pixelFontOutline
             visible = false
             fontScaleX = 5f
             fontScaleY = 5f
@@ -499,6 +501,7 @@ class GameScene(context: Context) :
         }.addTo(ui)
         val quotaLabel = Label().apply {
             text = "QUOTA"
+            font = Assets.pixelFontOutline
             visible = false
             fontScaleX = 5f
             fontScaleY = 5f
@@ -508,6 +511,7 @@ class GameScene(context: Context) :
 
         val metaLabel = Label().apply {
             text = "FAILED"
+            font = Assets.pixelFontOutline
             visible = false
             fontScaleX = 5f
             fontScaleY = 5f
@@ -518,6 +522,7 @@ class GameScene(context: Context) :
         val quotasFailed = Label().apply {
             name = "quotas"
             text = "Quotas failed ${state.quotasFailed}/4"
+            font = Assets.pixelFontOutline
             fontScaleX = 4f
             fontScaleY = 4f
             fontColor = Color.fromHex("#994551")
