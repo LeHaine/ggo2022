@@ -107,6 +107,30 @@ class Fx(val game: GameScene) {
         }
     }
 
+    fun chickenExplode(x: Float, y: Float) {
+        fun setParticle(p: Particle) {
+            p.xDelta = (0..2).random().asRandomSign
+            p.yDelta = (1..2).random().asRandomSign
+            p.gravityY = 0.1f.about()
+            p.friction = 0.97f.about(0.05f).coerceAtMost(1f)
+            p.rotationDelta = (0f..PI2_F).random()
+            p.data0 = y + (0..12).random().toInt()
+            p.alpha = (0.7f..1f).random()
+            p.life = (1..2).random().seconds
+            p.onUpdate = ::bloodPhysics
+        }
+        create(1) {
+            val p = allocTopNormal(Assets.atlas.getByPrefix("fxChickenSpear").slice, x, y)
+            setParticle(p)
+        }
+        create(25) {
+            val idx = Random.nextInt(3)
+            val p = allocTopNormal(Assets.atlas.getByPrefix("fxGib$idx").slice, x, y)
+            p.color.set(PURPLE)
+            setParticle(p)
+        }
+    }
+
     fun meatBallExplode(x: Float, y: Float) {
         fun setParticle(p: Particle) {
             p.xDelta = (0..2).random().asRandomSign
@@ -272,6 +296,7 @@ class Fx(val game: GameScene) {
         private val DARK_MEAT_RED = Color.fromHex("#703d57")
         private val LIGHT_PURPLE = DARK_MEAT_RED
         private val BONE_WHITE = Color.fromHex("#e3d3cf")
+        private val PURPLE = Color.fromHex("#573746")
         private val DARK_PURPLE = Color.fromHex("#422e37")
         private val BLACK = Color.fromHex("#332e30")
     }

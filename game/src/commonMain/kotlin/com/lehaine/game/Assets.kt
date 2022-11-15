@@ -65,6 +65,15 @@ class Assets private constructor(context: Context) : Disposable {
         }
     }
 
+    private val chickenSpearRun by assets.prepare { atlas.getAnimation("chickenSpearRun") }
+    private val chickenSpearHandOfDeath by assets.prepare {
+        atlas.createAnimation("chickenSpearHandOfDeathGrab") {
+            frames(0..1)
+            frames(2, frameTime = 500.milliseconds)
+            frames(3, frameTime = 1000.milliseconds)
+        }
+    }
+
     init {
         assets.prepare {
             val button9p = NinePatch(atlas.getByPrefix("uiButton").slice, 1, 1, 1, 1)
@@ -156,6 +165,8 @@ class Assets private constructor(context: Context) : Disposable {
         val meatBallSit: Animation<TextureSlice> get() = INSTANCE.meatBallSit
         val meatBallHandOfDeath: Animation<TextureSlice> get() = INSTANCE.meatBallHandOfDeath
 
+        val chickenSpearRun: Animation<TextureSlice> get() = INSTANCE.chickenSpearRun
+        val chickenSpearHandOfDeath: Animation<TextureSlice> get() = INSTANCE.chickenSpearHandOfDeath
 
         fun createInstance(context: Context, onLoad: () -> Unit): Assets {
             check(instance == null) { "Instance already created!" }

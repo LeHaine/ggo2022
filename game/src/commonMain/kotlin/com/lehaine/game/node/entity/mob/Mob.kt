@@ -9,10 +9,7 @@ import com.lehaine.game.node.entity.SoulItem
 import com.lehaine.game.node.game
 import com.lehaine.littlekt.math.geom.Angle
 import com.lehaine.littlekt.util.signal1v
-import com.lehaine.rune.engine.node.renderable.entity.ObliqueEntity
-import com.lehaine.rune.engine.node.renderable.entity.angleTo
-import com.lehaine.rune.engine.node.renderable.entity.cd
-import com.lehaine.rune.engine.node.renderable.entity.toGridPosition
+import com.lehaine.rune.engine.node.renderable.entity.*
 import com.lehaine.rune.engine.node.renderable.sprite
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
@@ -135,7 +132,7 @@ abstract class Mob(val hero: Hero, override val level: Level) : ObliqueEntity(le
             val fx = (0..level.levelWidth).random()
             val fy = (0..level.levelHeight).random()
 
-            if (level.isValid(fx, fy) && !level.hasCollision(fx, fy)) {
+            if (level.isValid(fx, fy) && !level.hasCollision(fx, fy) && hero.distGridTo(fx, fy) >= 3) {
                 toGridPosition(fx, fy)
                 scanning = false
             }

@@ -279,6 +279,22 @@ class GameScene(context: Context) :
                 anchorBottom = 1f
             }
 
+            paddedContainer {
+                paddingTop = 15
+                paddingRight = 25
+                anchor(Control.AnchorLayout.TOP_RIGHT)
+                label {
+                    text = "Quota: ${state.soulsCaptured}/${state.nextUnlockCost}"
+                    onUpdate += {
+                        text = "Quota: ${state.soulsCaptured}/${state.nextUnlockCost}"
+                        color = if (state.soulsCaptured < state.nextUnlockCost) {
+                            Color.RED
+                        } else {
+                            Color.GREEN
+                        }
+                    }
+                }
+            }
             actionBar = actionBar()
 
             column {
@@ -301,7 +317,7 @@ class GameScene(context: Context) :
 
 
             paddedContainer {
-                padding(10)
+                padding(15)
                 anchor(Control.AnchorLayout.CENTER_TOP)
                 progressBar {
                     minWidth = 200f
@@ -377,15 +393,16 @@ class GameScene(context: Context) :
             gameCanvas.updateInterval = 1
         }
 
+        // TODO remove this before final release
         if (input.isKeyJustPressed(Key.R)) {
             root.destroyAllChildren()
             root.createNodes()
             resize(graphics.width, graphics.height)
         }
 
+        // TODO remove this before final release
         if (input.isKeyJustPressed(Key.NUM1)) {
             loadLevel(0) { actionCreator = null }
-
         } else if (input.isKeyJustPressed(Key.NUM2)) {
             loadLevel(1) { onEnterBoneMansOffice() }
         }
@@ -397,6 +414,9 @@ class GameScene(context: Context) :
         if (input.isKeyJustPressed(Key.P)) {
             println(stats)
         }
+
+
+        // TODO remove this before final release
         if (input.isKeyJustPressed(Key.ENTER)) {
             showDebugInfo = !showDebugInfo
         }
