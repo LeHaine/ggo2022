@@ -8,13 +8,14 @@ import com.lehaine.game.node.entity.mob.MeatBall
 import com.lehaine.game.node.entity.mob.Mob
 import com.lehaine.littlekt.util.datastructure.pool
 import kotlin.time.Duration.Companion.minutes
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * @author Colton Daily
  * @date 11/4/2022
  */
 class TestSpawner(hero: Hero, level: Level) : MonsterSpawner() {
-    private val meatBallPool = pool(10) {
+    private val meatBallPool = pool(preallocate = 10) {
         MeatBall(hero, level).apply {
             onDeath += {
                 it.reset()
@@ -23,7 +24,7 @@ class TestSpawner(hero: Hero, level: Level) : MonsterSpawner() {
         }
     }
 
-    private val chickenSpearPool = pool(10) {
+    private val chickenSpearPool = pool(preallocate = 10) {
         ChickenSpear(hero, level).apply {
             onDeath += {
                 it.reset()
@@ -36,16 +37,19 @@ class TestSpawner(hero: Hero, level: Level) : MonsterSpawner() {
         addEvent {
             oneTime = false
             endAt = 1.minutes
+            actionTimer = 10.seconds
             actionCondition = {
-                Mob.ALL.size < 5
+                Mob.ALL.size < 100
             }
             action = {
-                val mob = chickenSpearPool.alloc()
+                repeat(10) {
+                    val mob = chickenSpearPool.alloc()
 
-                mob.apply {
-                    teleportToRandomSpotAroundHero()
-                }.also {
-                    spawnMob(it)
+                    mob.apply {
+                        teleportToRandomSpotAroundHero()
+                    }.also {
+                        spawnMob(it)
+                    }
                 }
             }
         }

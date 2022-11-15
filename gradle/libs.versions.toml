@@ -5,10 +5,10 @@ plugin-kotlin = "1.7.20"
 kotlinx-html = "0.7.2"
 kotlinx-coroutines = "1.6.4"
 
-# 5812f4a
-littlekt = "0.6.0.5812f4a-SNAPSHOT"
-# 6201584
-rune="0.0.1.6201584-SNAPSHOT"
+# 7c46b1e
+littlekt = "0.6.0.7c46b1e-SNAPSHOT"
+# 4f5d5bd
+rune="0.0.1.4f5d5bd-SNAPSHOT"
 
 [libraries]
 plugin-android = { module = "com.android.tools.build:gradle", version.ref = "plugin-android" }

@@ -66,6 +66,7 @@ open class MonsterSpawner : Node() {
 
     override fun update(dt: Duration) {
         super.update(dt)
+        cd.update(dt)
         timeElapsed += dt
         events.fastForEach { event ->
             while (!event.finished
