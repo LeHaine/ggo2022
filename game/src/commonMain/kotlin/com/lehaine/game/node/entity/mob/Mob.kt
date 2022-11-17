@@ -85,7 +85,7 @@ abstract class Mob(val hero: Hero, override val level: Level) : ObliqueEntity(le
     }
 
     open fun hit(damage: Int, from: Angle) {
-        if (hasEffect(Effect.Invincible)) return
+        if (hasEffect(Effect.Invincible) || health <= 0) return
 
         health -= damage
         lastHitAngle = from
@@ -93,6 +93,7 @@ abstract class Mob(val hero: Hero, override val level: Level) : ObliqueEntity(le
         sprite.color.g = 0f
         sprite.color.b = 0f
         stretchY = 1.25f
+        Assets.sfxHits.random().play(0.25f)
         cd.timeout("hit", 250.milliseconds)
     }
 
@@ -115,6 +116,14 @@ abstract class Mob(val hero: Hero, override val level: Level) : ObliqueEntity(le
         velocityY = 0f
 
         reset()
+    }
+
+    override fun onLand() {
+        super.onLand()
+        if (!cd.has("landed")) {
+            Assets.sfxLands.random().play(0.2f)
+            cd("landed", 1000.milliseconds)
+        }
     }
 
     abstract fun explode()

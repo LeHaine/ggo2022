@@ -3,7 +3,6 @@ package com.lehaine.game.node.entity
 import com.lehaine.game.Assets
 import com.lehaine.game.Config
 import com.lehaine.game.GameInput
-import com.lehaine.game.data.ExpTable
 import com.lehaine.game.node.controller
 import com.lehaine.game.node.entity.mob.Effect
 import com.lehaine.game.node.entity.mob.Mob
@@ -136,6 +135,17 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
             sprite.color.b = hitRatio
         }
 
+
+        if (!velocityX.isFuzzyZero(0.05f) || !velocityY.isFuzzyZero(
+                0.05f
+            )
+        ) {
+            if (!cd.has("footstep")) {
+                Assets.sfxFootstep.play(0.1f)
+                cd("footstep", 450.milliseconds)
+            }
+        }
+
         if (cd.has("dash") || !canMove) return
 
         xMoveStrength = 0f
@@ -263,6 +273,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
         sprite.color.b = 0f
         stretchY = 1.25f
         cd.timeout("hit", 250.milliseconds)
+        Assets.sfxHits.random().play(0.25f)
     }
 
     private fun orbAttack() {
@@ -280,6 +291,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
             sideProjectile.globalPosition(centerX + 10f * sideAngle.cosine, centerY + 10f * sideAngle.sine)
             sideProjectile.moveTowardsAngle(sideAngle)
         }
+        Assets.sfxShoot.play(0.2f)
     }
 
     private fun swipeAttack() {
@@ -292,6 +304,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
             projectile.rotation = angle
             projectile.globalPosition(globalX + offset * angle.cosine, globalY + offset * angle.sine)
             projectile.enabled = true
+            Assets.sfxSwings.random().play(0.25f)
         }
         sprite.playOnce(Assets.heroSwing)
         addEffect(Effect.Stun, 300.milliseconds)
@@ -332,6 +345,11 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
 
     override fun onLand() {
         super.onLand()
+        if (!cd.has("landed")) {
+            Assets.sfxLands.random().play(0.2f)
+            cd("landed", 1000.milliseconds)
+        }
+
         if (health <= 0) {
             velocityZ = 0f
             sprite.playOnce(Assets.heroDie)
@@ -340,6 +358,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
                 onDeath.emit()
             }
         }
+
     }
 
     override fun isEffectible(): Boolean = health > 0

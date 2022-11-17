@@ -4,6 +4,7 @@ import com.lehaine.littlekt.AssetProvider
 import com.lehaine.littlekt.BitmapFontAssetParameter
 import com.lehaine.littlekt.Context
 import com.lehaine.littlekt.Disposable
+import com.lehaine.littlekt.audio.AudioClip
 import com.lehaine.littlekt.graph.node.component.NinePatchDrawable
 import com.lehaine.littlekt.graph.node.component.Theme
 import com.lehaine.littlekt.graph.node.component.createDefaultTheme
@@ -73,6 +74,59 @@ class Assets private constructor(context: Context) : Disposable {
             frames(3, frameTime = 1000.milliseconds)
         }
     }
+
+    private val sfxFootstep: AudioClip by assets.load(context.resourcesVfs["sfx/footstep0.wav"])
+
+    private val sfxHit0: AudioClip by assets.load(context.resourcesVfs["sfx/hit0.wav"])
+    private val sfxHit1: AudioClip by assets.load(context.resourcesVfs["sfx/hit1.wav"])
+    private val sfxHit2: AudioClip by assets.load(context.resourcesVfs["sfx/hit2.wav"])
+
+    private val sfxHits by assets.prepare {
+        listOf(
+            sfxHit0,
+            sfxHit1,
+            sfxHit2,
+        )
+    }
+
+    private val sfxLand0: AudioClip by assets.load(context.resourcesVfs["sfx/land0.wav"])
+    private val sfxLand1: AudioClip by assets.load(context.resourcesVfs["sfx/land1.wav"])
+
+    private val sfxLands by assets.prepare {
+        listOf(
+            sfxLand0,
+            sfxLand1,
+        )
+    }
+
+    private val sfxSwing0: AudioClip by assets.load(context.resourcesVfs["sfx/swing0.wav"])
+    private val sfxSwing1: AudioClip by assets.load(context.resourcesVfs["sfx/swing1.wav"])
+    private val sfxSwing2: AudioClip by assets.load(context.resourcesVfs["sfx/swing2.wav"])
+    private val sfxSwing3: AudioClip by assets.load(context.resourcesVfs["sfx/swing3.wav"])
+    private val sfxSwing4: AudioClip by assets.load(context.resourcesVfs["sfx/swing4.wav"])
+    private val sfxSwing5: AudioClip by assets.load(context.resourcesVfs["sfx/swing5.wav"])
+    private val sfxSwing6: AudioClip by assets.load(context.resourcesVfs["sfx/swing6.wav"])
+    private val sfxSwing7: AudioClip by assets.load(context.resourcesVfs["sfx/swing7.wav"])
+    private val sfxSwing8: AudioClip by assets.load(context.resourcesVfs["sfx/swing8.wav"])
+    private val sfxSwing9: AudioClip by assets.load(context.resourcesVfs["sfx/swing9.wav"])
+
+    private val sfxSwings by assets.prepare {
+        listOf(
+            sfxSwing0,
+            sfxSwing1,
+            sfxSwing2,
+            sfxSwing3,
+            sfxSwing4,
+            sfxSwing5,
+            sfxSwing6,
+            sfxSwing7,
+            sfxSwing8,
+            sfxSwing9
+        )
+    }
+
+    private val sfxCollect: AudioClip by assets.load(context.resourcesVfs["sfx/collect0.wav"])
+    private val sfxShoot: AudioClip by assets.load(context.resourcesVfs["sfx/shoot0.wav"])
 
     init {
         assets.prepare {
@@ -167,6 +221,14 @@ class Assets private constructor(context: Context) : Disposable {
 
         val chickenSpearRun: Animation<TextureSlice> get() = INSTANCE.chickenSpearRun
         val chickenSpearHandOfDeath: Animation<TextureSlice> get() = INSTANCE.chickenSpearHandOfDeath
+
+
+        val sfxFootstep get() = INSTANCE.sfxFootstep
+        val sfxSwings get() = INSTANCE.sfxSwings
+        val sfxHits get() = INSTANCE.sfxHits
+        val sfxLands get() = INSTANCE.sfxLands
+        val sfxCollect get() = INSTANCE.sfxCollect
+        val sfxShoot get() = INSTANCE.sfxShoot
 
         fun createInstance(context: Context, onLoad: () -> Unit): Assets {
             check(instance == null) { "Instance already created!" }
