@@ -158,6 +158,7 @@ class GameScene(context: Context) :
         val cursor =
             Cursor(cursorImage, (cursorImage.width * 0.5).roundToInt(), (cursorImage.height * 0.5f).roundToInt())
         context.graphics.setCursor(cursor)
+        Assets.music.play(0.05f, true)
         createNodes()
     }
 

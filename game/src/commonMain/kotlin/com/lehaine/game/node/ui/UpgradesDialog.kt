@@ -43,7 +43,7 @@ class UpgradesDialog(private val state: GameState) : Control() {
         buttonColumn.apply {
             repeat(3) {
                 val upgrade = upgrades.random()
-                button {
+                soundButton {
                     text = "${upgrade.title}: ${upgrade.description}"
                     onPressed += {
                         upgrade.collect()

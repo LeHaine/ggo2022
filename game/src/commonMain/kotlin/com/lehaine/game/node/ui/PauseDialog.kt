@@ -34,7 +34,7 @@ class PauseDialog : CenterContainer() {
                     }
 
 
-                    button {
+                    soundButton {
                         text = "Resume"
                         onReady += {
                             scene?.requestFocus(this)
@@ -44,14 +44,14 @@ class PauseDialog : CenterContainer() {
                         }
                     }
 
-                    button {
+                    soundButton {
                         text = "Settings"
                         onPressed += {
                             onSettings.emit()
                         }
                     }
 
-                    button {
+                    soundButton {
                         onReady += {
                             if (context.platform != Context.Platform.DESKTOP) {
                                 enabled = false

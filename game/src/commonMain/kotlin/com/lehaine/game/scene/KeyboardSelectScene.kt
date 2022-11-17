@@ -3,6 +3,7 @@ package com.lehaine.game.scene
 import com.lehaine.game.Assets
 import com.lehaine.game.Config
 import com.lehaine.game.node.ui.fadeMask
+import com.lehaine.game.node.ui.soundButton
 import com.lehaine.littlekt.Context
 import com.lehaine.littlekt.async.KtScope
 import com.lehaine.littlekt.graph.node.Node
@@ -44,7 +45,7 @@ class KeyboardSelectScene(
                         row {
                             separation = 10
                             align = AlignMode.CENTER
-                            button {
+                            soundButton {
                                 text = "QWERTY"
 
                                 onReady += {
@@ -55,7 +56,7 @@ class KeyboardSelectScene(
                                 }
                             }
 
-                            button {
+                            soundButton {
                                 text = "AZERTY"
 
                                 onPressed += {

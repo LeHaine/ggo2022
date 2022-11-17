@@ -5,6 +5,7 @@ import com.lehaine.littlekt.BitmapFontAssetParameter
 import com.lehaine.littlekt.Context
 import com.lehaine.littlekt.Disposable
 import com.lehaine.littlekt.audio.AudioClip
+import com.lehaine.littlekt.audio.AudioStream
 import com.lehaine.littlekt.graph.node.component.NinePatchDrawable
 import com.lehaine.littlekt.graph.node.component.Theme
 import com.lehaine.littlekt.graph.node.component.createDefaultTheme
@@ -127,6 +128,8 @@ class Assets private constructor(context: Context) : Disposable {
 
     private val sfxCollect: AudioClip by assets.load(context.resourcesVfs["sfx/collect0.wav"])
     private val sfxShoot: AudioClip by assets.load(context.resourcesVfs["sfx/shoot0.wav"])
+    private val sfxSelect: AudioClip by assets.load(context.resourcesVfs["sfx/select0.wav"])
+    private val music: AudioStream by assets.load(context.resourcesVfs["sfx/music.mp3"])
 
     init {
         assets.prepare {
@@ -229,6 +232,9 @@ class Assets private constructor(context: Context) : Disposable {
         val sfxLands get() = INSTANCE.sfxLands
         val sfxCollect get() = INSTANCE.sfxCollect
         val sfxShoot get() = INSTANCE.sfxShoot
+        val sfxSelect get() = INSTANCE.sfxSelect
+
+        val music get() = INSTANCE.music
 
         fun createInstance(context: Context, onLoad: () -> Unit): Assets {
             check(instance == null) { "Instance already created!" }

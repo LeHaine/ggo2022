@@ -3,6 +3,7 @@ package com.lehaine.game.scene
 import com.lehaine.game.Assets
 import com.lehaine.game.Config
 import com.lehaine.game.node.ui.fadeMask
+import com.lehaine.game.node.ui.soundButton
 import com.lehaine.littlekt.Context
 import com.lehaine.littlekt.graph.node.Node
 import com.lehaine.littlekt.graph.node.component.HAlign
@@ -38,7 +39,7 @@ class MenuScene(
                             fontScaleY = 2f
                         }
 
-                        button {
+                        soundButton {
                             text = "Start Game"
                             requestFocus(this)
                             onPressed += {
@@ -49,7 +50,7 @@ class MenuScene(
                             }
                         }
 
-                        button {
+                        soundButton {
                             text = "Settings"
                             onPressed += {
                                 if (!switchingScenes) {

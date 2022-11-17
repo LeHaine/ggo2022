@@ -41,7 +41,7 @@ class SettingsDialog : CenterContainer() {
                         separation = 5
                         align = AlignMode.CENTER
                         val progressBar = ProgressBar()
-                        button {
+                        soundButton {
                             text = "-"
                             onUpdate += {
                                 if (pressed) {
@@ -56,7 +56,7 @@ class SettingsDialog : CenterContainer() {
                                 Config.cameraShakeMultiplier = ratio
                             }
                         }
-                        button {
+                        soundButton {
                             text = "+"
                             onUpdate += {
                                 if (pressed) {
@@ -73,7 +73,7 @@ class SettingsDialog : CenterContainer() {
                         align = AlignMode.CENTER
 
                         val keyboardButtonGroup = ButtonGroup()
-                        button {
+                        soundButton {
                             text = "QWERTY"
                             toggleMode = true
                             setButtonGroup(keyboardButtonGroup)
@@ -84,7 +84,7 @@ class SettingsDialog : CenterContainer() {
                             }
                         }
 
-                        button {
+                        soundButton {
                             text = "AZERTY"
                             toggleMode = true
                             pressed = Config.keyboardType == Config.KeyboardType.AZERTY
@@ -97,7 +97,7 @@ class SettingsDialog : CenterContainer() {
                         }
                     }
 
-                    button {
+                    soundButton {
                         text = "Back"
                         onPressed += {
                             onBack.emit()
