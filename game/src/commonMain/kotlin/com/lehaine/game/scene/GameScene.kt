@@ -198,7 +198,6 @@ class GameScene(context: Context) :
 
                         hero = hero(ldtkLevel.entities("Hero")[0], level, entityCamera, projectiles) {
                             onDeath += {
-                                parent = foreground
                                 ui.apply {
                                     fadeMask(
                                         250.milliseconds,
@@ -403,7 +402,7 @@ class GameScene(context: Context) :
 
         // TODO remove this before final release
         if (input.isKeyJustPressed(Key.NUM1)) {
-            loadLevel(0) { actionCreator = null }
+            loadLevel(0) { onEnterArena() }
         } else if (input.isKeyJustPressed(Key.NUM2)) {
             loadLevel(1) { onEnterBoneMansOffice() }
         }
@@ -439,12 +438,18 @@ class GameScene(context: Context) :
     }
 
     private fun onEnterBoneMansOffice() {
+        Assets.music.pause()
         if (state.soulsCaptured >= state.nextUnlockCost) {
             performQuotaMetAnimation()
         } else {
             state.quotasFailed++
             performQuotaFailedAnimation()
         }
+    }
+
+    private fun onEnterArena() {
+        actionCreator = null
+        Assets.music.resume()
     }
 
     private fun performQuotaMetAnimation() {
@@ -480,10 +485,12 @@ class GameScene(context: Context) :
             wait(1000.milliseconds) {
                 quotaLabel.visible = true
                 hero.camera.shake(100.milliseconds, 1f * Config.cameraShakeMultiplier)
+                Assets.sfxSlam.play(0.5f)
             }
             wait(1000.milliseconds) {
                 metaLabel.visible = true
                 hero.camera.shake(100.milliseconds, 1f * Config.cameraShakeMultiplier)
+                Assets.sfxSlam.play(0.5f)
             }
 
             wait(3.seconds) { container.destroy() }
@@ -496,10 +503,10 @@ class GameScene(context: Context) :
                     state.unlockNextSkill()
                     hero.levelUp()
                     hero.camera.shake(100.milliseconds, 1f * Config.cameraShakeMultiplier)
-
+                    Assets.sfxSkillUnlock.play(0.3f)
                 }
                 wait(1500.milliseconds) {
-                    loadLevel(0) { actionCreator = null }
+                    loadLevel(0) { onEnterArena() }
                 }
             } else {
                 action {
@@ -554,10 +561,12 @@ class GameScene(context: Context) :
             wait(1000.milliseconds) {
                 quotaLabel.visible = true
                 hero.camera.shake(100.milliseconds, 1f * Config.cameraShakeMultiplier)
+                Assets.sfxSlam.play(0.5f)
             }
             wait(1000.milliseconds) {
                 metaLabel.visible = true
                 hero.camera.shake(100.milliseconds, 1f * Config.cameraShakeMultiplier)
+                Assets.sfxSlam.play(0.5f)
             }
             wait(1500.milliseconds) {
                 quotaLabel.destroy()
@@ -569,7 +578,7 @@ class GameScene(context: Context) :
                 if (state.quotasFailed == 4) {
                     changeTo(GameOverScene(false, context))
                 } else {
-                    loadLevel(0) { actionCreator = null }
+                    loadLevel(0) { onEnterArena() }
                 }
             }
         }

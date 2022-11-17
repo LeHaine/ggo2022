@@ -93,7 +93,9 @@ abstract class Mob(val hero: Hero, override val level: Level) : ObliqueEntity(le
         sprite.color.g = 0f
         sprite.color.b = 0f
         stretchY = 1.25f
-        Assets.sfxHits.random().play(0.25f)
+        if(health > 0) {
+            Assets.sfxHits.random().play(0.25f)
+        }
         cd.timeout("hit", 250.milliseconds)
     }
 
@@ -109,6 +111,7 @@ abstract class Mob(val hero: Hero, override val level: Level) : ObliqueEntity(le
         if (spawnDrop) {
             spawnDrop()
         }
+        Assets.sfxDeathMob.play(0.2f)
         onDeath.emit(this)
         enabled = false
         ALL -= this

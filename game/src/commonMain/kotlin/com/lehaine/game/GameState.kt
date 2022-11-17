@@ -26,7 +26,7 @@ class GameState {
     val unlocks = Array(4) { false }
 
 
-    val nextUnlockCost get() = soulsRequired[unlockIdx]
+    val nextUnlockCost get() = if(soulsRequired.indices.contains(unlockIdx)) soulsRequired[unlockIdx] else 1000000
     var shootingUnlocked
         get() = unlocks[0]
         set(value) {

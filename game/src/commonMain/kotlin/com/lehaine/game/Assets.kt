@@ -129,6 +129,10 @@ class Assets private constructor(context: Context) : Disposable {
     private val sfxCollect: AudioClip by assets.load(context.resourcesVfs["sfx/collect0.wav"])
     private val sfxShoot: AudioClip by assets.load(context.resourcesVfs["sfx/shoot0.wav"])
     private val sfxSelect: AudioClip by assets.load(context.resourcesVfs["sfx/select0.wav"])
+    private val sfxSlam: AudioClip by assets.load(context.resourcesVfs["sfx/slam0.wav"])
+    private val sfxSkillUnlock: AudioClip by assets.load(context.resourcesVfs["sfx/skillUnlock0.wav"])
+    private val sfxDeathHero: AudioClip by assets.load(context.resourcesVfs["sfx/deathHero0.wav"])
+    private val sfxDeathMob: AudioClip by assets.load(context.resourcesVfs["sfx/deathMob0.wav"])
     private val music: AudioStream by assets.load(context.resourcesVfs["sfx/music.mp3"])
 
     init {
@@ -233,6 +237,10 @@ class Assets private constructor(context: Context) : Disposable {
         val sfxCollect get() = INSTANCE.sfxCollect
         val sfxShoot get() = INSTANCE.sfxShoot
         val sfxSelect get() = INSTANCE.sfxSelect
+        val sfxSlam get() = INSTANCE.sfxSlam
+        val sfxSkillUnlock get() = INSTANCE.sfxSkillUnlock
+        val sfxDeathHero get() = INSTANCE.sfxDeathHero
+        val sfxDeathMob get() = INSTANCE.sfxDeathMob
 
         val music get() = INSTANCE.music
 

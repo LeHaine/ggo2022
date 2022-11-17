@@ -8,11 +8,15 @@ import com.lehaine.game.node.entity.mob.Effect
 import com.lehaine.game.node.entity.mob.Mob
 import com.lehaine.game.node.fx
 import com.lehaine.game.node.game
+import com.lehaine.game.render.FlashFragmentShader
 import com.lehaine.littlekt.graph.node.Node
 import com.lehaine.littlekt.graph.node.addTo
 import com.lehaine.littlekt.graph.node.annotation.SceneGraphDslMarker
 import com.lehaine.littlekt.graph.node.node
 import com.lehaine.littlekt.graph.node.node2d.Node2D
+import com.lehaine.littlekt.graph.node.render.Material
+import com.lehaine.littlekt.graphics.shader.ShaderProgram
+import com.lehaine.littlekt.graphics.shader.shaders.DefaultVertexShader
 import com.lehaine.littlekt.graphics.tilemap.ldtk.LDtkEntity
 import com.lehaine.littlekt.math.geom.Angle
 import com.lehaine.littlekt.math.geom.cosine
@@ -71,6 +75,8 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
         }
     }
     private val canMove = data.field<Boolean>("canMove").value
+    private val flashMaterial =
+        Material(ShaderProgram(DefaultVertexShader(), FlashFragmentShader()))
 
     override val effects: MutableMap<Effect, Duration> = mutableMapOf()
     override val effectsToRemove: MutableList<Effect> = mutableListOf()
@@ -120,7 +126,15 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
         if (!canMove) {
             addEffect(Effect.Invincible, Duration.INFINITE)
         }
+
+        onReady += {
+            flashMaterial.shader?.prepare(context)
+        }
+        onDestroy += {
+            flashMaterial.dispose()
+        }
     }
+
 
     override fun update(dt: Duration) {
         super.update(dt)
@@ -268,13 +282,16 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
         velocityX += 0.25f * from.cosine
         velocityY += 0.25f * from.sine
         velocityZ += 0.25f
-        sprite.color.r = 1f
-        sprite.color.g = 0f
-        sprite.color.b = 0f
         stretchY = 1.25f
-        game.flashRed()
-        cd.timeout("hit", 250.milliseconds)
-        Assets.sfxHits.random().play(0.25f)
+        if (health <= 0) {
+            sprite.material = flashMaterial
+            shadow.material = flashMaterial
+            Assets.sfxDeathHero.play(0.25f)
+        } else {
+            cd.timeout("hit", 250.milliseconds)
+            game.flashRed()
+            Assets.sfxHits.random().play(0.25f)
+        }
     }
 
     private fun orbAttack() {
