@@ -589,4 +589,14 @@ class GameScene(context: Context) :
             }
         }
     }
+
+    fun flashRed() {
+        ui.apply {
+            fadeMask(Duration.ZERO, fadeTime = 100.milliseconds, fadeColor = Color.fromHex("#994551")) {
+                onFinish += {
+                    destroy()
+                }
+            }
+        }
+    }
 }

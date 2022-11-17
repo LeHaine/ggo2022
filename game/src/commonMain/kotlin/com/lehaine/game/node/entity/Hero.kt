@@ -272,6 +272,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
         sprite.color.g = 0f
         sprite.color.b = 0f
         stretchY = 1.25f
+        game.flashRed()
         cd.timeout("hit", 250.milliseconds)
         Assets.sfxHits.random().play(0.25f)
     }
