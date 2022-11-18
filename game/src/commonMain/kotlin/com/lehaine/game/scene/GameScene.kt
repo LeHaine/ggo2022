@@ -115,7 +115,7 @@ class GameScene(context: Context) :
         controller.addBinding(
             GameInput.SHOOT,
             buttons = listOf(GameButton.XBOX_X),
-            pointers = listOf(Pointer.MOUSE_RIGHT)
+            pointers = listOf(Pointer.MOUSE_RIGHT, Pointer.MOUSE_MIDDLE)
         )
         controller.addBinding(
             GameInput.DASH,
