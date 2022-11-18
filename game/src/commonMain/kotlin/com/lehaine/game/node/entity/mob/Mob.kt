@@ -84,16 +84,16 @@ abstract class Mob(val hero: Hero, override val level: Level) : ObliqueEntity(le
         shadow.globalY = (cy + yr) * Config.GRID_CELL_SIZE - Config.GRID_CELL_SIZE + 2
     }
 
-    open fun hit(damage: Int, from: Angle) {
+    open fun hit(from: Angle) {
         if (hasEffect(Effect.Invincible) || health <= 0) return
 
-        health -= damage
+        health -= 1 + game.state.extraHeroDamage
         lastHitAngle = from
         sprite.color.r = 1f
         sprite.color.g = 0f
         sprite.color.b = 0f
         stretchY = 1.25f
-        if(health > 0) {
+        if (health > 0) {
             Assets.sfxHits.random().play(0.25f)
         }
         cd.timeout("hit", 250.milliseconds)

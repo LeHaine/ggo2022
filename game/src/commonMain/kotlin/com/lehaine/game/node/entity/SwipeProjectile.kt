@@ -3,6 +3,7 @@ package com.lehaine.game.node.entity
 import com.lehaine.game.Assets
 import com.lehaine.game.Config
 import com.lehaine.game.node.entity.mob.Mob
+import com.lehaine.game.node.game
 import com.lehaine.littlekt.math.distSqr
 import com.lehaine.littlekt.math.geom.cosine
 import com.lehaine.littlekt.math.geom.sine
@@ -38,10 +39,10 @@ class SwipeProjectile(val hero: Hero) : Entity(Config.GRID_CELL_SIZE.toFloat()),
             cd("swipe", swipeAnim.duration)
             swiped = true
             Mob.ALL.fastForEach {
-                val dist = outerRadius + it.outerRadius
+                val dist = outerRadius * game.state.projectileDamageRadiusMultiplier + it.outerRadius
                 val colliding = distSqr(px, py, it.px, it.py) <= dist * dist
                 if (it.enabled && colliding) {
-                    it.hit(hero.damage, hero.angleTo(it))
+                    it.hit(hero.angleTo(it))
 
                     val angle = hero.angleTo(it)
                     it.velocityX += knockbackPower * angle.cosine

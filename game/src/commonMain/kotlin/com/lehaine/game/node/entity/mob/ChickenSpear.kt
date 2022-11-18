@@ -11,6 +11,7 @@ import com.lehaine.littlekt.math.geom.sine
 import com.lehaine.rune.engine.node.renderable.entity.angleTo
 import com.lehaine.rune.engine.node.renderable.entity.cd
 import kotlin.math.sign
+import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 
 /**
@@ -36,6 +37,20 @@ class ChickenSpear(hero: Hero, level: Level) : Mob(hero, level) {
         yDir = angle.sine
 
         dir = xDir.sign.toInt()
+    }
+
+    override fun update(dt: Duration) {
+        super.update(dt)
+
+        val camera = hero.camera.camera ?: return
+        val vw = camera.virtualWidth
+        val vx = camera.position.x - vw * 0.5f
+        val vx2 = vx + vw - hero.camera.offset.x * 2
+
+        if ((left <= vx && xDir < 0) || (right >= vx2 && xDir > 0)) {
+            this.xDir = -this.xDir
+            dir = this.xDir.sign.toInt()
+        }
     }
 
     override fun fixedUpdate() {

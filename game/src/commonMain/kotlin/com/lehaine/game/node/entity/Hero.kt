@@ -18,10 +18,8 @@ import com.lehaine.littlekt.graph.node.render.Material
 import com.lehaine.littlekt.graphics.shader.ShaderProgram
 import com.lehaine.littlekt.graphics.shader.shaders.DefaultVertexShader
 import com.lehaine.littlekt.graphics.tilemap.ldtk.LDtkEntity
-import com.lehaine.littlekt.math.geom.Angle
-import com.lehaine.littlekt.math.geom.cosine
-import com.lehaine.littlekt.math.geom.degrees
-import com.lehaine.littlekt.math.geom.sine
+import com.lehaine.littlekt.math.PI2
+import com.lehaine.littlekt.math.geom.*
 import com.lehaine.littlekt.math.isFuzzyZero
 import com.lehaine.littlekt.util.datastructure.Pool
 import com.lehaine.littlekt.util.fastForEach
@@ -34,6 +32,7 @@ import com.lehaine.rune.engine.node.renderable.entity.castRayTo
 import com.lehaine.rune.engine.node.renderable.entity.cd
 import com.lehaine.rune.engine.node.renderable.entity.toGridPosition
 import com.lehaine.rune.engine.node.renderable.sprite
+import kotlin.math.floor
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
@@ -55,7 +54,6 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
     ObliqueEntity(level, Config.GRID_CELL_SIZE.toFloat()), Effectible {
 
     val onDeath = signal()
-    val damage = 5
     var health = 4
 
     private val orbProjectilePool: Pool<OrbProjectile> by lazy {
@@ -128,6 +126,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
         }
 
         onReady += {
+            health = (health * game.state.heroHealthMultiplier).toInt()
             flashMaterial.shader?.prepare(context)
         }
         onDestroy += {
@@ -314,32 +313,45 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
 
     private fun swipeAttack() {
         cd("delay", 200.milliseconds) {
-            val projectile = swipeProjectilePool.alloc()
-            val offset = 20f
+            repeat(1 + game.state.extraProjectiles) {
+                val projectile = swipeProjectilePool.alloc()
+                val offset = 20f + 20f * floor(it / 2f)
 
-            val angle = angleToMouse
-            projectile.sprite.flipY = dir == -1
-            projectile.rotation = angle
-            projectile.globalPosition(globalX + offset * angle.cosine, globalY + offset * angle.sine)
-            projectile.enabled = true
-            Assets.sfxSwings.random().play(0.25f)
+                val angle = if (it % 2 == 0) angleToMouse else angleToMouse + 180.degrees
+                projectile.sprite.flipY = dir == -1
+                projectile.rotation = angle
+                projectile.globalPosition(globalX + offset * angle.cosine, globalY + offset * angle.sine)
+                projectile.enabled = true
+            }
         }
+        Assets.sfxSwings.random().play(0.25f)
         sprite.playOnce(Assets.heroSwing)
         addEffect(Effect.Stun, 300.milliseconds)
     }
 
     private fun boneSpearAttack(tx: Float, ty: Float) {
-        val projectile = boneSpearProjectile.alloc()
+        var projectile = boneSpearProjectile.alloc()
         projectile.globalX = tx
         projectile.globalY = ty
         projectile.enabled = true
+        if (game.state.extraProjectiles > 0) {
+            val angleBetween = (PI2 / (game.state.extraProjectiles)).radians
+            var currentAngle = 0.degrees
+            repeat(game.state.extraProjectiles) {
+                projectile = boneSpearProjectile.alloc()
+                projectile.globalX = tx + 20 * currentAngle.cosine
+                projectile.globalY = ty + 20 * currentAngle.sine
+                projectile.enabled = true
+                currentAngle += angleBetween
+            }
+        }
     }
 
 
     private fun performHandOfDeath() {
         if (Mob.ALL.isEmpty()) return
 
-        repeat(5) {
+        repeat(5 + game.state.extraProjectiles) {
             var mob = Mob.ALL.random()
             while (mobsTemp.contains(mob)) {
                 mob = Mob.ALL.random()

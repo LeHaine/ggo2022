@@ -13,7 +13,15 @@ class GameState {
     var monsterRespawnMultiplier = 1f
     var monsterSpeedMultiplier = 1f
 
+    var skillCDMultiplier = 1f
     var soulItemDropMultiplier = 1f
+    var extraProjectiles = 0
+    var extraExplosions = 0
+    var projectileDamageRadiusMultiplier = 1f
+    var heroHealthMultiplier = 1f
+    var extraHeroDamage = 0
+
+
 
     var quotasFailed = 0
     var soulsCaptured = 0

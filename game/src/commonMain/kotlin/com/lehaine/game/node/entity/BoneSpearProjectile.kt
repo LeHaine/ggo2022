@@ -4,6 +4,7 @@ import com.lehaine.game.Assets
 import com.lehaine.game.Config
 import com.lehaine.game.node.entity.mob.Mob
 import com.lehaine.game.node.fx
+import com.lehaine.game.node.game
 import com.lehaine.littlekt.math.distSqr
 import com.lehaine.littlekt.util.fastForEach
 import com.lehaine.rune.engine.node.renderable.entity.Entity
@@ -29,7 +30,7 @@ class BoneSpearProjectile(val hero: Hero) : Entity(Config.GRID_CELL_SIZE.toFloat
                 fx.groundParticles(globalX, globalY)
                 hero.camera.shake(100.milliseconds, 1f * Config.cameraShakeMultiplier)
                 Mob.ALL.fastForEach {
-                    val dist = outerRadius + it.outerRadius
+                    val dist = outerRadius * game.state.projectileDamageRadiusMultiplier + it.outerRadius
                     val colliding = distSqr(px, py, it.px, it.py) <= dist * dist
                     if (it.enabled && colliding) {
                         it.explode()

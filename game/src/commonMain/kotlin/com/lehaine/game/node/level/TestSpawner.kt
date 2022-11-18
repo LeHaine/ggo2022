@@ -39,10 +39,10 @@ class TestSpawner(hero: Hero, level: Level) : MonsterSpawner() {
             endAt = 1.minutes
             actionTimer = 10.seconds
             actionCondition = {
-                Mob.ALL.size < 100
+                Mob.ALL.size < 1
             }
             action = {
-                repeat(10) {
+                repeat(1) {
                     val mob = chickenSpearPool.alloc()
 
                     mob.apply {

@@ -4,6 +4,8 @@ import com.lehaine.game.Assets
 import com.lehaine.game.Config
 import com.lehaine.game.node.entity.mob.Mob
 import com.lehaine.game.node.fx
+import com.lehaine.game.node.game
+import com.lehaine.littlekt.math.distSqr
 import com.lehaine.littlekt.math.geom.Angle
 import com.lehaine.littlekt.math.geom.cosine
 import com.lehaine.littlekt.math.geom.sine
@@ -41,14 +43,26 @@ class OrbProjectile(val hero: Hero, level: GameLevel<*>) : ObliqueEntity(level, 
         if (!attacked) {
             cd("attacked", (500.800).milliseconds)
             attacked = true
-
         }
+
+        val camera = hero.camera.camera ?: return
+        val vw = camera.virtualWidth
+        val vx = camera.position.x - vw * 0.5f
+        val vx2 = vx + vw - hero.camera.offset.x * 2
+
+        if ((left <= vx && velocityX < 0) || (right >= vx2 && velocityX > 0)) {
+            velocityX = -velocityX
+            totalWallHitsLeft--
+        }
+
+
         var hit = false
         Mob.ALL.fastForEach {
-            val colliding = isCollidingWith(it)
+            val dist = outerRadius * game.state.projectileDamageRadiusMultiplier + it.outerRadius
+            val colliding = distSqr(px, py, it.px, it.py) <= dist * dist
             if (it.enabled && colliding) {
                 hit = true
-                it.hit(hero.damage, hero.angleTo(it))
+                it.hit(hero.angleTo(it))
 
                 val angle = hero.angleTo(it)
                 it.velocityX += knockbackPower * angle.cosine
