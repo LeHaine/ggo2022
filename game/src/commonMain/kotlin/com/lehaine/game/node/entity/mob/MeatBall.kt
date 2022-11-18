@@ -85,6 +85,7 @@ class MeatBall(hero: Hero, level: Level) : Mob(hero, level) {
         cd("shake", 700.milliseconds) {
             hero.camera.shake(100.milliseconds, 2f * Config.cameraShakeMultiplier)
             fx.meatBallExplode(globalX, globalY)
+            Assets.sfxDeathMob.play(0.2f)
             spawnDrop()
         }
         addEffect(Effect.Stun, Assets.meatBallHandOfDeath.duration)

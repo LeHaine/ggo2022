@@ -61,6 +61,7 @@ class ChickenSpear(hero: Hero, level: Level) : Mob(hero, level) {
     override fun handleHandOfDeath() {
         sprite.playOnce(Assets.chickenSpearHandOfDeath)
         cd("shake", 700.milliseconds) {
+            Assets.sfxDeathMob.play(0.2f)
             hero.camera.shake(100.milliseconds, 2f * Config.cameraShakeMultiplier)
             fx.chickenExplode(globalX, globalY)
             spawnDrop()
@@ -73,6 +74,6 @@ class ChickenSpear(hero: Hero, level: Level) : Mob(hero, level) {
     }
 
     override fun explode() {
-        fx.meatBallExplode(globalX, globalY)
+        fx.chickenExplode(globalX, globalY)
     }
 }

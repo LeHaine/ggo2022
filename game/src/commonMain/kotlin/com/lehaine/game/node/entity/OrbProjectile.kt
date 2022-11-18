@@ -24,6 +24,7 @@ class OrbProjectile(val hero: Hero, level: GameLevel<*>) : ObliqueEntity(level, 
     private val speed = 0.6f
     private val knockbackPower = 0.1f
     private var attacked = false
+    private var totalWallHitsLeft = 3
 
     init {
         sprite.slice = Assets.atlas.getByPrefix("spiritOrb").slice
@@ -56,7 +57,7 @@ class OrbProjectile(val hero: Hero, level: GameLevel<*>) : ObliqueEntity(level, 
         }
 
 
-        if (hit || (!cd.has("attacked") && attacked)) {
+        if (hit && attacked) {
             fx.spiritBallExplode(centerX, centerY)
             attacked = false
             enabled = false
@@ -66,11 +67,22 @@ class OrbProjectile(val hero: Hero, level: GameLevel<*>) : ObliqueEntity(level, 
 
     override fun onLevelCollision(xDir: Int, yDir: Int) {
         super.onLevelCollision(xDir, yDir)
-        cd.remove("attacked")
-        fx.spiritBallExplode(centerX, centerY)
-        attacked = false
-        enabled = false
-        hero.projectileFinished(this)
+        if (totalWallHitsLeft <= 0) {
+            cd.remove("attacked")
+            fx.spiritBallExplode(centerX, centerY)
+            attacked = false
+            enabled = false
+            totalWallHitsLeft = 3
+            hero.projectileFinished(this)
+        } else {
+            if (xDir != 0) {
+                velocityX = -velocityX * 2f
+            }
+            if (yDir != 0) {
+                velocityY = -velocityY * 2f
+            }
+            totalWallHitsLeft--
+        }
     }
 
     fun moveTowardsAngle(angle: Angle) {

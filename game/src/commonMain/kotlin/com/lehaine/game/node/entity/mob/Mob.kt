@@ -110,8 +110,8 @@ abstract class Mob(val hero: Hero, override val level: Level) : ObliqueEntity(le
     fun die(spawnDrop: Boolean = true) {
         if (spawnDrop) {
             spawnDrop()
+            Assets.sfxDeathMob.play(0.2f)
         }
-        Assets.sfxDeathMob.play(0.2f)
         onDeath.emit(this)
         enabled = false
         ALL -= this
