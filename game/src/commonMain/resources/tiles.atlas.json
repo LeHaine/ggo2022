@@ -751,8 +751,8 @@
         {
             "filename": "chickenSpearRun0",
             "frame": {
-                "x": 587,
-                "y": 219,
+                "x": 601,
+                "y": 495,
                 "w": 16,
                 "h": 11
             },
@@ -793,8 +793,8 @@
         {
             "filename": "chickenSpearRun2",
             "frame": {
-                "x": 629,
-                "y": 59,
+                "x": 683,
+                "y": 154,
                 "w": 16,
                 "h": 10
             },
@@ -814,8 +814,8 @@
         {
             "filename": "chickenSpearRun3",
             "frame": {
-                "x": 683,
-                "y": 155,
+                "x": 620,
+                "y": 472,
                 "w": 16,
                 "h": 11
             },
@@ -877,8 +877,8 @@
         {
             "filename": "fxCircle0",
             "frame": {
-                "x": 725,
-                "y": 53,
+                "x": 623,
+                "y": 489,
                 "w": 16,
                 "h": 16
             },
@@ -919,8 +919,8 @@
         {
             "filename": "fxGib0",
             "frame": {
-                "x": 684,
-                "y": 193,
+                "x": 673,
+                "y": 103,
                 "w": 4,
                 "h": 3
             },
@@ -939,6 +939,27 @@
         },
         {
             "filename": "fxGib1",
+            "frame": {
+                "x": 626,
+                "y": 463,
+                "w": 4,
+                "h": 3
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 2,
+                "y": 1,
+                "w": 4,
+                "h": 3
+            },
+            "sourceSize": {
+                "w": 8,
+                "h": 5
+            }
+        },
+        {
+            "filename": "fxGib2",
             "frame": {
                 "x": 569,
                 "y": 505,
@@ -959,31 +980,10 @@
             }
         },
         {
-            "filename": "fxGib2",
-            "frame": {
-                "x": 694,
-                "y": 193,
-                "w": 4,
-                "h": 3
-            },
-            "rotated": false,
-            "trimmed": true,
-            "spriteSourceSize": {
-                "x": 2,
-                "y": 1,
-                "w": 4,
-                "h": 3
-            },
-            "sourceSize": {
-                "w": 8,
-                "h": 5
-            }
-        },
-        {
             "filename": "fxImpact0",
             "frame": {
-                "x": 603,
-                "y": 399,
+                "x": 689,
+                "y": 29,
                 "w": 14,
                 "h": 9
             },
@@ -1045,8 +1045,8 @@
         {
             "filename": "fxLittleEye",
             "frame": {
-                "x": 263,
-                "y": 373,
+                "x": 621,
+                "y": 300,
                 "w": 4,
                 "h": 6
             },
@@ -1108,8 +1108,8 @@
         {
             "filename": "fxSmallCircle0",
             "frame": {
-                "x": 621,
-                "y": 300,
+                "x": 478,
+                "y": 295,
                 "w": 6,
                 "h": 6
             },
@@ -1192,8 +1192,8 @@
         {
             "filename": "heartBeating0",
             "frame": {
-                "x": 700,
-                "y": 58,
+                "x": 710,
+                "y": 29,
                 "w": 19,
                 "h": 17
             },
@@ -1213,8 +1213,8 @@
         {
             "filename": "heartBeating1",
             "frame": {
-                "x": 710,
-                "y": 4,
+                "x": 698,
+                "y": 73,
                 "w": 20,
                 "h": 18
             },
@@ -1234,8 +1234,8 @@
         {
             "filename": "heartBeating2",
             "frame": {
-                "x": 682,
-                "y": 86,
+                "x": 683,
+                "y": 130,
                 "w": 20,
                 "h": 18
             },
@@ -1255,8 +1255,8 @@
         {
             "filename": "heartDead0",
             "frame": {
-                "x": 682,
-                "y": 110,
+                "x": 716,
+                "y": 4,
                 "w": 19,
                 "h": 17
             },
@@ -1277,7 +1277,7 @@
             "filename": "heroAir0",
             "frame": {
                 "x": 685,
-                "y": 4,
+                "y": 46,
                 "w": 19,
                 "h": 21
             },
@@ -1612,8 +1612,8 @@
         {
             "filename": "heroSwing0",
             "frame": {
-                "x": 653,
-                "y": 117,
+                "x": 660,
+                "y": 4,
                 "w": 23,
                 "h": 18
             },
@@ -1633,8 +1633,8 @@
         {
             "filename": "heroSwing1",
             "frame": {
-                "x": 673,
-                "y": 61,
+                "x": 689,
+                "y": 4,
                 "w": 21,
                 "h": 19
             },
@@ -1801,8 +1801,8 @@
         {
             "filename": "heroWalk3",
             "frame": {
-                "x": 652,
-                "y": 90,
+                "x": 653,
+                "y": 112,
                 "w": 24,
                 "h": 21
             },
@@ -1813,6 +1813,153 @@
                 "y": 11,
                 "w": 24,
                 "h": 21
+            },
+            "sourceSize": {
+                "w": 48,
+                "h": 32
+            }
+        },
+        {
+            "filename": "hopperManAir0",
+            "frame": {
+                "x": 512,
+                "y": 50,
+                "w": 33,
+                "h": 16
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 5,
+                "y": 13,
+                "w": 33,
+                "h": 16
+            },
+            "sourceSize": {
+                "w": 48,
+                "h": 32
+            }
+        },
+        {
+            "filename": "hopperManHop0",
+            "frame": {
+                "x": 618,
+                "y": 335,
+                "w": 25,
+                "h": 12
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 13,
+                "y": 20,
+                "w": 25,
+                "h": 12
+            },
+            "sourceSize": {
+                "w": 48,
+                "h": 32
+            }
+        },
+        {
+            "filename": "hopperManHop1",
+            "frame": {
+                "x": 660,
+                "y": 28,
+                "w": 23,
+                "h": 12
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 15,
+                "y": 20,
+                "w": 23,
+                "h": 12
+            },
+            "sourceSize": {
+                "w": 48,
+                "h": 32
+            }
+        },
+        {
+            "filename": "hopperManHop2",
+            "frame": {
+                "x": 587,
+                "y": 219,
+                "w": 22,
+                "h": 11
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 16,
+                "y": 21,
+                "w": 22,
+                "h": 11
+            },
+            "sourceSize": {
+                "w": 48,
+                "h": 32
+            }
+        },
+        {
+            "filename": "hopperManHop3",
+            "frame": {
+                "x": 629,
+                "y": 59,
+                "w": 25,
+                "h": 16
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 13,
+                "y": 16,
+                "w": 25,
+                "h": 16
+            },
+            "sourceSize": {
+                "w": 48,
+                "h": 32
+            }
+        },
+        {
+            "filename": "hopperManHop4",
+            "frame": {
+                "x": 512,
+                "y": 50,
+                "w": 33,
+                "h": 16
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 5,
+                "y": 13,
+                "w": 33,
+                "h": 16
+            },
+            "sourceSize": {
+                "w": 48,
+                "h": 32
+            }
+        },
+        {
+            "filename": "hopperManIdle0",
+            "frame": {
+                "x": 618,
+                "y": 335,
+                "w": 25,
+                "h": 12
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 13,
+                "y": 20,
+                "w": 25,
+                "h": 12
             },
             "sourceSize": {
                 "w": 48,
@@ -2243,7 +2390,7 @@
             "filename": "levelUp20",
             "frame": {
                 "x": 652,
-                "y": 59,
+                "y": 81,
                 "w": 15,
                 "h": 25
             },
@@ -2410,8 +2557,8 @@
         {
             "filename": "meatBallRun1",
             "frame": {
-                "x": 698,
-                "y": 31,
+                "x": 683,
+                "y": 103,
                 "w": 21,
                 "h": 21
             },
@@ -2473,8 +2620,8 @@
         {
             "filename": "meatBallSitting0",
             "frame": {
-                "x": 512,
-                "y": 50,
+                "x": 710,
+                "y": 52,
                 "w": 19,
                 "h": 15
             },
@@ -2494,8 +2641,8 @@
         {
             "filename": "meatBallSitting1",
             "frame": {
-                "x": 683,
-                "y": 133,
+                "x": 601,
+                "y": 425,
                 "w": 19,
                 "h": 16
             },
@@ -2515,8 +2662,8 @@
         {
             "filename": "meatBallStandUp0",
             "frame": {
-                "x": 512,
-                "y": 50,
+                "x": 710,
+                "y": 52,
                 "w": 19,
                 "h": 15
             },
@@ -2536,8 +2683,8 @@
         {
             "filename": "meatBallStandUp1",
             "frame": {
-                "x": 707,
-                "y": 110,
+                "x": 603,
+                "y": 381,
                 "w": 19,
                 "h": 15
             },
@@ -2557,8 +2704,8 @@
         {
             "filename": "meatBallStandUp2",
             "frame": {
-                "x": 708,
-                "y": 81,
+                "x": 603,
+                "y": 402,
                 "w": 19,
                 "h": 16
             },
@@ -2578,8 +2725,8 @@
         {
             "filename": "meatBallStandUp3",
             "frame": {
-                "x": 725,
-                "y": 28,
+                "x": 601,
+                "y": 447,
                 "w": 19,
                 "h": 19
             },
@@ -2600,7 +2747,7 @@
             "filename": "meatBallStandUp4",
             "frame": {
                 "x": 660,
-                "y": 4,
+                "y": 46,
                 "w": 19,
                 "h": 23
             },
@@ -2621,7 +2768,7 @@
             "filename": "meatBallStandUp5",
             "frame": {
                 "x": 673,
-                "y": 33,
+                "y": 75,
                 "w": 19,
                 "h": 22
             },
@@ -2704,8 +2851,8 @@
         {
             "filename": "shadowSmall",
             "frame": {
-                "x": 660,
-                "y": 33,
+                "x": 263,
+                "y": 373,
                 "w": 7,
                 "h": 5
             },
@@ -2746,8 +2893,8 @@
         {
             "filename": "soulBlob",
             "frame": {
-                "x": 603,
-                "y": 414,
+                "x": 631,
+                "y": 300,
                 "w": 4,
                 "h": 5
             },
@@ -2767,8 +2914,8 @@
         {
             "filename": "spiritOrb0",
             "frame": {
-                "x": 478,
-                "y": 295,
+                "x": 276,
+                "y": 373,
                 "w": 6,
                 "h": 6
             },
@@ -2914,8 +3061,8 @@
         {
             "filename": "swipeAttack16",
             "frame": {
-                "x": 736,
-                "y": 4,
+                "x": 601,
+                "y": 472,
                 "w": 13,
                 "h": 17
             },
@@ -3082,8 +3229,8 @@
         {
             "filename": "swipeAttack26",
             "frame": {
-                "x": 684,
-                "y": 172,
+                "x": 626,
+                "y": 424,
                 "w": 14,
                 "h": 15
             },
@@ -3250,8 +3397,8 @@
         {
             "filename": "uiAIcon",
             "frame": {
-                "x": 601,
-                "y": 443,
+                "x": 645,
+                "y": 481,
                 "w": 14,
                 "h": 12
             },
@@ -3355,8 +3502,8 @@
         {
             "filename": "uiButton",
             "frame": {
-                "x": 554,
-                "y": 495,
+                "x": 653,
+                "y": 139,
                 "w": 4,
                 "h": 4
             },
@@ -3376,8 +3523,8 @@
         {
             "filename": "uiButtonHighlight",
             "frame": {
-                "x": 613,
-                "y": 414,
+                "x": 554,
+                "y": 495,
                 "w": 4,
                 "h": 4
             },
@@ -3439,8 +3586,8 @@
         {
             "filename": "uiEIcon",
             "frame": {
-                "x": 601,
-                "y": 461,
+                "x": 628,
+                "y": 381,
                 "w": 12,
                 "h": 12
             },
@@ -3481,8 +3628,8 @@
         {
             "filename": "uiLmbIcon",
             "frame": {
-                "x": 601,
-                "y": 425,
+                "x": 626,
+                "y": 445,
                 "w": 15,
                 "h": 12
             },
@@ -3523,8 +3670,8 @@
         {
             "filename": "uiOutline",
             "frame": {
-                "x": 273,
-                "y": 373,
+                "x": 663,
+                "y": 139,
                 "w": 4,
                 "h": 4
             },
@@ -3565,8 +3712,8 @@
         {
             "filename": "uiQIcon",
             "frame": {
-                "x": 618,
-                "y": 335,
+                "x": 684,
+                "y": 170,
                 "w": 16,
                 "h": 12
             },
@@ -3586,8 +3733,8 @@
         {
             "filename": "uiRmbIcon",
             "frame": {
-                "x": 603,
-                "y": 381,
+                "x": 642,
+                "y": 463,
                 "w": 15,
                 "h": 12
             },

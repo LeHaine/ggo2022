@@ -8,6 +8,7 @@ import com.lehaine.game.node.entity.Hero
 import com.lehaine.game.node.entity.SoulItem
 import com.lehaine.game.node.game
 import com.lehaine.littlekt.math.geom.Angle
+import com.lehaine.littlekt.math.isFuzzyZero
 import com.lehaine.littlekt.util.signal1v
 import com.lehaine.rune.engine.node.renderable.entity.*
 import com.lehaine.rune.engine.node.renderable.sprite
@@ -51,7 +52,10 @@ abstract class Mob(val hero: Hero, override val level: Level) : ObliqueEntity(le
 
     override fun update(dt: Duration) {
         super.update(dt)
-        if (isCollidingWithInnerCircle(hero) && !cd.has("damageCooldown")) {
+        if (velocityZ.isFuzzyZero(0.008f) && hero.velocityZ.isFuzzyZero(0.008f) && isCollidingWithInnerCircle(hero) && !cd.has(
+                "damageCooldown"
+            )
+        ) {
             hero.hit(angleTo(hero))
             cd.timeout("damageCooldown", 100.milliseconds)
         }

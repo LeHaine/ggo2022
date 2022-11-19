@@ -76,6 +76,10 @@ class Assets private constructor(context: Context) : Disposable {
         }
     }
 
+
+    private val hopperManHop by assets.prepare { atlas.getAnimation("hopperManHop") }
+    private val hopperManAir by assets.prepare { atlas.getAnimation("hopperManAir") }
+
     private val sfxFootstep: AudioClip by assets.load(context.resourcesVfs["sfx/footstep0.wav"])
 
     private val sfxHit0: AudioClip by assets.load(context.resourcesVfs["sfx/hit0.wav"])
@@ -228,6 +232,9 @@ class Assets private constructor(context: Context) : Disposable {
 
         val chickenSpearRun: Animation<TextureSlice> get() = INSTANCE.chickenSpearRun
         val chickenSpearHandOfDeath: Animation<TextureSlice> get() = INSTANCE.chickenSpearHandOfDeath
+        
+        val hopperManHop: Animation<TextureSlice> get() = INSTANCE.hopperManHop
+        val hopperManAir: Animation<TextureSlice> get() = INSTANCE.hopperManAir
 
 
         val sfxFootstep get() = INSTANCE.sfxFootstep

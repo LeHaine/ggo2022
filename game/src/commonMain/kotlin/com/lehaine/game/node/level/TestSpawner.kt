@@ -4,6 +4,7 @@ import com.lehaine.game.Level
 import com.lehaine.game.node.MonsterSpawner
 import com.lehaine.game.node.entity.Hero
 import com.lehaine.game.node.entity.mob.ChickenSpear
+import com.lehaine.game.node.entity.mob.HopperMan
 import com.lehaine.game.node.entity.mob.MeatBall
 import com.lehaine.game.node.entity.mob.Mob
 import com.lehaine.littlekt.util.datastructure.pool
@@ -33,17 +34,26 @@ class TestSpawner(hero: Hero, level: Level) : MonsterSpawner() {
         }
     }
 
+    private val hopperManPool = pool(preallocate = 10) {
+        HopperMan(hero, level).apply {
+            onDeath += {
+                it.reset()
+                this@pool.free(it)
+            }
+        }
+    }
+
     init {
         addEvent {
             oneTime = false
             endAt = 1.minutes
             actionTimer = 10.seconds
             actionCondition = {
-                Mob.ALL.size < 1
+                Mob.ALL.size < 100
             }
             action = {
                 repeat(1) {
-                    val mob = chickenSpearPool.alloc()
+                    val mob = hopperManPool.alloc()
 
                     mob.apply {
                         teleportToRandomSpotAroundHero()
