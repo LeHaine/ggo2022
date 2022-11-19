@@ -415,6 +415,11 @@ class GameScene(context: Context) :
             println(stats)
         }
 
+        // TODO remove this before final release
+        if (input.isKeyJustPressed(Key.NUMPAD1)) {
+            state.extraProjectiles++
+        }
+
 
         // TODO remove this before final release
         if (input.isKeyJustPressed(Key.ENTER)) {

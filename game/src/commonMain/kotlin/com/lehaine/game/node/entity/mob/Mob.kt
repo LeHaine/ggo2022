@@ -26,8 +26,8 @@ abstract class Mob(val hero: Hero, override val level: Level) : ObliqueEntity(le
 
     open var speed = 0.003f
     var speedMul = 1f
-    open val baseHealth = 10
-    var health = 10
+    open val baseHealth = 2
+    var health = 2
     var avoidOtherMobs = true
 
     val onDeath = signal1v<Mob>()

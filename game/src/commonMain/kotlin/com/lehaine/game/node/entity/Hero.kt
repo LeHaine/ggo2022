@@ -33,6 +33,7 @@ import com.lehaine.rune.engine.node.renderable.entity.cd
 import com.lehaine.rune.engine.node.renderable.entity.toGridPosition
 import com.lehaine.rune.engine.node.renderable.sprite
 import kotlin.math.floor
+import kotlin.math.min
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
@@ -294,20 +295,25 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
     }
 
     private fun orbAttack() {
-        val straightAngle = angleToMouse
+        val angle = angleToMouse
 
-        val straightProjectile = orbProjectilePool.alloc()
-        straightProjectile.enabled = true
-        straightProjectile.globalPosition(centerX + 10f * straightAngle.cosine, centerY + 10f * straightAngle.sine)
-        straightProjectile.moveTowardsAngle(straightAngle)
+        var projectile = orbProjectilePool.alloc()
+        projectile.enabled = true
+        projectile.globalPosition(centerX + 10f * angle.cosine, centerY + 10f * angle.sine)
+        projectile.moveTowardsAngle(angle)
 
-        repeat(2) {
-            val sideAngle = angleToMouse + 20.degrees * if (it % 2 == 0) 1 else -1
-            val sideProjectile = orbProjectilePool.alloc()
-            sideProjectile.enabled = true
-            sideProjectile.globalPosition(centerX + 10f * sideAngle.cosine, centerY + 10f * sideAngle.sine)
-            sideProjectile.moveTowardsAngle(sideAngle)
+        var deltaAngle = 10.degrees
+        repeat(game.state.extraProjectiles) {
+            projectile = orbProjectilePool.alloc()
+            projectile.globalX = centerX + 10 * angle.cosine
+            projectile.globalY = centerY + 10 * angle.sine
+            projectile.enabled = true
+            projectile.moveTowardsAngle(if (it % 2 == 0) angle + deltaAngle else angle - deltaAngle)
+            if (it % 2 != 0) {
+                deltaAngle += 10.degrees
+            }
         }
+
         Assets.sfxShoot.play(0.2f)
     }
 
@@ -351,7 +357,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
     private fun performHandOfDeath() {
         if (Mob.ALL.isEmpty()) return
 
-        repeat(5 + game.state.extraProjectiles) {
+        repeat(min(Mob.ALL.size, 5 + game.state.extraProjectiles)) {
             var mob = Mob.ALL.random()
             while (mobsTemp.contains(mob)) {
                 mob = Mob.ALL.random()
