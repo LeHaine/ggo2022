@@ -10,8 +10,13 @@ import com.lehaine.game.node.game
 import com.lehaine.littlekt.math.geom.Angle
 import com.lehaine.littlekt.math.isFuzzyZero
 import com.lehaine.littlekt.util.signal1v
-import com.lehaine.rune.engine.node.renderable.entity.*
+import com.lehaine.rune.engine.node.renderable.entity.ObliqueEntity
+import com.lehaine.rune.engine.node.renderable.entity.angleTo
+import com.lehaine.rune.engine.node.renderable.entity.cd
+import com.lehaine.rune.engine.node.renderable.entity.toGridPosition
 import com.lehaine.rune.engine.node.renderable.sprite
+import kotlin.math.ceil
+import kotlin.random.Random
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -143,13 +148,44 @@ abstract class Mob(val hero: Hero, override val level: Level) : ObliqueEntity(le
     }
 
     fun teleportToRandomSpotAroundHero() {
+        val camera = hero.camera.camera ?: return
+        val vw = camera.virtualWidth
+        val vh = camera.virtualHeight
+        val vx = camera.position.x - vw * 0.5f - Config.GRID_CELL_SIZE * 3
+        val vy = camera.position.y - vh * 0.5f - Config.GRID_CELL_SIZE * 3
+        val vx2 = vx + vw - hero.camera.offset.x * 2 + Config.GRID_CELL_SIZE * 3
+        val vy2 = vy + vh - hero.camera.offset.y * 2 + Config.GRID_CELL_SIZE * 3
+        val w = vw + Config.GRID_CELL_SIZE * 3 * 2
+        val h = vh + Config.GRID_CELL_SIZE * 3 * 2
+        val perimeter = (w * 2) + (h * 2)
+
         var scanning = true
         while (scanning) {
-            val fx = (0..level.levelWidth).random()
-            val fy = (0..level.levelHeight).random()
+            val point = Random.nextFloat() * perimeter
 
-            if (level.isValid(fx, fy) && !level.hasCollision(fx, fy) && hero.distGridTo(fx, fy) >= 3) {
-                toGridPosition(fx, fy)
+            var rx: Float
+            var ry: Float
+
+            if (point <= w) { // anywhere at top
+                rx = (Random.nextFloat() * w) + vx
+                ry = vy
+            } else if (point <= w + h) { // anywhere on right
+                rx = vx2
+                ry = (Random.nextFloat() * h) + vy
+            } else if (point <= (w * 2) + h) { // anywhere on bottom
+                rx = (Random.nextFloat() * w) + vx
+                ry = vy2
+            } else { // anywhere on left
+                rx = vx
+                ry = (Random.nextFloat() * h) + vy
+            }
+            rx /= Config.GRID_CELL_SIZE
+            ry /= Config.GRID_CELL_SIZE
+
+            val tx = ceil(rx).toInt()
+            val ty = ceil(ry).toInt()
+            if (level.isValid(tx, ty) && !level.hasCollision(tx, ty)) {
+                toGridPosition(tx, ty)
                 scanning = false
             }
         }

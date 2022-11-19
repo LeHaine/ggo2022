@@ -157,7 +157,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
             }
         }
 
-        if (cd.has("dash")) {
+        if (cd.has("dashDamage")) {
             Mob.ALL.fastForEach {
                 if (it.enabled && isCollidingWithInnerCircle(it)) {
                     it.hit(angleTo(it))
@@ -229,6 +229,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
             camera.shake(50.milliseconds, 0.5f * Config.cameraShakeMultiplier)
             cd("dashCD", 1.seconds)
             addEffect(Effect.Invincible, 350.milliseconds)
+            cd("dashDamage", 350.milliseconds)
             cd("dash", 250.milliseconds) {
                 speedMultiplier = 1f
                 scaleX = 1f
