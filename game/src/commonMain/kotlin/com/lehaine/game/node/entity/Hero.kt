@@ -27,10 +27,7 @@ import com.lehaine.littlekt.util.signal
 import com.lehaine.rune.engine.GameLevel
 import com.lehaine.rune.engine.node.EntityCamera2D
 import com.lehaine.rune.engine.node.renderable.animatedSprite
-import com.lehaine.rune.engine.node.renderable.entity.ObliqueEntity
-import com.lehaine.rune.engine.node.renderable.entity.castRayTo
-import com.lehaine.rune.engine.node.renderable.entity.cd
-import com.lehaine.rune.engine.node.renderable.entity.toGridPosition
+import com.lehaine.rune.engine.node.renderable.entity.*
 import com.lehaine.rune.engine.node.renderable.sprite
 import kotlin.math.floor
 import kotlin.math.min
@@ -157,6 +154,14 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
             if (!cd.has("footstep")) {
                 Assets.sfxFootstep.play(0.1f)
                 cd("footstep", 450.milliseconds)
+            }
+        }
+
+        if (cd.has("dash")) {
+            Mob.ALL.fastForEach {
+                if (it.enabled && isCollidingWithInnerCircle(it)) {
+                    it.hit(angleTo(it))
+                }
             }
         }
 
