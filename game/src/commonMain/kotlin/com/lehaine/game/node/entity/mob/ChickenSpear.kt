@@ -44,12 +44,19 @@ class ChickenSpear(hero: Hero, level: Level) : Mob(hero, level) {
 
         val camera = hero.camera.camera ?: return
         val vw = camera.virtualWidth
+        val vh = camera.virtualHeight
         val vx = camera.position.x - vw * 0.5f
+        val vy = camera.position.y - vh * 0.5f
         val vx2 = vx + vw - hero.camera.offset.x * 2
+        val vy2 = vy + vh - hero.camera.offset.y * 2
 
         if ((left <= vx && xDir < 0) || (right >= vx2 && xDir > 0)) {
-            this.xDir = -this.xDir
-            dir = this.xDir.sign.toInt()
+            xDir = -xDir
+            dir = xDir.sign.toInt()
+        }
+
+        if ((top <= vy && yDir < 0) || (bottom >= vy2 && yDir > 0)) {
+            yDir = -yDir
         }
     }
 

@@ -47,14 +47,20 @@ class OrbProjectile(val hero: Hero, level: GameLevel<*>) : ObliqueEntity(level, 
 
         val camera = hero.camera.camera ?: return
         val vw = camera.virtualWidth
+        val vh = camera.virtualHeight
         val vx = camera.position.x - vw * 0.5f
+        val vy = camera.position.y - vh * 0.5f
         val vx2 = vx + vw - hero.camera.offset.x * 2
+        val vy2 = vy + vh - hero.camera.offset.y * 2
 
         if ((left <= vx && velocityX < 0) || (right >= vx2 && velocityX > 0)) {
             velocityX = -velocityX
             totalWallHitsLeft--
         }
-
+        if ((top <= vy && velocityY < 0) || (bottom >= vy2 && velocityY > 0)) {
+            velocityY = -velocityY
+            totalWallHitsLeft--
+        }
 
         var hit = false
         Mob.ALL.fastForEach {
@@ -70,25 +76,18 @@ class OrbProjectile(val hero: Hero, level: GameLevel<*>) : ObliqueEntity(level, 
             }
         }
 
-
-        if (hit && attacked) {
-            fx.spiritBallExplode(centerX, centerY)
-            attacked = false
-            enabled = false
-            hero.projectileFinished(this)
-        }
-    }
-
-    override fun onLevelCollision(xDir: Int, yDir: Int) {
-        super.onLevelCollision(xDir, yDir)
-        if (totalWallHitsLeft <= 0) {
+        if ((hit && attacked) || totalWallHitsLeft <= 0) {
             cd.remove("attacked")
             fx.spiritBallExplode(centerX, centerY)
             attacked = false
             enabled = false
             totalWallHitsLeft = 3
             hero.projectileFinished(this)
-        } else {
+        }
+    }
+
+    override fun onLevelCollision(xDir: Int, yDir: Int) {
+        super.onLevelCollision(xDir, yDir)
             if (xDir != 0) {
                 velocityX = -velocityX * 2f
             }
@@ -96,7 +95,6 @@ class OrbProjectile(val hero: Hero, level: GameLevel<*>) : ObliqueEntity(level, 
                 velocityY = -velocityY * 2f
             }
             totalWallHitsLeft--
-        }
     }
 
     fun moveTowardsAngle(angle: Angle) {

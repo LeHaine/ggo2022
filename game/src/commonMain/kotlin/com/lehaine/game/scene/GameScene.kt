@@ -170,6 +170,7 @@ class GameScene(context: Context) :
                 targetHeight = 235
                 entityCamera = entityCamera2D {
                     trackingSpeed = 1.25f
+                    clampToBounds = false
                     viewBounds.width = ldtkLevel.pxWidth.toFloat()
                     viewBounds.height = ldtkLevel.pxHeight.toFloat()
                     camera = canvasCamera
