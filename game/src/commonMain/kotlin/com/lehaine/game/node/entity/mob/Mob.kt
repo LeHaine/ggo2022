@@ -8,7 +8,10 @@ import com.lehaine.game.node.entity.Hero
 import com.lehaine.game.node.entity.SoulItem
 import com.lehaine.game.node.game
 import com.lehaine.littlekt.math.geom.Angle
+import com.lehaine.littlekt.math.geom.cosine
+import com.lehaine.littlekt.math.geom.sine
 import com.lehaine.littlekt.math.isFuzzyZero
+import com.lehaine.littlekt.util.fastForEach
 import com.lehaine.littlekt.util.signal1v
 import com.lehaine.rune.engine.node.renderable.entity.ObliqueEntity
 import com.lehaine.rune.engine.node.renderable.entity.angleTo
@@ -93,6 +96,19 @@ abstract class Mob(val hero: Hero, override val level: Level) : ObliqueEntity(le
         shadow.globalY = (cy + yr) * Config.GRID_CELL_SIZE - Config.GRID_CELL_SIZE + 2
     }
 
+    override fun fixedUpdate() {
+        super.fixedUpdate()
+        if (avoidOtherMobs) {
+            ALL.fastForEach { mob ->
+                if (mob == this) return@fastForEach
+                if (isCollidingWithOuterCircle(mob)) {
+                    val angle = angleTo(mob)
+                    velocityX -= speed * speedMul * angle.cosine
+                    velocityY -= speed * speedMul * angle.sine
+                }
+            }
+        }
+    }
     open fun hit(from: Angle) {
         if (hasEffect(Effect.Invincible) || health <= 0) return
 
