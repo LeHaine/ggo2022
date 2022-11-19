@@ -1,7 +1,7 @@
 package com.lehaine.game.node.ui
 
 import com.lehaine.game.GameState
-import com.lehaine.game.data.createUpgrades
+import com.lehaine.game.data.createArenaUpgrades
 import com.lehaine.littlekt.graph.node.Node
 import com.lehaine.littlekt.graph.node.node
 import com.lehaine.littlekt.graph.node.ui.*
@@ -16,7 +16,7 @@ fun Node.upgradesDialog(state: GameState, callback: UpgradesDialog.() -> Unit = 
  */
 class UpgradesDialog(private val state: GameState) : Control() {
 
-    private val upgrades = createUpgrades(state)
+    private val arenaUpgrades = createArenaUpgrades(state)
     private var buttonColumn: VBoxContainer
 
     val onUpgradeSelect = signal()
@@ -38,19 +38,26 @@ class UpgradesDialog(private val state: GameState) : Control() {
         }
     }
 
-    fun refresh() {
+    fun refresh(upgradeType: UpgradeType) {
         buttonColumn.destroyAllChildren()
         buttonColumn.apply {
-            repeat(3) {
-                val upgrade = upgrades.random()
-                soundButton {
-                    text = "${upgrade.title}: ${upgrade.description}"
-                    onPressed += {
-                        upgrade.collect()
-                        onUpgradeSelect.emit()
+            if (upgradeType == UpgradeType.ARENA) {
+                repeat(3) {
+                    val upgrade = arenaUpgrades.random()
+                    soundButton {
+                        text = "${upgrade.title}: ${upgrade.description}"
+                        onPressed += {
+                            upgrade.collect()
+                            onUpgradeSelect.emit()
+                        }
                     }
                 }
             }
         }
+    }
+
+    enum class UpgradeType {
+        ARENA,
+        OFFICE
     }
 }

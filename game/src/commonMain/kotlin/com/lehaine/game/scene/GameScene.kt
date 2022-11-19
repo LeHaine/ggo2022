@@ -372,7 +372,7 @@ class GameScene(context: Context) :
         state.exp.onLevelUp += { level, gained ->
             gameCanvas.updateInterval = 0
             upgradesDialog.enabled = true
-            upgradesDialog.refresh()
+            upgradesDialog.refresh(UpgradesDialog.UpgradeType.ARENA)
         }
 
         fx.createParticleBatchNodes()
@@ -417,7 +417,7 @@ class GameScene(context: Context) :
 
         // TODO remove this before final release
         if (input.isKeyJustPressed(Key.NUMPAD1)) {
-            state.extraProjectiles++
+            state.arenaState.extraProjectiles++
         }
 
 
