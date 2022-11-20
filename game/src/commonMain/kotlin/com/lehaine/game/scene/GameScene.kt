@@ -28,6 +28,7 @@ import com.lehaine.littlekt.input.GameAxis
 import com.lehaine.littlekt.input.GameButton
 import com.lehaine.littlekt.input.Key
 import com.lehaine.littlekt.input.Pointer
+import com.lehaine.littlekt.math.floorToInt
 import com.lehaine.littlekt.util.toString
 import com.lehaine.littlekt.util.viewport.ExtendViewport
 import com.lehaine.rune.engine.ActionCreator
@@ -303,17 +304,27 @@ class GameScene(context: Context) :
                 marginTop = 25f
                 separation = 30
                 val deadHeart = Assets.atlas.getAnimation("heartDead")
-                repeat(4) {
-                    control {
-                        animatedSprite {
-                            val idx = it
-                            onReady += {
-                                registerState(Assets.heartBeating, priority = 5) { hero.health >= idx + 1 }
-                                registerState(deadHeart, 0)
+
+                var lastHeroMultiplier = 0f
+
+                onUpdate += {
+                    if (lastHeroMultiplier != state.heroHealthMultiplier) {
+                        lastHeroMultiplier = state.heroHealthMultiplier
+                        destroyAllChildren()
+                        repeat((4 * state.heroHealthMultiplier).floorToInt()) {
+                            control {
+                                animatedSprite {
+                                    val idx = it
+                                    onReady += {
+                                        registerState(Assets.heartBeating, priority = 5) { hero.health >= idx + 1 }
+                                        registerState(deadHeart, 0)
+                                    }
+                                }
                             }
                         }
                     }
                 }
+
             }
 
 
@@ -418,7 +429,14 @@ class GameScene(context: Context) :
 
         // TODO remove this before final release
         if (input.isKeyJustPressed(Key.NUMPAD1)) {
-            state.arenaState.extraProjectiles++
+            state.extraProjectiles++
+        }
+
+        // TODO remove this before final release
+        if (input.isKeyJustPressed(Key.NUMPAD2)) {
+            gameCanvas.updateInterval = 0
+            upgradesDialog.enabled = true
+            upgradesDialog.refresh(UpgradesDialog.UpgradeType.ARENA)
         }
 
 

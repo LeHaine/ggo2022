@@ -34,7 +34,7 @@ abstract class Mob(val hero: Hero, override val level: Level) : ObliqueEntity(le
     open var maxSoulsDrop = 10
 
     open var speed = 0.003f
-    var speedMul = 1f
+    val speedMul get() = game.state.monsterSpeedMultiplier
     open val baseHealth = 2
     var health = 2
     var avoidOtherMobs = true
@@ -109,6 +109,7 @@ abstract class Mob(val hero: Hero, override val level: Level) : ObliqueEntity(le
             }
         }
     }
+
     open fun hit(from: Angle) {
         if (hasEffect(Effect.Invincible) || health <= 0) return
 

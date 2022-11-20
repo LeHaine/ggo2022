@@ -51,10 +51,10 @@ class HopperMan(hero: Hero, level: Level) : Mob(hero, level) {
         super.fixedUpdate()
         if (hasEffect(Effect.Stun)) return
 
-        speedMul = min(distGridTo(hero) / 7f, 1f)
+        val mul = min(distGridTo(hero) / 7f, 1f)
         if (velocityZ != 0f) {
-            velocityX += speed * speedMul * game.state.monsterSpeedMultiplier * xDir
-            velocityY += speed * speedMul * game.state.monsterSpeedMultiplier * yDir
+            velocityX += speed * speedMul * game.state.monsterSpeedMultiplier * xDir * mul
+            velocityY += speed * speedMul * game.state.monsterSpeedMultiplier * yDir * mul
         }
     }
 

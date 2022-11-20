@@ -24,11 +24,11 @@ sealed class Upgrade(
             Upgrade(
                 state,
                 title = "Damned Victims",
-                description = "+10% souls drop & +10% damned victims spawn."
+                description = "+10% souls drop\n+10% damned victims spawn."
             ) {
             override fun onCollect() {
-                state.arenaState.soulItemDropMultiplier += 0.1f
-                state.arenaState.totalMonstersSpawnMultiplier += 0.1f
+                state.soulItemDropMultiplier += 1.1f
+                state.totalMonstersSpawnMultiplier += 1.1f
             }
         }
 
@@ -36,11 +36,11 @@ sealed class Upgrade(
             Upgrade(
                 state,
                 title = "A Quickie",
-                description = "+15% souls drop & +15% faster spawn of a damned victim."
+                description = "+15% souls drop\n+15% faster spawn of a damned victim."
             ) {
             override fun onCollect() {
-                state.arenaState.soulItemDropMultiplier += 0.15f
-                state.arenaState.monsterRespawnMultiplier += 0.15f
+                state.soulItemDropMultiplier *= 1.15f
+                state.monsterRespawnMultiplier *= 1.15f
             }
         }
 
@@ -48,10 +48,11 @@ sealed class Upgrade(
             Upgrade(
                 state,
                 title = "Make It Rain",
-                description = "+1 additional projectile & +25% more mob health"
+                description = "+1 additional projectile\n+25% more mob health"
             ) {
             override fun onCollect() {
-                state.arenaState.extraProjectiles++
+                state.extraProjectiles++
+                state.monsterHealthMultiplier *= 1.25f
             }
         }
 
@@ -59,10 +60,11 @@ sealed class Upgrade(
             Upgrade(
                 state,
                 title = "Large and In Charge",
-                description = "+25% increase projectile radius & +25% more victims speed"
+                description = "+25% increase projectile radius\n+25% more victims speed"
             ) {
             override fun onCollect() {
-                state.arenaState.projectileDamageRadiusMultiplier += 0.5f
+                state.projectileDamageRadiusMultiplier *= 1.25f
+                state.monsterSpeedMultiplier *= 1.25f
             }
         }
 
@@ -70,10 +72,10 @@ sealed class Upgrade(
             Upgrade(
                 state,
                 title = "It Goes Boom",
-                description = "+1 extra explosion of projectile ends & 25% more victims spawn"
+                description = "+1 extra explosion of projectile ends\n25% more victims spawn"
             ) {
             override fun onCollect() {
-                state.arenaState.extraExplosions++
+                state.extraExplosions++
             }
         }
 
@@ -81,11 +83,11 @@ sealed class Upgrade(
             Upgrade(
                 state,
                 title = "Super Charge Me",
-                description = "-50% cooldown reduction & -50% health"
+                description = "-50% cooldown reduction\n-50% health"
             ) {
             override fun onCollect() {
-                state.arenaState.skillCDMultiplier *= 0.5f
-                state.arenaState.heroHealthMultiplier *= 0.5f
+                state.skillCDMultiplier *= 0.5f
+                state.heroHealthMultiplier *= 0.5f
             }
         }
 
@@ -93,11 +95,11 @@ sealed class Upgrade(
             Upgrade(
                 state,
                 title = "I'm Fragile",
-                description = "+200% more damage & reset health to 1"
+                description = "+3 more damage\nReset health to 1"
             ) {
             override fun onCollect() {
-                state.arenaState.heroHealthMultiplier = 0.25f
-                state.arenaState.extraHeroDamage *= 3
+                state.heroHealthMultiplier = 0.25f
+                state.extraHeroDamage += 3
             }
         }
 
@@ -105,18 +107,14 @@ sealed class Upgrade(
             Upgrade(
                 state,
                 title = "Juggernaut",
-                description = "+100% more health & damage reduce by 50% and souls by 25%"
+                description = "+1 more health\n-50% damage\n-25% souls dropped"
             ) {
             override fun onCollect() {
-                state.arenaState.soulItemDropMultiplier -= 0.25f
-                state.arenaState.heroHealthMultiplier *= 2f
-                state.arenaState.extraHeroDamage /= 2
+                state.soulItemDropMultiplier *= 0.75f
+                state.heroHealthMultiplier += 1
+                state.extraHeroDamage /= 2
             }
         }
-    }
-
-    sealed class Office(state: GameState, title: String, description: String) : Upgrade(state, title, description) {
-
     }
 }
 
@@ -131,5 +129,3 @@ fun createArenaUpgrades(state: GameState) =
         Upgrade.Arena.ImFragile(state),
         Upgrade.Arena.Juggernaut(state)
     )
-
-fun createOfficeUpgrades(state: GameState) = listOf<Upgrade.Office>()

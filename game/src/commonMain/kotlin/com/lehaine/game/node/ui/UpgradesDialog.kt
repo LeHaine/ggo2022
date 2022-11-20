@@ -3,6 +3,7 @@ package com.lehaine.game.node.ui
 import com.lehaine.game.GameState
 import com.lehaine.game.data.createArenaUpgrades
 import com.lehaine.littlekt.graph.node.Node
+import com.lehaine.littlekt.graph.node.component.VAlign
 import com.lehaine.littlekt.graph.node.node
 import com.lehaine.littlekt.graph.node.ui.*
 import com.lehaine.littlekt.util.signal
@@ -14,7 +15,7 @@ fun Node.upgradesDialog(state: GameState, callback: UpgradesDialog.() -> Unit = 
  * @author Colton Daily
  * @date 11/11/2022
  */
-class UpgradesDialog(private val state: GameState) : Control() {
+class UpgradesDialog(state: GameState) : Control() {
 
     private val arenaUpgrades = createArenaUpgrades(state)
     private var buttonColumn: VBoxContainer
@@ -45,13 +46,16 @@ class UpgradesDialog(private val state: GameState) : Control() {
                 repeat(3) {
                     val upgrade = arenaUpgrades.random()
                     soundButton {
-                        text = "${upgrade.title}: ${upgrade.description}"
+                        text = "${upgrade.title}\n${upgrade.description}"
+                        verticalAlign = VAlign.TOP
                         onPressed += {
                             upgrade.collect()
                             onUpgradeSelect.emit()
                         }
                     }
                 }
+            } else {
+                // TODO display all upgrades for office
             }
         }
     }

@@ -23,6 +23,8 @@ import com.lehaine.littlekt.math.geom.*
 import com.lehaine.littlekt.math.isFuzzyZero
 import com.lehaine.littlekt.util.datastructure.Pool
 import com.lehaine.littlekt.util.fastForEach
+import com.lehaine.littlekt.util.milliseconds
+import com.lehaine.littlekt.util.seconds
 import com.lehaine.littlekt.util.signal
 import com.lehaine.rune.engine.GameLevel
 import com.lehaine.rune.engine.node.EntityCamera2D
@@ -200,7 +202,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
 
     fun attemptSwipeAttack() {
         if (!cd.has("swipeCD")) {
-            cd("swipeCD", (750.1100).milliseconds)
+            cd("swipeCD", ((750..1100).random() * game.state.skillCDMultiplier).milliseconds)
             swipeAttack()
         }
     }
@@ -209,7 +211,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
         if (!game.state.shootingUnlocked) return
 
         if (!cd.has("shootCD")) {
-            cd("shootCD", 3.seconds)
+            cd("shootCD", (3 * game.state.skillCDMultiplier).seconds)
             orbAttack()
             camera.shake(100.milliseconds, 0.5f * Config.cameraShakeMultiplier)
         }
@@ -227,7 +229,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
             scaleX = 1.25f
             scaleY = 0.9f
             camera.shake(50.milliseconds, 0.5f * Config.cameraShakeMultiplier)
-            cd("dashCD", 1.seconds)
+            cd("dashCD", (1 * game.state.skillCDMultiplier).seconds)
             addEffect(Effect.Invincible, 350.milliseconds)
             cd("dashDamage", 350.milliseconds)
             cd("dash", 250.milliseconds) {
@@ -243,7 +245,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
         if (!game.state.handOfDeathUnlocked) return
 
         if (!cd.has("handOfDeathCD")) {
-            cd("handOfDeathCD", 30.seconds)
+            cd("handOfDeathCD", (30 * game.state.skillCDMultiplier).seconds)
             performHandOfDeath()
         }
     }
@@ -255,7 +257,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
             val tcx = (mouseX / Config.GRID_CELL_SIZE).toInt()
             val tcy = (mouseY / Config.GRID_CELL_SIZE).toInt()
             if (castRayTo(tcx, tcy) { cx, cy -> !level.hasCollision(cx, cy) }) {
-                cd("boneSpearCD", 15.seconds)
+                cd("boneSpearCD", (15 * game.state.skillCDMultiplier).seconds)
                 boneSpearAttack(mouseX, mouseY)
             }
         }
