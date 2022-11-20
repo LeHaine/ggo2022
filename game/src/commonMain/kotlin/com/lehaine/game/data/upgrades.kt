@@ -59,7 +59,7 @@ sealed class Upgrade(
         Upgrade(
             state,
             title = "Large and In Charge",
-            description = "+25% increase projectile radius\n+25% more victims speed"
+            description = "+25% increase area of effect\n+25% more victims speed"
         ) {
         override fun onCollect() {
             state.projectileDamageRadiusMultiplier *= 1.25f
@@ -87,7 +87,7 @@ sealed class Upgrade(
         ) {
         override fun onCollect() {
             state.skillCDMultiplier *= 0.95f
-            state.heroHealthMultiplier *= 0.25f
+            state.heroHealthMultiplier *= 0.75f
         }
     }
 

@@ -33,6 +33,7 @@ import com.lehaine.rune.engine.node.renderable.entity.*
 import com.lehaine.rune.engine.node.renderable.sprite
 import kotlin.math.floor
 import kotlin.math.min
+import kotlin.random.Random
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
@@ -326,7 +327,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
     }
 
     private fun swipeAttack() {
-        cd("delay", 200.milliseconds) {
+        cd("swipeDelay${Random.nextFloat()}", 200.milliseconds) {
             repeat(1 + game.state.extraProjectiles) {
                 val projectile = swipeProjectilePool.alloc()
                 val offset = 20f + 20f * floor(it / 2f)
