@@ -27,7 +27,7 @@ class GameState {
 
     val exp = ExpTable()
 
-    val soulsRequired = listOf(100, 200, 300, 400)
+    val soulsRequired = listOf(500, 5000, 50000, 500000)
 
     var unlockIdx = 0
     val unlocks = Array(4) { false }

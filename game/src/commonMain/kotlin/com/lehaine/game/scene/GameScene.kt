@@ -310,8 +310,9 @@ class GameScene(context: Context) :
                 onUpdate += {
                     if (lastHeroMultiplier != state.heroHealthMultiplier) {
                         lastHeroMultiplier = state.heroHealthMultiplier
+                        hero.health = (4 * state.heroHealthMultiplier).floorToInt().coerceAtLeast(1)
                         destroyAllChildren()
-                        repeat((4 * state.heroHealthMultiplier).floorToInt()) {
+                        repeat(hero.health) {
                             control {
                                 animatedSprite {
                                     val idx = it
@@ -451,7 +452,7 @@ class GameScene(context: Context) :
             state.dashUnlocked = true
             state.shootingUnlocked = true
             state.handOfDeathUnlocked = true
-            state.soulsCaptured = 10000
+            state.soulsCaptured = 10000000
             state.unlockIdx = 3
         }
 

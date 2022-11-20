@@ -126,7 +126,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
         }
 
         onReady += {
-            health = (health * game.state.heroHealthMultiplier).toInt()
+            health = (health * game.state.heroHealthMultiplier).toInt().coerceAtLeast(1)
             flashMaterial.shader?.prepare(context)
         }
         onDestroy += {
