@@ -8,7 +8,9 @@ import com.lehaine.littlekt.graphics.Particle
 import com.lehaine.littlekt.graphics.ParticleSimulator
 import com.lehaine.littlekt.graphics.TextureSlice
 import com.lehaine.littlekt.math.PI2_F
+import com.lehaine.littlekt.math.geom.radians
 import com.lehaine.littlekt.math.random
+import com.lehaine.littlekt.util.milliseconds
 import com.lehaine.littlekt.util.seconds
 import com.lehaine.rune.engine.node.renderable.ParticleBatch
 import kotlin.math.sign
@@ -104,6 +106,43 @@ class Fx(val game: GameScene) {
             p.friction = 0.97f.about(0.05f).coerceAtMost(1f)
             p.rotationDelta = (0f..PI2_F).random()
             p.life = (0.5f..0.75f).random().seconds
+        }
+    }
+
+
+    fun smallExplosion(x: Float, y: Float) {
+        val smallCircle = Assets.atlas.getByPrefix("fxSmallCircle").slice
+        val dot = Assets.atlas.getByPrefix("fxDot").slice
+
+        // smoke
+        val smoke = Assets.atlas.getByPrefix("fxSmoke").slice
+        repeat(10) {
+            val p = allocBotNormal(smoke, x + (0..5).random().asRandomSign, y + (0..5).random().asRandomSign)
+            p.fadeOutSpeed = (0.5f..1f).random()
+            p.scale((0.25f..0.5f).random())
+            p.xDelta = (0f..1.3f).random().asRandomSign
+            p.yDelta = (-2f..0f).random()
+            p.friction = (0.93f..0.96f).random()
+            p.rotation = (0f..PI2_F).random().radians
+            p.rotationDelta = (0f..0.02f).random().asRandomSign
+            p.life = (4f..5f).random().seconds
+            p.delay = if (it > 20) (0..100).random().milliseconds else Duration.ZERO
+
+        }
+
+        // Fire
+        repeat(10) {
+            val p = allocTopAdd(smoke, x + (0..3).random().asRandomSign, y + (0..6).random().asRandomSign)
+            p.color.set(FIRE)
+            p.fadeOutSpeed = (0.5f..1f).random()
+            p.scale((0.15f..0.35f).random())
+            p.moveAwayFrom(x, y, (0f..2f).random())
+            p.friction = (0.93f..0.96f).random()
+            p.rotation = (0f..PI2_F).random().radians
+            p.rotationDelta = (0f..0.02f).random().asRandomSign
+            p.life = (1f..3f).random().seconds
+            p.delay = if (it > 20) (0..100).random().milliseconds else Duration.ZERO
+
         }
     }
 
@@ -299,5 +338,6 @@ class Fx(val game: GameScene) {
         private val PURPLE = Color.fromHex("#573746")
         private val DARK_PURPLE = Color.fromHex("#422e37")
         private val BLACK = Color.fromHex("#332e30")
+        private val FIRE = Color.fromHex("#E78F0C")
     }
 }

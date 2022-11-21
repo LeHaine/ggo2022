@@ -21,6 +21,7 @@ import com.lehaine.littlekt.graphics.tilemap.ldtk.LDtkEntity
 import com.lehaine.littlekt.math.PI2
 import com.lehaine.littlekt.math.geom.*
 import com.lehaine.littlekt.math.isFuzzyZero
+import com.lehaine.littlekt.math.random
 import com.lehaine.littlekt.util.datastructure.Pool
 import com.lehaine.littlekt.util.fastForEach
 import com.lehaine.littlekt.util.milliseconds
@@ -73,6 +74,14 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
             BoneSpearProjectile(this).apply { enabled = false }.addTo(projectiles)
         }
     }
+
+    private val explodingProjectile: Pool<ExplodingProjectile> by lazy {
+        Pool(1) {
+            ExplodingProjectile(this).apply { enabled = false }.addTo(projectiles)
+        }
+    }
+
+
     private val canMove = data.field<Boolean>("canMove").value
     private val flashMaterial =
         Material(ShaderProgram(DefaultVertexShader(), FlashFragmentShader()))
@@ -383,9 +392,37 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
 
     fun projectileFinished(projectile: Projectile) {
         when (projectile) {
+            is SwipeProjectile, is BoneSpearProjectile, is OrbProjectile -> {
+                if (projectile is Node2D) {
+                    repeat(game.state.extraExplosions) {
+                        cd("explosion$it-${Random.nextFloat()}", (100 * it).milliseconds) {
+                            addExplodingProjectile(
+                                projectile.globalX + (-16f..16f).random(),
+                                projectile.globalY + (-16f..16f).random()
+                            )
+                        }
+                    }
+                }
+            }
+
+            else -> {
+                // do nothing if any other projectile
+            }
+        }
+
+        when (projectile) {
             is SwipeProjectile -> swipeProjectilePool.free(projectile)
             is BoneSpearProjectile -> boneSpearProjectile.free(projectile)
+            is OrbProjectile -> orbProjectilePool.free(projectile)
+            is ExplodingProjectile -> explodingProjectile.free(projectile)
         }
+    }
+
+    private fun addExplodingProjectile(x: Float, y: Float) {
+        val projectile = explodingProjectile.alloc()
+        projectile.globalX = x
+        projectile.globalY = y
+        projectile.enabled = true
     }
 
     override fun onLand() {
