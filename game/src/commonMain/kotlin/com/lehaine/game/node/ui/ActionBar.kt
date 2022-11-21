@@ -9,14 +9,8 @@ import com.lehaine.littlekt.graph.node.annotation.SceneGraphDslMarker
 import com.lehaine.littlekt.graph.node.component.AlignMode
 import com.lehaine.littlekt.graph.node.node
 import com.lehaine.littlekt.graph.node.ui.*
-import com.lehaine.littlekt.graphics.Color
 import com.lehaine.littlekt.graphics.TextureSlice
-import com.lehaine.rune.engine.ActionCreator
-import com.lehaine.rune.engine.actionCreator
 import com.lehaine.rune.engine.node.renderable.entity.cd
-import kotlin.time.Duration
-import kotlin.time.Duration.Companion.milliseconds
-import kotlin.time.Duration.Companion.seconds
 
 fun Node.actionBar(
     callback: @SceneGraphDslMarker ActionBar.() -> Unit = {}
@@ -131,7 +125,7 @@ class ActionBarItem(
         progressBar = cooldownIcon
 
         onUpdate += {
-            ratio = hero.cd.ratio(itemName)
+            ratio = if (game.state.skillCDMultiplier == 0f) 0f else hero.cd.ratio(itemName)
 
             background = if (isUnlocked()) {
                 unlockedIcon

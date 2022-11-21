@@ -111,38 +111,18 @@ class Fx(val game: GameScene) {
 
 
     fun smallExplosion(x: Float, y: Float) {
-        val smallCircle = Assets.atlas.getByPrefix("fxSmallCircle").slice
         val dot = Assets.atlas.getByPrefix("fxDot").slice
 
-        // smoke
-        val smoke = Assets.atlas.getByPrefix("fxSmoke").slice
-        repeat(10) {
-            val p = allocBotNormal(smoke, x + (0..5).random().asRandomSign, y + (0..5).random().asRandomSign)
+        repeat(80) {
+            val p = allocBotNormal(dot, x + (0..5).random().asRandomSign, y + (0..5).random().asRandomSign)
             p.fadeOutSpeed = (0.5f..1f).random()
-            p.scale((0.25f..0.5f).random())
-            p.xDelta = (0f..1.3f).random().asRandomSign
-            p.yDelta = (-2f..0f).random()
-            p.friction = (0.93f..0.96f).random()
+            p.alpha = (0.4f..1f).random()
+            p.color.set(MEAT_RED)
+            p.moveAwayFrom(x, y, (1f..3f).random())
+            p.friction = (0.8f..0.9f).random()
             p.rotation = (0f..PI2_F).random().radians
             p.rotationDelta = (0f..0.02f).random().asRandomSign
-            p.life = (4f..5f).random().seconds
-            p.delay = if (it > 20) (0..100).random().milliseconds else Duration.ZERO
-
-        }
-
-        // Fire
-        repeat(10) {
-            val p = allocTopAdd(smoke, x + (0..3).random().asRandomSign, y + (0..6).random().asRandomSign)
-            p.color.set(FIRE)
-            p.fadeOutSpeed = (0.5f..1f).random()
-            p.scale((0.15f..0.35f).random())
-            p.moveAwayFrom(x, y, (0f..2f).random())
-            p.friction = (0.93f..0.96f).random()
-            p.rotation = (0f..PI2_F).random().radians
-            p.rotationDelta = (0f..0.02f).random().asRandomSign
-            p.life = (1f..3f).random().seconds
-            p.delay = if (it > 20) (0..100).random().milliseconds else Duration.ZERO
-
+            p.life = (2f..3f).random().seconds
         }
     }
 

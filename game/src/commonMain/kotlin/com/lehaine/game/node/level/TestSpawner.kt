@@ -7,7 +7,11 @@ import com.lehaine.game.node.entity.mob.ChickenSpear
 import com.lehaine.game.node.entity.mob.HopperMan
 import com.lehaine.game.node.entity.mob.MeatBall
 import com.lehaine.game.node.entity.mob.Mob
+import com.lehaine.game.node.game
+import com.lehaine.littlekt.math.floorToInt
 import com.lehaine.littlekt.util.datastructure.pool
+import com.lehaine.littlekt.util.seconds
+import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
 
@@ -47,9 +51,9 @@ class TestSpawner(hero: Hero, level: Level) : MonsterSpawner() {
         addEvent {
             oneTime = false
             endAt = 30.seconds
-            actionTimer = 1.seconds
+            actionTimer = { 1.seconds.withRespawnMulti }
             actionCondition = {
-                Mob.ALL.size < 30
+                Mob.ALL.size < 30.withMonsterMulti
             }
             action = {
                 val mob = meatBallPool.alloc()
@@ -64,10 +68,11 @@ class TestSpawner(hero: Hero, level: Level) : MonsterSpawner() {
 
         addEvent {
             actionCondition = {
-                Mob.ALL.size < 100
+                Mob.ALL.size < 100.withMonsterMulti
+
             }
             action = {
-                repeat(20) {
+                repeat(5.withMonsterMulti) {
                     val mob = chickenSpearPool.alloc()
 
                     mob.apply {
@@ -82,12 +87,12 @@ class TestSpawner(hero: Hero, level: Level) : MonsterSpawner() {
         addEvent {
             oneTime = false
             endAt = 2.minutes
-            actionTimer = 10.seconds
+            actionTimer = { 10.seconds.withRespawnMulti }
             actionCondition = {
-                Mob.ALL.size < 100
+                Mob.ALL.size < 100.withMonsterMulti
             }
             action = {
-                repeat(5) {
+                repeat(3.withMonsterMulti) {
                     val mob = hopperManPool.alloc()
 
                     mob.apply {
@@ -99,4 +104,7 @@ class TestSpawner(hero: Hero, level: Level) : MonsterSpawner() {
             }
         }
     }
+
+    private val Duration.withRespawnMulti get() = (this.seconds * game.state.monsterRespawnMultiplier).seconds
+    private val Int.withMonsterMulti get() = (this * game.state.totalMonstersSpawnMultiplier).floorToInt()
 }

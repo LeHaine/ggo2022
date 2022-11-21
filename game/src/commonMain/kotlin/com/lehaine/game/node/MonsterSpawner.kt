@@ -32,7 +32,7 @@ open class MonsterSpawner : Node() {
         val endAt: Duration,
         val oneTime: Boolean,
         var actionCondition: () -> Boolean,
-        var actionTimer: Duration,
+        var actionTimer: (() -> Duration) ,
         val action: (() -> Unit)?,
         val onFinish: (() -> Unit)?,
         var finished: Boolean = false
@@ -44,7 +44,7 @@ open class MonsterSpawner : Node() {
         var oneTime: Boolean = true
         var actionCondition: () -> Boolean = { true }
         var action: (() -> Unit)? = null
-        var actionTimer = Duration.ZERO
+        var actionTimer: (() -> Duration) = { Duration.ZERO }
         var onFinish: (() -> Unit)? = null
 
         fun build() = Event(
@@ -76,8 +76,8 @@ open class MonsterSpawner : Node() {
                 && event.action != null && event.actionCondition()
             ) {
                 event.action.invoke().also {
-                    if (event.actionTimer > Duration.ZERO) {
-                        cd.timeout("actionTimer", event.actionTimer)
+                    if (event.actionTimer() > Duration.ZERO) {
+                        cd.timeout("actionTimer", event.actionTimer())
                     }
                 }
 

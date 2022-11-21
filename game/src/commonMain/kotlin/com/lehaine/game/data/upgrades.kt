@@ -39,7 +39,7 @@ sealed class Upgrade(
         ) {
         override fun onCollect() {
             state.soulItemDropMultiplier *= 1.15f
-            state.monsterRespawnMultiplier *= 1.15f
+            state.monsterRespawnMultiplier *= 0.85f
         }
     }
 
@@ -95,10 +95,10 @@ sealed class Upgrade(
         Upgrade(
             state,
             title = "I'm Fragile",
-            description = "+3 more damage\nReset health to 1"
+            description = "+3 more damage\n-50% health"
         ) {
         override fun onCollect() {
-            state.heroHealthMultiplier = 0.25f
+            state.heroHealthMultiplier *= 0.5f
             state.extraHeroDamage += 3
         }
     }
@@ -164,6 +164,78 @@ sealed class Upgrade(
         }
     }
 
+    class Runner(state: GameState) :
+        Upgrade(
+            state,
+            title = "Runner",
+            description = "+25% run speed\n-5% cooldown\nLose all extra explosions"
+        ) {
+        override fun onCollect() {
+            state.skillCDMultiplier *= 0.95f
+            state.extraExplosions = 0
+        }
+    }
+
+    class GodLike(state: GameState) :
+        Upgrade(
+            state,
+            title = "God Like",
+            description = "-75% cooldown\nHealth is stuck at 1 and cannot be increased"
+        ) {
+        override fun onCollect() {
+            state.skillCDMultiplier *= 0.25f
+            state.heroHealthMultiplier = 0.25f
+            state.lockHeroHealth = true
+        }
+    }
+
+    class RepeatAfterMe(state: GameState) :
+        Upgrade(
+            state,
+            title = "Repeat After Me",
+            description = "+1 attack repeated\nMob health increased by 75%"
+        ) {
+        override fun onCollect() {
+            state.extraHeroAttacks++
+            state.monsterHealthMultiplier *= 1.75f
+        }
+    }
+
+    class MakeEmWeak(state: GameState) :
+        Upgrade(
+            state,
+            title = "Make 'em Weak",
+            description = "-25% mob health\n-1 attack repeated"
+        ) {
+        override fun onCollect() {
+            state.extraHeroAttacks--
+            state.monsterHealthMultiplier *= 1.75f
+        }
+    }
+
+    class ILoveSouls(state: GameState) :
+        Upgrade(
+            state,
+            title = "I Love Souls",
+            description = "+100% souls dropped\nYour max health can no longer change"
+        ) {
+        override fun onCollect() {
+            state.soulItemDropMultiplier *= 2f
+            state.lockHeroHealth = true
+        }
+    }
+
+    class ALittleOffTheTop(state: GameState) :
+        Upgrade(
+            state,
+            title = "A Little of the Top",
+            description = "+2 extra projectiles\n+100% more mobs spawned"
+        ) {
+        override fun onCollect() {
+            state.totalMonstersSpawnMultiplier *= 2f
+            state.extraProjectiles += 2
+        }
+    }
 }
 
 fun createArenaUpgrades(state: GameState) =
@@ -179,5 +251,11 @@ fun createArenaUpgrades(state: GameState) =
         Upgrade.Brute(state),
         Upgrade.INeedToEat(state),
         Upgrade.FillMeUp(state),
-        Upgrade.ExtraSpeed(state)
+        Upgrade.ExtraSpeed(state),
+        Upgrade.Runner(state),
+        Upgrade.GodLike(state),
+        Upgrade.RepeatAfterMe(state),
+        Upgrade.MakeEmWeak(state),
+        Upgrade.ILoveSouls(state),
+        Upgrade.ALittleOffTheTop(state)
     )

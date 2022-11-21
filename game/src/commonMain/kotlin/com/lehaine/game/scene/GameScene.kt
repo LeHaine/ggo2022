@@ -385,7 +385,7 @@ class GameScene(context: Context) :
         state.exp.onLevelUp += { level, gained ->
             gameCanvas.updateInterval = 0
             upgradesDialog.enabled = true
-            upgradesDialog.refresh(UpgradesDialog.UpgradeType.ARENA)
+            upgradesDialog.refresh()
         }
 
         fx.createParticleBatchNodes()
@@ -437,7 +437,7 @@ class GameScene(context: Context) :
         if (input.isKeyJustPressed(Key.NUMPAD2)) {
             gameCanvas.updateInterval = 0
             upgradesDialog.enabled = true
-            upgradesDialog.refresh(UpgradesDialog.UpgradeType.ARENA)
+            upgradesDialog.refresh()
         }
 
 
