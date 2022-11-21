@@ -10,7 +10,6 @@ import com.lehaine.littlekt.graphics.TextureSlice
 import com.lehaine.littlekt.math.PI2_F
 import com.lehaine.littlekt.math.geom.radians
 import com.lehaine.littlekt.math.random
-import com.lehaine.littlekt.util.milliseconds
 import com.lehaine.littlekt.util.seconds
 import com.lehaine.rune.engine.node.renderable.ParticleBatch
 import kotlin.math.sign
@@ -275,39 +274,6 @@ class Fx(val game: GameScene) {
             ((x + offsetX) / Config.GRID_CELL_SIZE).toInt(),
             ((y + offsetY) / Config.GRID_CELL_SIZE).toInt()
         )
-
-    private fun Float.about(variance: Float = 0.1f, sign: Boolean = false): Float {
-        return this * (1 + (0..(variance * 100).toInt() / 100).random()) * (if (sign) randomSign else 1)
-    }
-
-    private fun Int.about(variance: Float = 0.1f, sign: Boolean = false): Float {
-        return about(this.toFloat(), sign)
-    }
-
-    private fun <T> pickOne(one: T, two: T, three: T): T {
-        val r = Random.nextInt(3)
-        if (r == 0) return one
-        if (r == 1) return two
-        return three
-    }
-
-    private fun <T> pickOne(one: T, two: T, three: T, four: T): T {
-        val r = Random.nextInt(4)
-        if (r == 0) return one
-        if (r == 1) return two
-        if (r == 2) return three
-        return four
-    }
-
-    private fun <T> pickOne(one: T, two: T): T {
-        val r = Random.nextFloat()
-        if (r < 0.5f) return one
-        return two
-    }
-
-    private val randomSign: Int get() = (0..1).random().toInt() * 2 - 1
-    private val Float.asRandomSign: Float get() = if (Random.nextFloat() >= 0.5f) this else -this
-    private val Int.asRandomSign: Int get() = if (Random.nextFloat() >= 0.5f) this else -this
 
     companion object {
         private val MEAT_RED = Color.fromHex("#994551")

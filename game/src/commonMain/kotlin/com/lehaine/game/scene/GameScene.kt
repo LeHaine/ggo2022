@@ -60,7 +60,11 @@ class GameScene(context: Context) :
 
     private var setupController = false
 
-    val state = GameState()
+    val state = GameState().apply {
+        onHealHero = {
+            hero.setHealthToFull()
+        }
+    }
 
     lateinit var background: Node
     lateinit var fxBackground: Node
@@ -310,9 +314,12 @@ class GameScene(context: Context) :
                 onUpdate += {
                     if (lastHeroMultiplier != state.heroHealthMultiplier) {
                         lastHeroMultiplier = state.heroHealthMultiplier
-                        hero.health = (4 * state.heroHealthMultiplier).floorToInt().coerceAtLeast(1)
                         destroyAllChildren()
-                        repeat(hero.health) {
+                        val newHealth = (4 * state.heroHealthMultiplier).floorToInt().coerceAtLeast(1)
+                        if (hero.health > newHealth) {
+                            hero.health = newHealth
+                        }
+                        repeat(newHealth) {
                             control {
                                 animatedSprite {
                                     val idx = it

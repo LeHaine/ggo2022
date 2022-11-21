@@ -136,7 +136,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
         }
 
         onReady += {
-            health = (health * game.state.heroHealthMultiplier).toInt().coerceAtLeast(1)
+            setHealthToFull()
             flashMaterial.shader?.prepare(context)
         }
         onDestroy += {
@@ -144,6 +144,9 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
         }
     }
 
+    fun setHealthToFull() {
+        health = (4 * game.state.heroHealthMultiplier).toInt().coerceAtLeast(1)
+    }
 
     override fun update(dt: Duration) {
         super.update(dt)
@@ -289,8 +292,8 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
 
     override fun fixedUpdate() {
         super.fixedUpdate()
-        velocityX += speed * speedMultiplier * xMoveStrength
-        velocityY += speed * speedMultiplier * yMoveStrength
+        velocityX += speed * speedMultiplier * xMoveStrength * game.state.heroSpeedMultiplier
+        velocityY += speed * speedMultiplier * yMoveStrength * game.state.heroSpeedMultiplier
     }
 
     fun hit(from: Angle) {

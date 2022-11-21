@@ -24,6 +24,7 @@ class GameState {
                 field = value
             }
         }
+    var heroSpeedMultiplier = 1f
     var extraHeroDamage = 0
     var extraHeroAttacks = 0
         set(value) {
@@ -36,6 +37,7 @@ class GameState {
 
     var lockHeroHealth = false
 
+    var onHealHero: () -> Unit = {}
 
     var quotasFailed = 0
     var soulsCaptured = 0
@@ -46,6 +48,7 @@ class GameState {
 
     var unlockIdx = 0
     val unlocks = Array(4) { false }
+
 
     val nextUnlockCost get() = if (soulsRequired.indices.contains(unlockIdx)) soulsRequired[unlockIdx] else 1000000
     var shootingUnlocked
@@ -71,9 +74,5 @@ class GameState {
 
     fun unlockNextSkill() {
         unlocks[unlockIdx++] = true
-    }
-
-    class OfficeState {
-
     }
 }

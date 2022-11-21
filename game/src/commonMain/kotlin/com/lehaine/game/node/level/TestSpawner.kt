@@ -3,11 +3,9 @@ package com.lehaine.game.node.level
 import com.lehaine.game.Level
 import com.lehaine.game.node.MonsterSpawner
 import com.lehaine.game.node.entity.Hero
-import com.lehaine.game.node.entity.mob.ChickenSpear
-import com.lehaine.game.node.entity.mob.HopperMan
-import com.lehaine.game.node.entity.mob.MeatBall
-import com.lehaine.game.node.entity.mob.Mob
+import com.lehaine.game.node.entity.mob.*
 import com.lehaine.game.node.game
+import com.lehaine.game.pickOne
 import com.lehaine.littlekt.math.floorToInt
 import com.lehaine.littlekt.util.datastructure.pool
 import com.lehaine.littlekt.util.seconds
@@ -46,6 +44,23 @@ class TestSpawner(hero: Hero, level: Level) : MonsterSpawner() {
             }
         }
     }
+    private val beetlePool = pool(preallocate = 10) {
+        Beetle(hero, level).apply {
+            onDeath += {
+                it.reset()
+                this@pool.free(it)
+            }
+        }
+    }
+
+    private val batPool = pool(preallocate = 10) {
+        Bat(hero, level).apply {
+            onDeath += {
+                it.reset()
+                this@pool.free(it)
+            }
+        }
+    }
 
     init {
         addEvent {
@@ -56,12 +71,14 @@ class TestSpawner(hero: Hero, level: Level) : MonsterSpawner() {
                 Mob.ALL.size < 30.withMonsterMulti
             }
             action = {
-                val mob = meatBallPool.alloc()
+                repeat((2..4).random().withMonsterMulti) {
+                    val mob = pickOne(beetlePool, batPool).alloc()
 
-                mob.apply {
-                    teleportToRandomSpotAroundHero()
-                }.also {
-                    spawnMob(it)
+                    mob.apply {
+                        teleportToRandomSpotAroundHero()
+                    }.also {
+                        spawnMob(it)
+                    }
                 }
             }
         }

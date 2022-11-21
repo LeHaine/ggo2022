@@ -18,7 +18,7 @@ class ExpTable {
     val expRemaining: Int get() = expToNextLevel - exp
 
     val expToNextLevel: Int
-        get() = (100f * (1 + 0.05f).pow(level)).floorToInt()
+        get() = (100f * (1 + 0.15f).pow(level)).floorToInt()
 
     val ratioToNextLevel: Float get() = exp / expToNextLevel.toFloat()
 

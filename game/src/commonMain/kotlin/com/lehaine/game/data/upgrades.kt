@@ -236,6 +236,55 @@ sealed class Upgrade(
             state.extraProjectiles += 2
         }
     }
+
+    class JustALittleReset(state: GameState) :
+        Upgrade(
+            state,
+            title = "Just a Little Reset",
+            description = "Reset all hero stats back to default\n+50% all mob stats"
+        ) {
+        override fun onCollect() {
+            state.totalMonstersSpawnMultiplier *= 1.5f
+            state.monsterRespawnMultiplier *= 0.5f
+            state.monsterSpeedMultiplier *= 1.5f
+            state.monsterHealthMultiplier *= 1.5f
+
+            state.lockHeroHealth = false
+
+            state.skillCDMultiplier = 1f
+            state.soulItemDropMultiplier = 1f
+            state.extraProjectiles = 0
+            state.extraExplosions = 0
+            state.projectileDamageRadiusMultiplier = 1f
+            state.heroHealthMultiplier = 1f
+            state.extraHeroDamage = 0
+            state.extraHeroAttacks = 0
+        }
+    }
+
+    class HealMe(state: GameState) :
+        Upgrade(
+            state,
+            title = "Heal Me",
+            description = "Heal to full health\n-50% souls drop"
+        ) {
+        override fun onCollect() {
+            state.soulItemDropMultiplier *= 0.5f
+            state.onHealHero()
+        }
+    }
+
+    class SlowItDown(state: GameState) :
+        Upgrade(
+            state,
+            title = "Slow it Down",
+            description = "-25% mob speed\n-5% hero speed"
+        ) {
+        override fun onCollect() {
+            state.monsterSpeedMultiplier *= 0.75f
+            state.heroSpeedMultiplier *= 0.95f
+        }
+    }
 }
 
 fun createArenaUpgrades(state: GameState) =
@@ -257,5 +306,8 @@ fun createArenaUpgrades(state: GameState) =
         Upgrade.RepeatAfterMe(state),
         Upgrade.MakeEmWeak(state),
         Upgrade.ILoveSouls(state),
-        Upgrade.ALittleOffTheTop(state)
+        Upgrade.ALittleOffTheTop(state),
+        Upgrade.JustALittleReset(state),
+        Upgrade.HealMe(state),
+        Upgrade.SlowItDown(state)
     )

@@ -14,6 +14,174 @@
     },
     "frames": [
         {
+            "filename": "batFlap0",
+            "frame": {
+                "x": 477,
+                "y": 457,
+                "w": 13,
+                "h": 7
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 17,
+                "y": 23,
+                "w": 13,
+                "h": 7
+            },
+            "sourceSize": {
+                "w": 48,
+                "h": 32
+            }
+        },
+        {
+            "filename": "batFlap1",
+            "frame": {
+                "x": 653,
+                "y": 202,
+                "w": 17,
+                "h": 8
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 15,
+                "y": 23,
+                "w": 17,
+                "h": 8
+            },
+            "sourceSize": {
+                "w": 48,
+                "h": 32
+            }
+        },
+        {
+            "filename": "batFlap2",
+            "frame": {
+                "x": 689,
+                "y": 29,
+                "w": 15,
+                "h": 10
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 16,
+                "y": 22,
+                "w": 15,
+                "h": 10
+            },
+            "sourceSize": {
+                "w": 48,
+                "h": 32
+            }
+        },
+        {
+            "filename": "beetleIdle0",
+            "frame": {
+                "x": 393,
+                "y": 327,
+                "w": 13,
+                "h": 6
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 17,
+                "y": 26,
+                "w": 13,
+                "h": 6
+            },
+            "sourceSize": {
+                "w": 48,
+                "h": 32
+            }
+        },
+        {
+            "filename": "beetleRun0",
+            "frame": {
+                "x": 496,
+                "y": 457,
+                "w": 13,
+                "h": 7
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 17,
+                "y": 25,
+                "w": 13,
+                "h": 7
+            },
+            "sourceSize": {
+                "w": 48,
+                "h": 32
+            }
+        },
+        {
+            "filename": "beetleRun1",
+            "frame": {
+                "x": 263,
+                "y": 373,
+                "w": 13,
+                "h": 6
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 17,
+                "y": 26,
+                "w": 13,
+                "h": 6
+            },
+            "sourceSize": {
+                "w": 48,
+                "h": 32
+            }
+        },
+        {
+            "filename": "beetleRun2",
+            "frame": {
+                "x": 645,
+                "y": 481,
+                "w": 13,
+                "h": 7
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 17,
+                "y": 25,
+                "w": 13,
+                "h": 7
+            },
+            "sourceSize": {
+                "w": 48,
+                "h": 32
+            }
+        },
+        {
+            "filename": "beetleRun3",
+            "frame": {
+                "x": 263,
+                "y": 373,
+                "w": 13,
+                "h": 6
+            },
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {
+                "x": 17,
+                "y": 26,
+                "w": 13,
+                "h": 6
+            },
+            "sourceSize": {
+                "w": 48,
+                "h": 32
+            }
+        },
+        {
             "filename": "boneManDesk0",
             "frame": {
                 "x": 217,
@@ -730,7 +898,7 @@
         {
             "filename": "chickenSpearIdle0",
             "frame": {
-                "x": 653,
+                "x": 676,
                 "y": 202,
                 "w": 16,
                 "h": 10
@@ -772,8 +940,8 @@
         {
             "filename": "chickenSpearRun1",
             "frame": {
-                "x": 675,
-                "y": 202,
+                "x": 683,
+                "y": 154,
                 "w": 16,
                 "h": 10
             },
@@ -793,8 +961,8 @@
         {
             "filename": "chickenSpearRun2",
             "frame": {
-                "x": 683,
-                "y": 154,
+                "x": 620,
+                "y": 472,
                 "w": 16,
                 "h": 10
             },
@@ -814,8 +982,8 @@
         {
             "filename": "chickenSpearRun3",
             "frame": {
-                "x": 620,
-                "y": 472,
+                "x": 623,
+                "y": 488,
                 "w": 16,
                 "h": 11
             },
@@ -877,8 +1045,8 @@
         {
             "filename": "fxCircle0",
             "frame": {
-                "x": 623,
-                "y": 489,
+                "x": 684,
+                "y": 170,
                 "w": 16,
                 "h": 16
             },
@@ -899,7 +1067,7 @@
             "filename": "fxDot0",
             "frame": {
                 "x": 404,
-                "y": 393,
+                "y": 406,
                 "w": 3,
                 "h": 3
             },
@@ -961,7 +1129,7 @@
         {
             "filename": "fxGib2",
             "frame": {
-                "x": 569,
+                "x": 623,
                 "y": 505,
                 "w": 4,
                 "h": 3
@@ -982,8 +1150,8 @@
         {
             "filename": "fxImpact0",
             "frame": {
-                "x": 689,
-                "y": 29,
+                "x": 705,
+                "y": 154,
                 "w": 14,
                 "h": 9
             },
@@ -1066,8 +1234,8 @@
         {
             "filename": "fxMeatLeg",
             "frame": {
-                "x": 477,
-                "y": 457,
+                "x": 404,
+                "y": 393,
                 "w": 3,
                 "h": 7
             },
@@ -1108,8 +1276,8 @@
         {
             "filename": "fxSmallCircle0",
             "frame": {
-                "x": 478,
-                "y": 295,
+                "x": 282,
+                "y": 373,
                 "w": 6,
                 "h": 6
             },
@@ -2830,8 +2998,8 @@
         {
             "filename": "shadow",
             "frame": {
-                "x": 393,
-                "y": 327,
+                "x": 542,
+                "y": 355,
                 "w": 12,
                 "h": 6
             },
@@ -2851,8 +3019,8 @@
         {
             "filename": "shadowSmall",
             "frame": {
-                "x": 263,
-                "y": 373,
+                "x": 150,
+                "y": 496,
                 "w": 7,
                 "h": 5
             },
@@ -2872,7 +3040,7 @@
         {
             "filename": "shadowXSmall",
             "frame": {
-                "x": 579,
+                "x": 569,
                 "y": 505,
                 "w": 4,
                 "h": 3
@@ -2914,8 +3082,8 @@
         {
             "filename": "spiritOrb0",
             "frame": {
-                "x": 276,
-                "y": 373,
+                "x": 478,
+                "y": 295,
                 "w": 6,
                 "h": 6
             },
@@ -3230,7 +3398,7 @@
             "filename": "swipeAttack26",
             "frame": {
                 "x": 626,
-                "y": 424,
+                "y": 442,
                 "w": 14,
                 "h": 15
             },
@@ -3397,8 +3565,8 @@
         {
             "filename": "uiAIcon",
             "frame": {
-                "x": 645,
-                "y": 481,
+                "x": 709,
+                "y": 130,
                 "w": 14,
                 "h": 12
             },
@@ -3523,8 +3691,8 @@
         {
             "filename": "uiButtonHighlight",
             "frame": {
-                "x": 554,
-                "y": 495,
+                "x": 684,
+                "y": 192,
                 "w": 4,
                 "h": 4
             },
@@ -3586,8 +3754,8 @@
         {
             "filename": "uiEIcon",
             "frame": {
-                "x": 628,
-                "y": 381,
+                "x": 645,
+                "y": 494,
                 "w": 12,
                 "h": 12
             },
@@ -3628,8 +3796,8 @@
         {
             "filename": "uiLmbIcon",
             "frame": {
-                "x": 626,
-                "y": 445,
+                "x": 642,
+                "y": 463,
                 "w": 15,
                 "h": 12
             },
@@ -3670,8 +3838,8 @@
         {
             "filename": "uiOutline",
             "frame": {
-                "x": 663,
-                "y": 139,
+                "x": 554,
+                "y": 495,
                 "w": 4,
                 "h": 4
             },
@@ -3712,8 +3880,8 @@
         {
             "filename": "uiQIcon",
             "frame": {
-                "x": 684,
-                "y": 170,
+                "x": 626,
+                "y": 424,
                 "w": 16,
                 "h": 12
             },
@@ -3733,8 +3901,8 @@
         {
             "filename": "uiRmbIcon",
             "frame": {
-                "x": 642,
-                "y": 463,
+                "x": 646,
+                "y": 442,
                 "w": 15,
                 "h": 12
             },
