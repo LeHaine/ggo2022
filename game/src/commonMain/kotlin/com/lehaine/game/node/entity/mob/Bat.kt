@@ -21,7 +21,7 @@ import kotlin.time.Duration.Companion.milliseconds
 class Bat(hero: Hero, level: Level) : Mob(hero, level) {
 
     override val baseHealth: Int = 1
-    override var speed: Float = 0.01f
+    override var speed: Float = 0.005f
     private var xDir = 0f
     private var yDir = 0f
 

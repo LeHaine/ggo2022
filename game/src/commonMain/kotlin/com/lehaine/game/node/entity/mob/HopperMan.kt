@@ -20,7 +20,7 @@ import kotlin.time.Duration.Companion.milliseconds
  */
 class HopperMan(hero: Hero, level: Level) : Mob(hero, level) {
 
-    override var speed: Float = 0.05f
+    override var speed: Float = 0.02f
     private var xDir = 0f
     private var yDir = 0f
 

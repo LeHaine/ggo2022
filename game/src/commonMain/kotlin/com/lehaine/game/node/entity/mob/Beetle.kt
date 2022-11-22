@@ -22,7 +22,7 @@ import kotlin.time.Duration.Companion.seconds
 class Beetle(hero: Hero, level: Level) : Mob(hero, level) {
 
     override val baseHealth: Int = 1
-    override var speed: Float = 0.022f
+    override var speed: Float = 0.01f
     private var xDir = 0f
     private var yDir = 0f
 
