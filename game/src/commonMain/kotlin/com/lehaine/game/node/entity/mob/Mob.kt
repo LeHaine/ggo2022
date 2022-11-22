@@ -42,6 +42,8 @@ abstract class Mob(val hero: Hero, override val level: Level) : ObliqueEntity(le
     val onDeath = signal1v<Mob>()
     var lastHitAngle: Angle = Angle.ZERO
 
+    var marked = false
+
     override val effects: MutableMap<Effect, Duration> = mutableMapOf()
     override val effectsToRemove: MutableList<Effect> = mutableListOf()
 
@@ -208,7 +210,12 @@ abstract class Mob(val hero: Hero, override val level: Level) : ObliqueEntity(le
         }
     }
 
-    abstract fun handleHandOfDeath()
+
+    fun handleHandOfDeath() {
+        marked = true
+        onHandOfDeath()
+    }
+    abstract fun onHandOfDeath()
 
     override fun isEffectible(): Boolean = health > 0
 
@@ -216,6 +223,7 @@ abstract class Mob(val hero: Hero, override val level: Level) : ObliqueEntity(le
         health = (baseHealth * game.state.monsterHealthMultiplier).toInt()
         globalScaleX = 1f
         globalScaleY = 1f
+        marked = false
     }
 
     override fun onDestroy() {

@@ -80,7 +80,7 @@ class MeatBall(hero: Hero, level: Level) : Mob(hero, level) {
         velocityY += speed * speedMul * game.state.monsterSpeedMultiplier * yDir
     }
 
-    override fun handleHandOfDeath() {
+    override fun onHandOfDeath() {
         sprite.playOnce(Assets.meatBallHandOfDeath)
         cd("shake", 700.milliseconds) {
             hero.camera.shake(100.milliseconds, 2f * Config.cameraShakeMultiplier)

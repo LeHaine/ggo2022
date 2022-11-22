@@ -64,7 +64,7 @@ class HopperMan(hero: Hero, level: Level) : Mob(hero, level) {
         cd("onGround", 500.milliseconds)
     }
 
-    override fun handleHandOfDeath() {
+    override fun onHandOfDeath() {
 //        sprite.playOnce(Assets.meatBallHandOfDeath)
 //        cd("shake", 700.milliseconds) {
 //            hero.camera.shake(100.milliseconds, 2f * Config.cameraShakeMultiplier)

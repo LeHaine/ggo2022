@@ -135,7 +135,7 @@ sealed class Upgrade(
             description = "+4 health\nLose half your souls"
         ) {
         override fun onCollect() {
-            state.heroHealthMultiplier += 1f
+            state.heroBaseHealth += 4
             state.soulsCaptured /= 2
         }
     }
@@ -184,7 +184,8 @@ sealed class Upgrade(
         ) {
         override fun onCollect() {
             state.skillCDMultiplier *= 0.25f
-            state.heroHealthMultiplier = 0.5f
+            state.heroHealthMultiplier = 1f
+            state.heroBaseHealth = 2
             state.lockHeroHealth = true
         }
     }

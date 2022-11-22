@@ -56,7 +56,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
     ObliqueEntity(level, Config.GRID_CELL_SIZE.toFloat()), Effectible {
 
     val onDeath = signal()
-    var health = 4
+    var health = 6
 
     private val orbProjectilePool: Pool<OrbProjectile> by lazy {
         Pool(3) {
@@ -144,7 +144,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
     }
 
     fun setHealthToFull() {
-        health = (4 * game.state.heroHealthMultiplier).toInt().coerceAtLeast(1)
+        health = (game.state.heroBaseHealth * game.state.heroHealthMultiplier).toInt().coerceAtLeast(1)
     }
 
     override fun update(dt: Duration) {
@@ -215,7 +215,16 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
     fun attemptSwipeAttack() {
         if (!cd.has("swipeCD")) {
             cd("swipeCD", (750 * game.state.skillCDMultiplier).milliseconds)
-            swipeAttack()
+
+            repeat(game.state.extraHeroAttacks + 1) {
+                if (it > 0) {
+                    cd("swipeRandom${Random.nextFloat()}", (200 * it).milliseconds) {
+                        swipeAttack()
+                    }
+                } else {
+                    swipeAttack()
+                }
+            }
         }
     }
 
@@ -224,7 +233,15 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
 
         if (!cd.has("shootCD")) {
             cd("shootCD", (3 * game.state.skillCDMultiplier).seconds)
-            orbAttack()
+            repeat(game.state.extraHeroAttacks + 1) {
+                if (it > 0) {
+                    cd("orbRandom${Random.nextFloat()}", (200 * it).milliseconds) {
+                        orbAttack()
+                    }
+                } else {
+                    orbAttack()
+                }
+            }
             camera.shake(100.milliseconds, 0.5f * Config.cameraShakeMultiplier)
         }
     }
@@ -258,7 +275,15 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
 
         if (!cd.has("handOfDeathCD")) {
             cd("handOfDeathCD", (30 * game.state.skillCDMultiplier).seconds)
-            performHandOfDeath()
+            repeat(game.state.extraHeroAttacks + 1) {
+                if (it > 0) {
+                    cd("handOfDeathRandom${Random.nextFloat()}", (200 * it).milliseconds) {
+                        performHandOfDeath()
+                    }
+                } else {
+                    performHandOfDeath()
+                }
+            }
         }
     }
 
@@ -270,7 +295,15 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
             val tcy = (mouseY / Config.GRID_CELL_SIZE).toInt()
             if (castRayTo(tcx, tcy) { cx, cy -> !level.hasCollision(cx, cy) }) {
                 cd("boneSpearCD", (15 * game.state.skillCDMultiplier).seconds)
-                boneSpearAttack(mouseX, mouseY)
+                repeat(game.state.extraHeroAttacks + 1) {
+                    if (it > 0) {
+                        cd("boneSpearRandom${Random.nextFloat()}", (200 * it).milliseconds) {
+                            boneSpearAttack(mouseX, mouseY)
+                        }
+                    } else {
+                        boneSpearAttack(mouseX, mouseY)
+                    }
+                }
             }
         }
     }
@@ -365,8 +398,8 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
             var currentAngle = 0.degrees
             repeat(game.state.extraProjectiles) {
                 projectile = boneSpearProjectile.alloc()
-                projectile.globalX = tx + 20 * currentAngle.cosine
-                projectile.globalY = ty + 20 * currentAngle.sine
+                projectile.globalX = tx + 48 * currentAngle.cosine
+                projectile.globalY = ty + 48 * currentAngle.sine
                 projectile.enabled = true
                 currentAngle += angleBetween
             }
@@ -379,7 +412,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
 
         repeat(min(Mob.ALL.size, 5 + game.state.extraProjectiles)) {
             var mob = Mob.ALL.random()
-            while (mobsTemp.contains(mob)) {
+            while (mobsTemp.contains(mob) || mob.marked) {
                 mob = Mob.ALL.random()
             }
             mobsTemp += mob

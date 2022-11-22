@@ -18,6 +18,13 @@ class GameState {
     var extraProjectiles = 0
     var extraExplosions = 0
     var projectileDamageRadiusMultiplier = 1f
+
+    var heroBaseHealth = 6
+        set(value) {
+            if (!lockHeroHealth) {
+                field = value
+            }
+        }
     var heroHealthMultiplier = 1f
         set(value) {
             if (!lockHeroHealth) {
@@ -28,11 +35,7 @@ class GameState {
     var extraHeroDamage = 0
     var extraHeroAttacks = 0
         set(value) {
-            field = if (value < 0) {
-                0
-            } else {
-                value
-            }
+            field = value.coerceAtLeast(0)
         }
 
     var lockHeroHealth = false

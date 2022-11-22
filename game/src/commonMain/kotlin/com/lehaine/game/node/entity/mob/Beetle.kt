@@ -64,7 +64,7 @@ class Beetle(hero: Hero, level: Level) : Mob(hero, level) {
         velocityY += speed * speedMul * game.state.monsterSpeedMultiplier * yDir
     }
 
-    override fun handleHandOfDeath() {
+    override fun onHandOfDeath() {
         sprite.playOnce(Assets.chickenSpearHandOfDeath)
         cd("shake", 700.milliseconds) {
             Assets.sfxDeathMob.play(0.2f * Config.sfxMultiplier)

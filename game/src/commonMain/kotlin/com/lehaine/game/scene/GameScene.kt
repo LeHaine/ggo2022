@@ -310,12 +310,15 @@ class GameScene(context: Context) :
                 val deadHeart = Assets.atlas.getAnimation("heartDead")
 
                 var lastHeroMultiplier = 0f
+                var lastBaseHealth = 0
 
                 onUpdate += {
-                    if (lastHeroMultiplier != state.heroHealthMultiplier) {
+                    if (lastHeroMultiplier != state.heroHealthMultiplier || lastBaseHealth != state.heroBaseHealth) {
                         lastHeroMultiplier = state.heroHealthMultiplier
+                        lastBaseHealth = state.heroBaseHealth
                         destroyAllChildren()
-                        val newHealth = (4 * state.heroHealthMultiplier).floorToInt().coerceAtLeast(1)
+                        val newHealth =
+                            (state.heroBaseHealth * state.heroHealthMultiplier).floorToInt().coerceAtLeast(1)
                         if (hero.health > newHealth) {
                             hero.health = newHealth
                         }
@@ -441,7 +444,7 @@ class GameScene(context: Context) :
         }
 
         // TODO remove this before final release
-        if (input.isKeyJustPressed(Key.NUMPAD2)) {
+        if (input.isKeyJustPressed(Key.NUMPAD2) || input.isKeyJustPressed(Key.U)) {
             gameCanvas.updateInterval = 0
             upgradesDialog.enabled = true
             upgradesDialog.refresh()
