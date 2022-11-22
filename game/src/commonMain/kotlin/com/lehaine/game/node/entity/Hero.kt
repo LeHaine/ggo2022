@@ -214,7 +214,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
 
     fun attemptSwipeAttack() {
         if (!cd.has("swipeCD")) {
-            cd("swipeCD", ((750..1100).random() * game.state.skillCDMultiplier).milliseconds)
+            cd("swipeCD", (750 * game.state.skillCDMultiplier).milliseconds)
             swipeAttack()
         }
     }

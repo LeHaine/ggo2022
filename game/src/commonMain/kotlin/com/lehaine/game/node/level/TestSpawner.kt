@@ -67,7 +67,7 @@ class TestSpawner(hero: Hero, level: Level) : MonsterSpawner() {
         addEvent {
             oneTime = false
             endAt = 30.seconds
-            actionTimer = { 200.milliseconds.withRespawnMulti }
+            actionTimer = { 1000.milliseconds.withRespawnMulti }
             actionCondition = {
                 Mob.ALL.size < 250.withMonsterMulti
             }
@@ -123,6 +123,6 @@ class TestSpawner(hero: Hero, level: Level) : MonsterSpawner() {
         }
     }
 
-    private val Duration.withRespawnMulti get() = (this.seconds * game.state.monsterRespawnMultiplier).seconds
-    private val Int.withMonsterMulti get() = (this * game.state.totalMonstersSpawnMultiplier).floorToInt()
+    private val Duration.withRespawnMulti get() = (this.seconds * (game.state.monsterRespawnMultiplier + game.state.unlockIdx * 0.5f)).seconds
+    private val Int.withMonsterMulti get() = (this * (game.state.totalMonstersSpawnMultiplier + game.state.unlockIdx * 0.5f)).floorToInt()
 }
