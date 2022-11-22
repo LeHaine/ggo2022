@@ -10,6 +10,7 @@ import com.lehaine.littlekt.math.floorToInt
 import com.lehaine.littlekt.util.datastructure.pool
 import com.lehaine.littlekt.util.seconds
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
 
@@ -66,9 +67,9 @@ class TestSpawner(hero: Hero, level: Level) : MonsterSpawner() {
         addEvent {
             oneTime = false
             endAt = 30.seconds
-            actionTimer = { 1.seconds.withRespawnMulti }
+            actionTimer = { 200.milliseconds.withRespawnMulti }
             actionCondition = {
-                Mob.ALL.size < 30.withMonsterMulti
+                Mob.ALL.size < 500.withMonsterMulti
             }
             action = {
                 repeat((2..4).random().withMonsterMulti) {

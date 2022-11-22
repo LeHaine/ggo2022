@@ -180,11 +180,11 @@ sealed class Upgrade(
         Upgrade(
             state,
             title = "God Like",
-            description = "-75% cooldown\nHealth is stuck at 1 and cannot be increased"
+            description = "-75% cooldown\nHealth is stuck at 2 and cannot be increased"
         ) {
         override fun onCollect() {
             state.skillCDMultiplier *= 0.25f
-            state.heroHealthMultiplier = 0.25f
+            state.heroHealthMultiplier = 0.5f
             state.lockHeroHealth = true
         }
     }
