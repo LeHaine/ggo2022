@@ -26,8 +26,8 @@ sealed class Upgrade(
             description = "+10% souls drop\n+10% damned victims spawn."
         ) {
         override fun onCollect() {
-            state.soulItemDropMultiplier += 1.1f
-            state.totalMonstersSpawnMultiplier += 1.1f
+            state.soulItemDropMultiplier += 0.1f
+            state.totalMonstersSpawnMultiplier += 0.1f
         }
     }
 
@@ -38,7 +38,7 @@ sealed class Upgrade(
             description = "+15% souls drop\n+15% faster spawn of a damned victim."
         ) {
         override fun onCollect() {
-            state.soulItemDropMultiplier *= 1.15f
+            state.soulItemDropMultiplier += 0.15f
             state.monsterRespawnMultiplier *= 0.85f
         }
     }
@@ -51,7 +51,7 @@ sealed class Upgrade(
         ) {
         override fun onCollect() {
             state.extraProjectiles++
-            state.monsterHealthMultiplier *= 1.25f
+            state.monsterHealthMultiplier += 0.25f
         }
     }
 
@@ -62,8 +62,8 @@ sealed class Upgrade(
             description = "+25% increase area of effect\n+25% more victims speed"
         ) {
         override fun onCollect() {
-            state.projectileDamageRadiusMultiplier *= 1.25f
-            state.monsterSpeedMultiplier *= 1.25f
+            state.projectileDamageRadiusMultiplier += 0.25f
+            state.monsterSpeedMultiplier += 0.25f
         }
     }
 
@@ -75,7 +75,7 @@ sealed class Upgrade(
         ) {
         override fun onCollect() {
             state.extraExplosions++
-            state.totalMonstersSpawnMultiplier *= 1.25f
+            state.totalMonstersSpawnMultiplier += 0.25f
         }
     }
 
@@ -111,7 +111,7 @@ sealed class Upgrade(
         ) {
         override fun onCollect() {
             state.soulItemDropMultiplier *= 0.75f
-            state.heroHealthMultiplier += .25f
+            state.heroBaseHealth++
             state.extraHeroDamage /= 2
         }
     }
@@ -123,7 +123,7 @@ sealed class Upgrade(
             description = "+5 more damage\n+50% cooldown"
         ) {
         override fun onCollect() {
-            state.skillCDMultiplier *= 1.5f
+            state.skillCDMultiplier += 0.5f
             state.extraHeroDamage += 5
         }
     }
@@ -147,8 +147,8 @@ sealed class Upgrade(
             description = "+50% souls drop\n+25% cooldown"
         ) {
         override fun onCollect() {
-            state.soulItemDropMultiplier *= 1.5f
-            state.skillCDMultiplier *= 1.25f
+            state.soulItemDropMultiplier += 0.5f
+            state.skillCDMultiplier += 0.25f
         }
     }
 
@@ -171,6 +171,7 @@ sealed class Upgrade(
             description = "+25% run speed\n-5% cooldown\nLose all extra explosions"
         ) {
         override fun onCollect() {
+            state.heroSpeedMultiplier += 0.25f
             state.skillCDMultiplier *= 0.95f
             state.extraExplosions = 0
         }
@@ -198,7 +199,7 @@ sealed class Upgrade(
         ) {
         override fun onCollect() {
             state.extraHeroAttacks++
-            state.monsterHealthMultiplier *= 1.75f
+            state.monsterHealthMultiplier += 0.75f
         }
     }
 
@@ -210,7 +211,7 @@ sealed class Upgrade(
         ) {
         override fun onCollect() {
             state.extraHeroAttacks--
-            state.monsterHealthMultiplier *= 1.75f
+            state.monsterHealthMultiplier *= 0.75f
         }
     }
 
@@ -221,7 +222,7 @@ sealed class Upgrade(
             description = "+100% souls dropped\nYour max health can no longer change"
         ) {
         override fun onCollect() {
-            state.soulItemDropMultiplier *= 2f
+            state.soulItemDropMultiplier += 1f
             state.lockHeroHealth = true
         }
     }
@@ -233,7 +234,7 @@ sealed class Upgrade(
             description = "+2 extra projectiles\n+100% more mobs spawned"
         ) {
         override fun onCollect() {
-            state.totalMonstersSpawnMultiplier *= 2f
+            state.totalMonstersSpawnMultiplier += 1f
             state.extraProjectiles += 2
         }
     }
@@ -245,10 +246,10 @@ sealed class Upgrade(
             description = "Reset all hero stats back to default\n+50% all mob stats"
         ) {
         override fun onCollect() {
-            state.totalMonstersSpawnMultiplier *= 1.5f
-            state.monsterRespawnMultiplier *= 0.5f
-            state.monsterSpeedMultiplier *= 1.5f
-            state.monsterHealthMultiplier *= 1.5f
+            state.totalMonstersSpawnMultiplier += 0.5f
+            state.monsterRespawnMultiplier += 0.5f
+            state.monsterSpeedMultiplier += 0.5f
+            state.monsterHealthMultiplier += 0.5f
 
             state.lockHeroHealth = false
 

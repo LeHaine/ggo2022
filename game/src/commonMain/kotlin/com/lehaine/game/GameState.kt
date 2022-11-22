@@ -9,12 +9,18 @@ import com.lehaine.game.data.ExpTable
 class GameState {
 
     var totalMonstersSpawnMultiplier = 1f
+        set(value) {
+            field = value.coerceAtMost(7f)
+        }
     var monsterHealthMultiplier = 1f
     var monsterRespawnMultiplier = 1f
     var monsterSpeedMultiplier = 1f
 
     var skillCDMultiplier = 1f
     var soulItemDropMultiplier = 1f
+        set(value) {
+            field = value.coerceAtMost(10f)
+        }
     var extraProjectiles = 0
     var extraExplosions = 0
     var projectileDamageRadiusMultiplier = 1f

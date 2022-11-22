@@ -13,10 +13,7 @@ import com.lehaine.littlekt.math.geom.sine
 import com.lehaine.littlekt.math.isFuzzyZero
 import com.lehaine.littlekt.util.fastForEach
 import com.lehaine.littlekt.util.signal1v
-import com.lehaine.rune.engine.node.renderable.entity.ObliqueEntity
-import com.lehaine.rune.engine.node.renderable.entity.angleTo
-import com.lehaine.rune.engine.node.renderable.entity.cd
-import com.lehaine.rune.engine.node.renderable.entity.toGridPosition
+import com.lehaine.rune.engine.node.renderable.entity.*
 import com.lehaine.rune.engine.node.renderable.sprite
 import kotlin.math.ceil
 import kotlin.random.Random
@@ -161,6 +158,13 @@ abstract class Mob(val hero: Hero, override val level: Level) : ObliqueEntity(le
     protected fun spawnDrop() {
         val multiplier = game.state.soulItemDropMultiplier
         val totalDropped = ((minSoulsDrop..maxSoulsDrop).random() * multiplier).toInt()
+
+        SoulItem.MARKED.fastForEach {
+            if (it.distPxTo(globalX, globalY) <= 48f) {
+                it.combine(totalDropped)
+                return
+            }
+        }
         repeat(totalDropped) {
             SoulItem.pool.alloc().spawn(globalX, globalY)
         }
@@ -215,6 +219,7 @@ abstract class Mob(val hero: Hero, override val level: Level) : ObliqueEntity(le
         marked = true
         onHandOfDeath()
     }
+
     abstract fun onHandOfDeath()
 
     override fun isEffectible(): Boolean = health > 0

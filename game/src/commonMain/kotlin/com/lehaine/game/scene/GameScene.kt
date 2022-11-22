@@ -289,14 +289,23 @@ class GameScene(context: Context) :
                 paddingTop = 15
                 paddingRight = 25
                 anchor(Control.AnchorLayout.TOP_RIGHT)
-                label {
-                    text = "Quota: ${state.soulsCaptured}/${state.nextUnlockCost}"
-                    onUpdate += {
+                column {
+                    label {
                         text = "Quota: ${state.soulsCaptured}/${state.nextUnlockCost}"
-                        color = if (state.soulsCaptured < state.nextUnlockCost) {
-                            Color.RED
-                        } else {
-                            Color.GREEN
+                        onUpdate += {
+                            text = "Quota: ${state.soulsCaptured}/${state.nextUnlockCost}"
+                            color = if (state.soulsCaptured < state.nextUnlockCost) {
+                                Color.RED
+                            } else {
+                                Color.GREEN
+                            }
+                        }
+                    }
+                    label {
+                        text = "Souls on ground: ${SoulItem.pool.totalAllocatedItems}"
+
+                        onUpdate += {
+                            text = "Souls on ground: ${SoulItem.pool.totalItemsInUse}"
                         }
                     }
                 }
