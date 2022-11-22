@@ -83,8 +83,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
 
 
     private val canMove = data.field<Boolean>("canMove").value
-    private val flashMaterial =
-        Material(ShaderProgram(DefaultVertexShader(), FlashFragmentShader()))
+    private val flashMaterial = Material(ShaderProgram(DefaultVertexShader(), FlashFragmentShader()))
 
     override val effects: MutableMap<Effect, Duration> = mutableMapOf()
     override val effectsToRemove: MutableList<Effect> = mutableListOf()
@@ -167,7 +166,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
             )
         ) {
             if (!cd.has("footstep")) {
-                Assets.sfxFootstep.play(0.1f)
+                Assets.sfxFootstep.play(0.1f * Config.sfxMultiplier)
                 cd("footstep", 450.milliseconds)
             }
         }
@@ -307,11 +306,11 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
         if (health <= 0) {
             sprite.material = flashMaterial
             shadow.material = flashMaterial
-            Assets.sfxDeathHero.play(0.25f)
+            Assets.sfxDeathHero.play(0.25f * Config.sfxMultiplier)
         } else {
             cd.timeout("hit", 250.milliseconds)
             game.flashRed()
-            Assets.sfxHits.random().play(0.25f)
+            Assets.sfxHits.random().play(0.25f * Config.sfxMultiplier)
         }
     }
 
@@ -335,7 +334,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
             }
         }
 
-        Assets.sfxShoot.play(0.2f)
+        Assets.sfxShoot.play(0.2f * Config.sfxMultiplier)
     }
 
     private fun swipeAttack() {
@@ -351,7 +350,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
                 projectile.enabled = true
             }
         }
-        Assets.sfxSwings.random().play(0.25f)
+        Assets.sfxSwings.random().play(0.25f * Config.sfxMultiplier)
         sprite.playOnce(Assets.heroSwing)
         addEffect(Effect.Stun, 300.milliseconds)
     }
@@ -400,8 +399,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
                     repeat(game.state.extraExplosions) {
                         cd("explosion$it-${Random.nextFloat()}", (100 * it).milliseconds) {
                             addExplodingProjectile(
-                                projectile.globalX + (-16f..16f).random(),
-                                projectile.globalY + (-16f..16f).random()
+                                projectile.globalX + (-16f..16f).random(), projectile.globalY + (-16f..16f).random()
                             )
                         }
                     }
@@ -431,7 +429,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
     override fun onLand() {
         super.onLand()
         if (!cd.has("landed")) {
-            Assets.sfxLands.random().play(0.2f)
+            Assets.sfxLands.random().play(0.2f * Config.sfxMultiplier)
             cd("landed", 1000.milliseconds)
         }
 

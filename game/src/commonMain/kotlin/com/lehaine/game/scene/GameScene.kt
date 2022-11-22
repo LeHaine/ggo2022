@@ -163,7 +163,7 @@ class GameScene(context: Context) :
         val cursor =
             Cursor(cursorImage, (cursorImage.width * 0.5).roundToInt(), (cursorImage.height * 0.5f).roundToInt())
         context.graphics.setCursor(cursor)
-        Assets.music.play(0.05f, true)
+        Assets.music.play(0.05f * Config.musicMultiplier, true)
         createNodes()
     }
 
@@ -517,12 +517,12 @@ class GameScene(context: Context) :
             wait(1000.milliseconds) {
                 quotaLabel.visible = true
                 hero.camera.shake(100.milliseconds, 1f * Config.cameraShakeMultiplier)
-                Assets.sfxSlam.play(0.5f)
+                Assets.sfxSlam.play(0.5f * Config.sfxMultiplier)
             }
             wait(1000.milliseconds) {
                 metaLabel.visible = true
                 hero.camera.shake(100.milliseconds, 1f * Config.cameraShakeMultiplier)
-                Assets.sfxSlam.play(0.5f)
+                Assets.sfxSlam.play(0.5f * Config.sfxMultiplier)
             }
 
             wait(3.seconds) { container.destroy() }
@@ -535,7 +535,7 @@ class GameScene(context: Context) :
                     state.unlockNextSkill()
                     hero.levelUp()
                     hero.camera.shake(100.milliseconds, 1f * Config.cameraShakeMultiplier)
-                    Assets.sfxSkillUnlock.play(0.3f)
+                    Assets.sfxSkillUnlock.play(0.3f * Config.sfxMultiplier)
                 }
                 wait(1500.milliseconds) {
                     loadLevel(0) { onEnterArena() }
@@ -593,12 +593,12 @@ class GameScene(context: Context) :
             wait(1000.milliseconds) {
                 quotaLabel.visible = true
                 hero.camera.shake(100.milliseconds, 1f * Config.cameraShakeMultiplier)
-                Assets.sfxSlam.play(0.5f)
+                Assets.sfxSlam.play(0.5f * Config.sfxMultiplier)
             }
             wait(1000.milliseconds) {
                 metaLabel.visible = true
                 hero.camera.shake(100.milliseconds, 1f * Config.cameraShakeMultiplier)
-                Assets.sfxSlam.play(0.5f)
+                Assets.sfxSlam.play(0.5f * Config.sfxMultiplier)
             }
             wait(1500.milliseconds) {
                 quotaLabel.destroy()

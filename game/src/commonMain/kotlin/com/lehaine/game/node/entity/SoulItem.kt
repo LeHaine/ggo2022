@@ -53,7 +53,7 @@ class SoulItem(level: Level) : ObliqueEntity(level, Config.GRID_CELL_SIZE.toFloa
             if (distPxTo(game.hero) < 8f) {
                 game.state.soulsCaptured++
                 game.state.exp.add(1)
-                Assets.sfxCollect.play((0.1f..0.2f).random())
+                Assets.sfxCollect.play((0.1f..0.2f).random() * Config.sfxMultiplier)
                 xMoveStrength = 0f
                 yMoveStrength = 0f
                 enabled = false

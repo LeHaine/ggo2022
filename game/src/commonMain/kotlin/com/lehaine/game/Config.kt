@@ -17,10 +17,28 @@ object Config {
             field = max(0f, min(value, 1f))
         }
 
+    var musicMultiplier = 1f
+        set(value) {
+            val prev = field
+            field = max(0f, min(value, 1f))
+            if (field == 0f) {
+                Assets.music.pause()
+            } else {
+                if (prev == 0f && value > 0f) {
+                    Assets.music.resume()
+                }
+                Assets.music.volume = 0.05f * field
+            }
+        }
+
+    var sfxMultiplier = 1f
+        set(value) {
+            field = max(0f, min(value, 1f))
+        }
+
     var keyboardType = KeyboardType.QWERTY
 
     enum class KeyboardType {
-        QWERTY,
-        AZERTY
+        QWERTY, AZERTY
     }
 }

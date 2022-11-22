@@ -34,10 +34,80 @@ class SettingsDialog : CenterContainer() {
                     }
 
                     label {
+                        text = "Music:"
+                    }
+
+                    row {
+                        name = "Music Container"
+                        separation = 5
+                        align = AlignMode.CENTER
+                        val progressBar = ProgressBar()
+                        soundButton {
+                            text = "-"
+                            onUpdate += {
+                                if (pressed) {
+                                    progressBar.value -= progressBar.step
+                                }
+                            }
+                        }
+                        node(progressBar) {
+                            ratio = Config.musicMultiplier
+                            minWidth = 100f
+                            onValueChanged += {
+                                Config.musicMultiplier = ratio
+                            }
+                        }
+                        soundButton {
+                            text = "+"
+                            onUpdate += {
+                                if (pressed) {
+                                    progressBar.value += progressBar.step
+                                }
+                            }
+                        }
+                    }
+
+                    label {
+                        text = "Sfx:"
+                    }
+
+                    row {
+                        name = "Sfx Container"
+                        separation = 5
+                        align = AlignMode.CENTER
+                        val progressBar = ProgressBar()
+                        soundButton {
+                            text = "-"
+                            onUpdate += {
+                                if (pressed) {
+                                    progressBar.value -= progressBar.step
+                                }
+                            }
+                        }
+                        node(progressBar) {
+                            ratio = Config.sfxMultiplier
+                            minWidth = 100f
+                            onValueChanged += {
+                                Config.sfxMultiplier = ratio
+                            }
+                        }
+                        soundButton {
+                            text = "+"
+                            onUpdate += {
+                                if (pressed) {
+                                    progressBar.value += progressBar.step
+                                }
+                            }
+                        }
+                    }
+
+
+                    label {
                         text = "Camera Shake:"
                     }
 
                     row {
+                        name = "Camera Shake Container"
                         separation = 5
                         align = AlignMode.CENTER
                         val progressBar = ProgressBar()

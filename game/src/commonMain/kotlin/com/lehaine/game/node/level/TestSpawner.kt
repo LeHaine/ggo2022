@@ -69,7 +69,7 @@ class TestSpawner(hero: Hero, level: Level) : MonsterSpawner() {
             endAt = 30.seconds
             actionTimer = { 200.milliseconds.withRespawnMulti }
             actionCondition = {
-                Mob.ALL.size < 500.withMonsterMulti
+                Mob.ALL.size < 250.withMonsterMulti
             }
             action = {
                 repeat((2..4).random().withMonsterMulti) {

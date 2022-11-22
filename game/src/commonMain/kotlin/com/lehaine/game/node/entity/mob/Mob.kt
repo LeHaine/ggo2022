@@ -30,8 +30,8 @@ import kotlin.time.Duration.Companion.milliseconds
 abstract class Mob(val hero: Hero, override val level: Level) : ObliqueEntity(level, Config.GRID_CELL_SIZE.toFloat()),
     Effectible {
 
-    open var minSoulsDrop = 0
-    open var maxSoulsDrop = 10
+    open var minSoulsDrop = 1
+    open var maxSoulsDrop = 2
 
     open var speed = 0.003f
     val speedMul get() = game.state.monsterSpeedMultiplier
@@ -120,7 +120,7 @@ abstract class Mob(val hero: Hero, override val level: Level) : ObliqueEntity(le
         sprite.color.b = 0f
         stretchY = 1.25f
         if (health > 0) {
-            Assets.sfxHits.random().play(0.25f)
+            Assets.sfxHits.random().play(0.25f * Config.sfxMultiplier)
         }
         cd.timeout("hit", 250.milliseconds)
     }
@@ -136,7 +136,7 @@ abstract class Mob(val hero: Hero, override val level: Level) : ObliqueEntity(le
     fun die(spawnDrop: Boolean = true) {
         if (spawnDrop) {
             spawnDrop()
-            Assets.sfxDeathMob.play(0.2f)
+            Assets.sfxDeathMob.play(0.2f * Config.sfxMultiplier)
         }
         onDeath.emit(this)
         enabled = false
@@ -150,7 +150,7 @@ abstract class Mob(val hero: Hero, override val level: Level) : ObliqueEntity(le
     override fun onLand() {
         super.onLand()
         if (!cd.has("landed")) {
-            Assets.sfxLands.random().play(0.2f)
+            Assets.sfxLands.random().play(0.2f * Config.sfxMultiplier)
             cd("landed", 1000.milliseconds)
         }
     }
