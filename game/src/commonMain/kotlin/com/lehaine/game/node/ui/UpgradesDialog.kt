@@ -1,6 +1,7 @@
 package com.lehaine.game.node.ui
 
 import com.lehaine.game.GameState
+import com.lehaine.game.data.Upgrade
 import com.lehaine.game.data.createArenaUpgrades
 import com.lehaine.littlekt.graph.node.Node
 import com.lehaine.littlekt.graph.node.component.HAlign
@@ -20,6 +21,7 @@ class UpgradesDialog(state: GameState) : Control() {
 
     private val arenaUpgrades = createArenaUpgrades(state)
     private var buttonColumn: VBoxContainer
+    private val currentUpgrades = mutableSetOf<Upgrade>()
 
     val onUpgradeSelect = signal()
 
@@ -51,15 +53,18 @@ class UpgradesDialog(state: GameState) : Control() {
 
     fun refresh() {
         buttonColumn.destroyAllChildren()
+        currentUpgrades.clear()
         buttonColumn.apply {
-            repeat(3) {
+            while (currentUpgrades.size < 3) {
                 val upgrade = arenaUpgrades.random()
-                soundButton {
-                    text = "${upgrade.title}\n${upgrade.description}"
-                    verticalAlign = VAlign.TOP
-                    onPressed += {
-                        upgrade.collect()
-                        onUpgradeSelect.emit()
+                if (currentUpgrades.add(upgrade)) {
+                    soundButton {
+                        text = "${upgrade.title}\n${upgrade.description}"
+                        verticalAlign = VAlign.TOP
+                        onPressed += {
+                            upgrade.collect()
+                            onUpgradeSelect.emit()
+                        }
                     }
                 }
             }
