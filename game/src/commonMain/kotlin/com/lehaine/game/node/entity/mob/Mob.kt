@@ -31,6 +31,8 @@ abstract class Mob(val hero: Hero, override val level: Level) : ObliqueEntity(le
     open var maxSoulsDrop = 2
 
     open var speed = 0.003f
+
+    private var lastHealthMulitplier = 1f
     val speedMul get() = game.state.monsterSpeedMultiplier
     open val baseHealth = 2
     var health = 2
@@ -59,6 +61,17 @@ abstract class Mob(val hero: Hero, override val level: Level) : ObliqueEntity(le
 
     override fun update(dt: Duration) {
         super.update(dt)
+        if (lastHealthMulitplier != game.state.monsterHealthMultiplier) {
+            val prevMaxHealth = (baseHealth * lastHealthMulitplier).toInt()
+            lastHealthMulitplier = game.state.monsterHealthMultiplier
+            val newMaxHealth = (baseHealth * game.state.monsterHealthMultiplier).toInt()
+            if (health == prevMaxHealth) {
+                health = newMaxHealth
+            }
+            if (health > newMaxHealth) {
+                health = newMaxHealth
+            }
+        }
         if (velocityZ.isFuzzyZero(0.008f) && hero.velocityZ.isFuzzyZero(0.008f) && isCollidingWithInnerCircle(hero) && !cd.has(
                 "damageCooldown"
             )

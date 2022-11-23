@@ -18,7 +18,6 @@ import kotlin.time.Duration.Companion.milliseconds
  */
 class BoneSpearProjectile(val hero: Hero) : Entity(Config.GRID_CELL_SIZE.toFloat()), Projectile {
     private var attacked = false
-
     init {
         anchorX = 0.5f
         anchorY = 1f

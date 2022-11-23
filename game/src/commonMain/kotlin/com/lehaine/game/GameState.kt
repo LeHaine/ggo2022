@@ -26,25 +26,18 @@ class GameState {
     var projectileDamageRadiusMultiplier = 1f
 
     var heroBaseHealth = 6
-        set(value) {
-            if (!lockHeroHealth) {
-                field = value
-            }
-        }
     var heroHealthMultiplier = 1f
-        set(value) {
-            if (!lockHeroHealth) {
-                field = value
-            }
-        }
     var heroSpeedMultiplier = 1f
+    var projectileKnockbackMultiplier = 1f
     var extraHeroDamage = 0
+        set(value) {
+            field = value.coerceAtLeast(0)
+        }
     var extraHeroAttacks = 0
         set(value) {
             field = value.coerceAtLeast(0)
         }
 
-    var lockHeroHealth = false
 
     var onHealHero: () -> Unit = {}
 

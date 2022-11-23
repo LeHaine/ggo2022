@@ -5,6 +5,7 @@ import com.lehaine.game.node.entity.BoneMan
 import com.lehaine.game.node.entity.Hero
 import com.lehaine.game.node.entity.SoulItem
 import com.lehaine.game.node.entity.hero
+import com.lehaine.game.node.entity.mob.Mob
 import com.lehaine.game.node.level.TestSpawner
 import com.lehaine.game.node.ui.*
 import com.lehaine.littlekt.Context
@@ -292,20 +293,15 @@ class GameScene(context: Context) :
                 column {
                     label {
                         text = "Quota: ${state.soulsCaptured}/${state.nextUnlockCost}"
+                        horizontalAlign = HAlign.RIGHT
                         onUpdate += {
-                            text = "Quota: ${state.soulsCaptured}/${state.nextUnlockCost}"
-                            color = if (state.soulsCaptured < state.nextUnlockCost) {
-                                Color.RED
+                            if (state.soulsCaptured < state.nextUnlockCost) {
+                                text = "Quota: ${state.soulsCaptured}/${state.nextUnlockCost}"
+                                color = Color.RED
                             } else {
-                                Color.GREEN
+                                text = "Quota reached.\nDie to meet the bone man."
+                                color = Color.GREEN
                             }
-                        }
-                    }
-                    label {
-                        text = "Souls on ground: ${SoulItem.pool.totalAllocatedItems}"
-
-                        onUpdate += {
-                            text = "Souls on ground: ${SoulItem.pool.totalItemsInUse}"
                         }
                     }
                 }
@@ -482,6 +478,9 @@ class GameScene(context: Context) :
     }
 
     private fun onEnterBoneMansOffice() {
+        Mob.ALL.clear()
+        SoulItem.ALL.clear()
+        SoulItem.MARKED.clear()
         Assets.music.pause()
         if (state.soulsCaptured >= state.nextUnlockCost) {
             performQuotaMetAnimation()

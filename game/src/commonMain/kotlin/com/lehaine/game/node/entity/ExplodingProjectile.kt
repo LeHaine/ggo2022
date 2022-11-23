@@ -18,7 +18,7 @@ import kotlin.time.Duration.Companion.milliseconds
  * @date 11/20/2022
  */
 class ExplodingProjectile(val hero: Hero) : Entity(Config.GRID_CELL_SIZE.toFloat()), Projectile {
-    private val knockbackPower = 0.1f
+    private val knockbackPower get() = 0.25f * game.state.projectileKnockbackMultiplier
     private var attacked = false
 
     init {

@@ -36,6 +36,7 @@ fun Node.meatBall(
  */
 class MeatBall(hero: Hero, level: Level) : Mob(hero, level) {
 
+    override val baseHealth: Int = 4
     override var speed: Float = 0.01f
     private var xDir = 0f
     private var yDir = 0f

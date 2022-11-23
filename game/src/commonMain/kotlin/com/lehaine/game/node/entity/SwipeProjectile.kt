@@ -20,9 +20,7 @@ import kotlin.time.Duration.Companion.milliseconds
  */
 class SwipeProjectile(val hero: Hero) : Entity(Config.GRID_CELL_SIZE.toFloat()), Projectile {
     private var swiped = false
-
-
-    val knockbackPower = 0.5f
+    private val knockbackPower get() = 0.25f * game.state.projectileKnockbackMultiplier
 
     init {
         anchorX = 0.5f

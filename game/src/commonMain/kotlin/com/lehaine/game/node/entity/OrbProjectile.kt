@@ -24,7 +24,7 @@ import kotlin.time.Duration.Companion.milliseconds
 class OrbProjectile(val hero: Hero, level: GameLevel<*>) : ObliqueEntity(level, Config.GRID_CELL_SIZE.toFloat()),
     Projectile {
     private val speed = 0.6f
-    private val knockbackPower = 0.1f
+    private val knockbackPower get() = 0.1f * game.state.projectileKnockbackMultiplier
     private var attacked = false
     private var totalWallHitsLeft = 3
 
@@ -88,13 +88,13 @@ class OrbProjectile(val hero: Hero, level: GameLevel<*>) : ObliqueEntity(level, 
 
     override fun onLevelCollision(xDir: Int, yDir: Int) {
         super.onLevelCollision(xDir, yDir)
-            if (xDir != 0) {
-                velocityX = -velocityX * 2f
-            }
-            if (yDir != 0) {
-                velocityY = -velocityY * 2f
-            }
-            totalWallHitsLeft--
+        if (xDir != 0) {
+            velocityX = -velocityX * 2f
+        }
+        if (yDir != 0) {
+            velocityY = -velocityY * 2f
+        }
+        totalWallHitsLeft--
     }
 
     fun moveTowardsAngle(angle: Angle) {

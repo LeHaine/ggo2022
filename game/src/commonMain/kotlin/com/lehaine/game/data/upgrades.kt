@@ -23,7 +23,7 @@ sealed class Upgrade(
         Upgrade(
             state,
             title = "Damned Victims",
-            description = "+10% souls drop\n+10% damned victims spawn."
+            description = "+10% souls drop\n+10% mobs spawn."
         ) {
         override fun onCollect() {
             state.soulItemDropMultiplier += 0.1f
@@ -35,7 +35,7 @@ sealed class Upgrade(
         Upgrade(
             state,
             title = "A Quickie",
-            description = "+15% souls drop\n+15% faster spawn of a damned victim."
+            description = "+15% souls drop\n+15% faster spawn of a mob."
         ) {
         override fun onCollect() {
             state.soulItemDropMultiplier += 0.15f
@@ -47,7 +47,7 @@ sealed class Upgrade(
         Upgrade(
             state,
             title = "Make It Rain",
-            description = "+1 additional projectile\n+25% more mob health"
+            description = "+1 additional projectile\n+25% mob health"
         ) {
         override fun onCollect() {
             state.extraProjectiles++
@@ -59,7 +59,7 @@ sealed class Upgrade(
         Upgrade(
             state,
             title = "Large and In Charge",
-            description = "+25% increase area of effect\n+25% more victims speed"
+            description = "+25% increase area of effect\n+25% more mobs speed"
         ) {
         override fun onCollect() {
             state.projectileDamageRadiusMultiplier += 0.25f
@@ -71,7 +71,7 @@ sealed class Upgrade(
         Upgrade(
             state,
             title = "It Goes Boom",
-            description = "+1 extra explosion of projectile ends\n25% more victims spawn"
+            description = "+1 extra explosion of projectile ends\n25% more mobs spawn"
         ) {
         override fun onCollect() {
             state.extraExplosions++
@@ -181,13 +181,12 @@ sealed class Upgrade(
         Upgrade(
             state,
             title = "God Like",
-            description = "-75% cooldown\nHealth is stuck at 2 and cannot be increased"
+            description = "-30% cooldown\nHealth is set to 1"
         ) {
         override fun onCollect() {
-            state.skillCDMultiplier *= 0.25f
+            state.skillCDMultiplier *= 0.7f
             state.heroHealthMultiplier = 1f
-            state.heroBaseHealth = 2
-            state.lockHeroHealth = true
+            state.heroBaseHealth = 1
         }
     }
 
@@ -195,7 +194,7 @@ sealed class Upgrade(
         Upgrade(
             state,
             title = "Repeat After Me",
-            description = "+1 attack repeated\nMob health increased by 75%"
+            description = "+1 attack repeated\n+75% mob health"
         ) {
         override fun onCollect() {
             state.extraHeroAttacks++
@@ -219,11 +218,11 @@ sealed class Upgrade(
         Upgrade(
             state,
             title = "I Love Souls",
-            description = "+100% souls dropped\nYour max health can no longer change"
+            description = "+100% souls dropped\n+50% mob speed"
         ) {
         override fun onCollect() {
             state.soulItemDropMultiplier += 1f
-            state.lockHeroHealth = true
+            state.monsterSpeedMultiplier += 0.5f
         }
     }
 
@@ -231,7 +230,7 @@ sealed class Upgrade(
         Upgrade(
             state,
             title = "A Little of the Top",
-            description = "+2 extra projectiles\n+100% more mobs spawned"
+            description = "+2 extra projectiles\n+100% mobs spawned"
         ) {
         override fun onCollect() {
             state.totalMonstersSpawnMultiplier += 1f
@@ -250,8 +249,6 @@ sealed class Upgrade(
             state.monsterRespawnMultiplier += 0.5f
             state.monsterSpeedMultiplier += 0.5f
             state.monsterHealthMultiplier += 0.5f
-
-            state.lockHeroHealth = false
 
             state.skillCDMultiplier = 1f
             state.soulItemDropMultiplier = 1f
@@ -287,6 +284,74 @@ sealed class Upgrade(
             state.heroSpeedMultiplier *= 0.95f
         }
     }
+
+    class KnockKnock(state: GameState) :
+        Upgrade(
+            state,
+            title = "Knock Knock",
+            description = "+10% knock back\n+10% mob health"
+        ) {
+        override fun onCollect() {
+            state.projectileKnockbackMultiplier += 0.1f
+            state.monsterHealthMultiplier += 0.1f
+        }
+    }
+
+    class ImACannon(state: GameState) :
+        Upgrade(
+            state,
+            title = "I'm a Cannon",
+            description = "+25% knock back\n+1 extra explosion\n+25% mob speed\n+25% mob health"
+        ) {
+        override fun onCollect() {
+            state.projectileKnockbackMultiplier += 0.25f
+            state.extraExplosions++
+            state.monsterSpeedMultiplier += 0.25f
+            state.monsterHealthMultiplier += 0.25f
+        }
+    }
+
+    class Weak(state: GameState) :
+        Upgrade(
+            state,
+            title = "Weak",
+            description = "+2 damage\n+1 attack repeated\n-50% knock back"
+        ) {
+        override fun onCollect() {
+            state.extraHeroDamage += 2
+            state.extraHeroAttacks++
+            state.projectileKnockbackMultiplier *= 0.5f
+        }
+    }
+
+    class NeverMiss(state: GameState) :
+        Upgrade(
+            state,
+            title = "Never Miss",
+            description = "+50% area of effect\n-3 damage"
+        ) {
+        override fun onCollect() {
+            state.projectileDamageRadiusMultiplier += 0.5f
+            state.extraHeroDamage -= 3
+        }
+    }
+
+    class MoreMoreMore(state: GameState) :
+        Upgrade(
+            state,
+            title = "More More More!",
+            description = "+1 extra projectile\n+1 extra explosion\n+15% all mob stats"
+        ) {
+        override fun onCollect() {
+            state.extraProjectiles++
+            state.extraExplosions++
+
+            state.totalMonstersSpawnMultiplier += 0.15f
+            state.monsterRespawnMultiplier += 0.15f
+            state.monsterSpeedMultiplier += 0.15f
+            state.monsterHealthMultiplier += 0.15f
+        }
+    }
 }
 
 fun createArenaUpgrades(state: GameState) =
@@ -311,5 +376,10 @@ fun createArenaUpgrades(state: GameState) =
         Upgrade.ALittleOffTheTop(state),
         Upgrade.JustALittleReset(state),
         Upgrade.HealMe(state),
-        Upgrade.SlowItDown(state)
+        Upgrade.SlowItDown(state),
+        Upgrade.KnockKnock(state),
+        Upgrade.ImACannon(state),
+        Upgrade.Weak(state),
+        Upgrade.NeverMiss(state),
+        Upgrade.MoreMoreMore(state)
     )

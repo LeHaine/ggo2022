@@ -9,6 +9,8 @@ import com.lehaine.littlekt.graph.node.component.VAlign
 import com.lehaine.littlekt.graph.node.node
 import com.lehaine.littlekt.graph.node.ui.*
 import com.lehaine.littlekt.util.signal
+import com.lehaine.rune.engine.Cooldown
+import kotlin.time.Duration.Companion.seconds
 
 fun Node.upgradesDialog(state: GameState, callback: UpgradesDialog.() -> Unit = {}) =
     node(UpgradesDialog(state), callback)
@@ -59,11 +61,22 @@ class UpgradesDialog(state: GameState) : Control() {
                 val upgrade = arenaUpgrades.random()
                 if (currentUpgrades.add(upgrade)) {
                     soundButton {
+                        val cd = Cooldown()
                         text = "${upgrade.title}\n${upgrade.description}"
                         verticalAlign = VAlign.TOP
+                        onReady += {
+                            cd.timeout("delay", 1.seconds)
+                        }
                         onPressed += {
-                            upgrade.collect()
-                            onUpgradeSelect.emit()
+                            if (!disabled) {
+                                upgrade.collect()
+                                onUpgradeSelect.emit()
+                            }
+                        }
+
+                        onUpdate += {
+                            cd.update(it)
+                            disabled = cd.has("delay")
                         }
                     }
                 }
