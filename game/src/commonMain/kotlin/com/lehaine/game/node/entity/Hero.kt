@@ -160,17 +160,6 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
             sprite.color.b = hitRatio
         }
 
-
-        if (!velocityX.isFuzzyZero(0.05f) || !velocityY.isFuzzyZero(
-                0.05f
-            )
-        ) {
-            if (!cd.has("footstep")) {
-                Assets.sfxFootstep.play(0.1f * Config.sfxMultiplier)
-                cd("footstep", 450.milliseconds)
-            }
-        }
-
         if (cd.has("dashDamage")) {
             Mob.ALL.fastForEach {
                 if (it.enabled && isCollidingWithInnerCircle(it)) {
@@ -259,7 +248,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
             scaleY = 0.9f
             camera.shake(50.milliseconds, 0.5f * Config.cameraShakeMultiplier)
             cd("dashCD", (1 * game.state.skillCDMultiplier).seconds)
-            addEffect(Effect.Invincible, 350.milliseconds)
+            addEffect(Effect.Invincible, 700.milliseconds)
             cd("dashDamage", 350.milliseconds)
             cd("dash", 250.milliseconds) {
                 speedMultiplier = 1f

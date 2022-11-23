@@ -27,6 +27,7 @@ class Bat(hero: Hero, level: Level) : Mob(hero, level) {
     init {
         width = 11f
         height = 6f
+        zr = 0.5f
         sprite.apply {
             registerState(Assets.batFlap, 0) { !cd.has("stun") }
         }
@@ -39,6 +40,13 @@ class Bat(hero: Hero, level: Level) : Mob(hero, level) {
         yDir = angle.sine
 
         dir = xDir.sign.toInt()
+
+        if (zr > 0.5f) {
+            gravity = 0.05f
+        } else {
+            zr = 0.5f
+            gravity = 0f
+        }
     }
 
 
@@ -55,7 +63,7 @@ class Bat(hero: Hero, level: Level) : Mob(hero, level) {
         cd("shake", 700.milliseconds) {
             Assets.sfxDeathMob.play(0.2f * Config.sfxMultiplier)
             hero.camera.shake(100.milliseconds, 2f * Config.cameraShakeMultiplier)
-            fx.chickenExplode(globalX, globalY)
+            fx.batExplode(globalX, globalY)
             spawnDrop()
         }
         addEffect(Effect.Stun, Assets.chickenSpearHandOfDeath.duration)
@@ -66,6 +74,6 @@ class Bat(hero: Hero, level: Level) : Mob(hero, level) {
     }
 
     override fun explode() {
-        fx.chickenExplode(globalX, globalY)
+        fx.batExplode(globalX, globalY)
     }
 }

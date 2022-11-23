@@ -123,10 +123,10 @@ abstract class Mob(val hero: Hero, override val level: Level) : ObliqueEntity(le
         }
     }
 
-    open fun hit(from: Angle) {
+    open fun hit(from: Angle, damage: Int = 1) {
         if (hasEffect(Effect.Invincible) || health <= 0) return
         fx.blood(globalX, globalY, from.cosine, from.sine)
-        health -= 1 + game.state.extraHeroDamage
+        health -= damage + game.state.extraHeroDamage
         lastHitAngle = from
         sprite.color.r = 1f
         sprite.color.g = 0f
@@ -151,6 +151,7 @@ abstract class Mob(val hero: Hero, override val level: Level) : ObliqueEntity(le
             spawnDrop()
             Assets.sfxDeathMob.play(0.2f * Config.sfxMultiplier)
         }
+        explode()
         onDeath.emit(this)
         enabled = false
         ALL -= this

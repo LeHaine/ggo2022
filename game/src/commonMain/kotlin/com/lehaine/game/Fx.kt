@@ -83,7 +83,7 @@ class Fx(val game: GameScene) {
 
     fun groundParticles(x: Float, y: Float) {
         create(30) {
-            val p = allocTopNormal(Assets.atlas.getByPrefix("fxDot").slice, x, y)
+            val p = allocBotNormal(Assets.atlas.getByPrefix("fxDot").slice, x, y)
             p.xDelta = (0..2).random().asRandomSign
             p.yDelta = -(1..2).random()
             p.color.set(pickOne(MEAT_RED, DARK_MEAT_RED, LIGHT_MEAT_RED))
@@ -98,7 +98,7 @@ class Fx(val game: GameScene) {
 
     fun spiritBallExplode(x: Float, y: Float) {
         create(10) {
-            val p = allocTopNormal(Assets.atlas.getByPrefix("fxDot").slice, x, y)
+            val p = allocBotNormal(Assets.atlas.getByPrefix("fxDot").slice, x, y)
             p.color.set(pickOne(LIGHT_PURPLE, DARK_PURPLE, LIGHT_MEAT_RED))
             p.xDelta = (0.5f..0.7f).random().asRandomSign
             p.yDelta = (0.5f..0.7f).random().asRandomSign
@@ -147,58 +147,89 @@ class Fx(val game: GameScene) {
     }
 
     fun chickenExplode(x: Float, y: Float) {
-        fun setParticle(p: Particle) {
-            p.xDelta = (0..2).random().asRandomSign
-            p.yDelta = (1..2).random().asRandomSign
-            p.gravityY = 0.1f.about()
-            p.friction = 0.97f.about(0.05f).coerceAtMost(1f)
-            p.rotationDelta = (0f..PI2_F).random()
-            p.data0 = y + (0..12).random().toInt()
-            p.alpha = (0.7f..1f).random()
-            p.life = (1..2).random().seconds
-            p.onUpdate = ::bloodPhysics
-        }
         create(1) {
-            val p = allocTopNormal(Assets.atlas.getByPrefix("fxChickenSpear").slice, x, y)
-            setParticle(p)
+            allocBotNormal(Assets.atlas.getByPrefix("fxChickenSpear").slice, x, y).setParticleForExplosion()
         }
         create(25) {
             val idx = Random.nextInt(3)
-            val p = allocTopNormal(Assets.atlas.getByPrefix("fxGib$idx").slice, x, y)
+            val p = allocBotNormal(Assets.atlas.getByPrefix("fxGib$idx").slice, x, y)
             p.color.set(PURPLE)
-            setParticle(p)
+            p.setParticleForExplosion()
         }
     }
 
+
     fun meatBallExplode(x: Float, y: Float) {
-        fun setParticle(p: Particle) {
-            p.xDelta = (0..2).random().asRandomSign
-            p.yDelta = (1..2).random().asRandomSign
-            p.gravityY = 0.1f.about()
-            p.friction = 0.97f.about(0.05f).coerceAtMost(1f)
-            p.rotationDelta = (0f..PI2_F).random()
-            p.data0 = y + (0..12).random().toInt()
-            p.alpha = (0.7f..1f).random()
-            p.life = (1..2).random().seconds
-            p.onUpdate = ::bloodPhysics
+        create(1) {
+            allocBotNormal(Assets.atlas.getByPrefix("fxBigEye").slice, x, y).setParticleForExplosion()
         }
         create(1) {
-            val p = allocTopNormal(Assets.atlas.getByPrefix("fxBigEye").slice, x, y)
-            setParticle(p)
-        }
-        create(1) {
-            val p = allocTopNormal(Assets.atlas.getByPrefix("fxLittleEye").slice, x, y)
-            setParticle(p)
+            allocBotNormal(Assets.atlas.getByPrefix("fxLittleEye").slice, x, y).setParticleForExplosion()
         }
         create(2) {
-            val p = allocTopNormal(Assets.atlas.getByPrefix("fxMeatLeg").slice, x, y)
-            setParticle(p)
+            allocBotNormal(Assets.atlas.getByPrefix("fxMeatLeg").slice, x, y).setParticleForExplosion()
         }
-        create(50) {
+        create(25) {
+            val idx = Random.nextInt(3)
+            val p = allocBotNormal(Assets.atlas.getByPrefix("fxGib$idx").slice, x, y)
+            p.color.set(pickOne(MEAT_RED, LIGHT_MEAT_RED, DARK_MEAT_RED))
+            p.setParticleForExplosion()
+        }
+    }
+
+    fun beetleExplode(x: Float, y: Float) {
+        create(1) {
+            allocBotNormal(Assets.atlas.getByPrefix("fxBeetleHead").slice, x, y).setParticleForExplosion()
+        }
+        create(1) {
+            allocBotNormal(Assets.atlas.getByPrefix("fxBeetleBody").slice, x, y).setParticleForExplosion()
+        }
+        create(10) {
+            val idx = Random.nextInt(3)
+            val p = allocBotNormal(Assets.atlas.getByPrefix("fxGib$idx").slice, x, y)
+            p.color.set(pickOne(DARK_PURPLE, PURPLE))
+            p.setParticleForExplosion()
+        }
+    }
+
+    fun batExplode(x: Float, y: Float) {
+        create(1) {
+            allocBotNormal(Assets.atlas.getByPrefix("fxBatWing0").slice, x, y).setParticleForExplosion()
+        }
+        create(1) {
+            val p = allocBotNormal(Assets.atlas.getByPrefix("fxBatWing0").slice, x, y)
+            p.scaleX = -1f
+            p.setParticleForExplosion()
+        }
+        create(1) {
+            allocBotNormal(Assets.atlas.getByPrefix("fxBatBody").slice, x, y).setParticleForExplosion()
+        }
+        create(10) {
+            val idx = Random.nextInt(3)
+            val p = allocBotNormal(Assets.atlas.getByPrefix("fxGib$idx").slice, x, y)
+            p.color.set(pickOne(DARK_PURPLE, PURPLE))
+            p.setParticleForExplosion()
+        }
+    }
+
+    fun hopperManExplode(x: Float, y: Float) {
+        create(1) {
+            allocBotNormal(Assets.atlas.getByPrefix("fxHopperManHead").slice, x, y).setParticleForExplosion()
+        }
+        create(1) {
+            allocBotNormal(Assets.atlas.getByPrefix("fxHopperManBody").slice, x, y).setParticleForExplosion()
+        }
+        create(1) {
+            allocBotNormal(Assets.atlas.getByPrefix("fxHopperManLeg0").slice, x, y).setParticleForExplosion()
+        }
+        create(1) {
+            allocBotNormal(Assets.atlas.getByPrefix("fxHopperManLeg1").slice, x, y).setParticleForExplosion()
+        }
+        create(20) {
             val idx = Random.nextInt(3)
             val p = allocTopNormal(Assets.atlas.getByPrefix("fxGib$idx").slice, x, y)
-            p.color.set(MEAT_RED)
-            setParticle(p)
+            p.color.set(pickOne(MEAT_RED, LIGHT_MEAT_RED))
+            p.setParticleForExplosion()
         }
     }
 
@@ -271,6 +302,19 @@ class Fx(val game: GameScene) {
         }
     }
 
+    private fun Particle.setParticleForExplosion() {
+        xDelta = (0..2).random().asRandomSign
+        yDelta = (1..2).random().asRandomSign
+        gravityY = 0.1f.about()
+        friction = 0.97f.about(0.05f).coerceAtMost(1f)
+        rotation = (0f..PI2_F).random().radians
+        rotationDelta = (0f..0.3f).random()
+        data0 = y + (0..12).random().toInt()
+        alpha = (0.7f..1f).random()
+        life = (1..2).random().seconds
+        onUpdate = ::bloodPhysics
+    }
+
     private fun allocTopNormal(slice: TextureSlice, x: Float, y: Float) =
         particleSimulator.alloc(slice, x, y).also { topNormal.add(it) }
 
@@ -290,11 +334,9 @@ class Fx(val game: GameScene) {
     }
 
 
-    private fun Particle.isColliding(offsetX: Int = 0, offsetY: Int = 0) =
-        game.level.hasCollision(
-            ((x + offsetX) / Config.GRID_CELL_SIZE).toInt(),
-            ((y + offsetY) / Config.GRID_CELL_SIZE).toInt()
-        )
+    private fun Particle.isColliding(offsetX: Int = 0, offsetY: Int = 0) = game.level.hasCollision(
+        ((x + offsetX) / Config.GRID_CELL_SIZE).toInt(), ((y + offsetY) / Config.GRID_CELL_SIZE).toInt()
+    )
 
     companion object {
         private val MEAT_RED = Color.fromHex("#994551")

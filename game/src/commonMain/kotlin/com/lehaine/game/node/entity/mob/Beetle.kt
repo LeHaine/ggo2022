@@ -69,7 +69,7 @@ class Beetle(hero: Hero, level: Level) : Mob(hero, level) {
         cd("shake", 700.milliseconds) {
             Assets.sfxDeathMob.play(0.2f * Config.sfxMultiplier)
             hero.camera.shake(100.milliseconds, 2f * Config.cameraShakeMultiplier)
-            fx.chickenExplode(globalX, globalY)
+            fx.beetleExplode(globalX, globalY)
             spawnDrop()
         }
         addEffect(Effect.Stun, Assets.chickenSpearHandOfDeath.duration)
@@ -80,6 +80,6 @@ class Beetle(hero: Hero, level: Level) : Mob(hero, level) {
     }
 
     override fun explode() {
-        fx.chickenExplode(globalX, globalY)
+        fx.beetleExplode(globalX, globalY)
     }
 }

@@ -1,8 +1,10 @@
 package com.lehaine.game.node.entity.mob
 
 import com.lehaine.game.Assets
+import com.lehaine.game.Config
 import com.lehaine.game.Level
 import com.lehaine.game.node.entity.Hero
+import com.lehaine.game.node.fx
 import com.lehaine.game.node.game
 import com.lehaine.littlekt.math.geom.cosine
 import com.lehaine.littlekt.math.geom.sine
@@ -65,21 +67,21 @@ class HopperMan(hero: Hero, level: Level) : Mob(hero, level) {
     }
 
     override fun onHandOfDeath() {
-//        sprite.playOnce(Assets.meatBallHandOfDeath)
-//        cd("shake", 700.milliseconds) {
-//            hero.camera.shake(100.milliseconds, 2f * Config.cameraShakeMultiplier)
-//            fx.meatBallExplode(globalX, globalY)
-//            Assets.sfxDeathMob.play(0.2f)
-//            spawnDrop()
-//        }
-//        addEffect(Effect.Stun, Assets.meatBallHandOfDeath.duration)
-//        addEffect(Effect.Invincible, Assets.meatBallHandOfDeath.duration)
-//        cd("stun", Assets.meatBallHandOfDeath.duration) {
-//            die(false)
-//        }
+        sprite.playOnce(Assets.meatBallHandOfDeath)
+        cd("shake", 700.milliseconds) {
+            hero.camera.shake(100.milliseconds, 2f * Config.cameraShakeMultiplier)
+            fx.hopperManExplode(globalX, globalY)
+            Assets.sfxDeathMob.play(0.2f)
+            spawnDrop()
+        }
+        addEffect(Effect.Stun, Assets.meatBallHandOfDeath.duration)
+        addEffect(Effect.Invincible, Assets.meatBallHandOfDeath.duration)
+        cd("stun", Assets.meatBallHandOfDeath.duration) {
+            die(false)
+        }
     }
 
     override fun explode() {
-        //  fx.meatBallExplode(globalX, globalY)
+        fx.hopperManExplode(globalX, globalY)
     }
 }

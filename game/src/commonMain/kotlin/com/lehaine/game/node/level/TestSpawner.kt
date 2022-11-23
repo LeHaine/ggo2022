@@ -147,12 +147,32 @@ class TestSpawner(hero: Hero, level: Level) : MonsterSpawner() {
         addEvent {
             oneTime = false
             startAt = 3.minutes
+            endAt = 5.minutes
             actionTimer = { 500.milliseconds.withRespawnMulti }
             actionCondition = {
                 Mob.ALL.size < 400.withMonsterMulti
             }
             action = {
-                repeat(8.withMonsterMulti) {
+                repeat(5.withMonsterMulti) {
+                    val mob = pickOne(beetlePool, batPool, meatBallPool, hopperManPool).alloc()
+
+                    mob.apply {
+                        teleportToRandomSpotAroundHero()
+                    }.also {
+                        spawnMob(it)
+                    }
+                }
+            }
+        }
+        addEvent {
+            oneTime = false
+            startAt = 5.minutes
+            actionTimer = { 100.milliseconds.withRespawnMulti }
+            actionCondition = {
+                Mob.ALL.size < 1000.withMonsterMulti
+            }
+            action = {
+                repeat(5.withMonsterMulti) {
                     val mob = pickOne(beetlePool, batPool, meatBallPool, hopperManPool).alloc()
 
                     mob.apply {

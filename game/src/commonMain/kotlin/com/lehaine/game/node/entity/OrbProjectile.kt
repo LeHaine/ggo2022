@@ -68,7 +68,7 @@ class OrbProjectile(val hero: Hero, level: GameLevel<*>) : ObliqueEntity(level, 
             val colliding = distSqr(px, py, it.px, it.py) <= dist * dist
             if (it.enabled && colliding) {
                 hit = true
-                it.hit(hero.angleTo(it))
+                it.hit(hero.angleTo(it), 2)
 
                 val angle = hero.angleTo(it)
                 it.velocityX += knockbackPower * angle.cosine
