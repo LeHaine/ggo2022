@@ -6,6 +6,7 @@ import com.lehaine.game.Level
 import com.lehaine.game.node.entity.Effectible
 import com.lehaine.game.node.entity.Hero
 import com.lehaine.game.node.entity.SoulItem
+import com.lehaine.game.node.fx
 import com.lehaine.game.node.game
 import com.lehaine.littlekt.math.geom.Angle
 import com.lehaine.littlekt.math.geom.cosine
@@ -124,7 +125,7 @@ abstract class Mob(val hero: Hero, override val level: Level) : ObliqueEntity(le
 
     open fun hit(from: Angle) {
         if (hasEffect(Effect.Invincible) || health <= 0) return
-
+        fx.blood(globalX, globalY, from.cosine, from.sine)
         health -= 1 + game.state.extraHeroDamage
         lastHitAngle = from
         sprite.color.r = 1f

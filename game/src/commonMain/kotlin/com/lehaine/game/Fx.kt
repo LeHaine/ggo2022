@@ -108,20 +108,41 @@ class Fx(val game: GameScene) {
         }
     }
 
+    fun blood(x: Float, y: Float, xDir: Float, yDir: Float) {
+        create(10) {
+            val p = allocBotNormal(Assets.atlas.getByPrefix("fxDot").slice, x, y)
+            p.color.set(pickOne(MEAT_RED, LIGHT_MEAT_RED)).withAlpha((0f..1f).random())
+            p.xDelta = xDir * (1f..3f).random()
+            p.yDelta = yDir * (1f..3f).random()
+            p.rotation = (0f..PI2_F).random().radians
+            p.friction = (0.92f..0.96f).random()
+            p.scale(0.7f)
+            p.life = (5..10).random().seconds
+            p.data3 = 5f
+        }
+    }
 
     fun smallExplosion(x: Float, y: Float) {
-        val dot = Assets.atlas.getByPrefix("fxDot").slice
+        val dot = Assets.atlas.getByPrefix("fxSmallCircle").slice
 
-        repeat(80) {
+        repeat(25) {
             val p = allocBotNormal(dot, x + (0..5).random().asRandomSign, y + (0..5).random().asRandomSign)
             p.fadeOutSpeed = (0.5f..1f).random()
             p.alpha = (0.4f..1f).random()
-            p.color.set(MEAT_RED)
+            p.scale((0.2f..1f).random())
+            p.scaleDelta = -(0.0025f..0.05f).random()
+            p.color.set(pickOne(MEAT_RED, LIGHT_MEAT_RED, BONE_WHITE)).withAlpha((0.7f..1f).random())
             p.moveAwayFrom(x, y, (1f..3f).random())
-            p.friction = (0.8f..0.9f).random()
+            p.friction = (0.9f..0.96f).random()
             p.rotation = (0f..PI2_F).random().radians
             p.rotationDelta = (0f..0.02f).random().asRandomSign
-            p.life = (2f..3f).random().seconds
+            p.life = (0.5f..1f).random().seconds
+            p.onUpdate = {
+                if (it.scaleX <= 0 || it.scaleY <= 0) {
+                    it.scale(0f)
+                    it.killed = true
+                }
+            }
         }
     }
 
