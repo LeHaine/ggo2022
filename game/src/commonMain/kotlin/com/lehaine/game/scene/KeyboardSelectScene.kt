@@ -10,6 +10,7 @@ import com.lehaine.littlekt.graph.node.Node
 import com.lehaine.littlekt.graph.node.component.AlignMode
 import com.lehaine.littlekt.graph.node.component.HAlign
 import com.lehaine.littlekt.graph.node.ui.*
+import com.lehaine.littlekt.graphics.Color
 import com.lehaine.littlekt.util.viewport.ExtendViewport
 import com.lehaine.rune.engine.RuneSceneDefault
 import kotlinx.coroutines.launch
@@ -25,6 +26,10 @@ class KeyboardSelectScene(
 ) : RuneSceneDefault(context, ExtendViewport(Config.VIRTUAL_WIDTH, Config.VIRTUAL_HEIGHT)) {
 
     private var switchingScenes = false
+
+    init {
+        clearColor = Color.fromHex("#8f6f6a")
+    }
     override suspend fun Node.initialize() {
         centerContainer {
             anchorRight = 1f

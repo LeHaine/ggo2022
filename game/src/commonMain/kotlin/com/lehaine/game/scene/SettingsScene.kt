@@ -5,6 +5,7 @@ import com.lehaine.game.node.ui.fadeMask
 import com.lehaine.game.node.ui.settingsDialog
 import com.lehaine.littlekt.Context
 import com.lehaine.littlekt.graph.node.Node
+import com.lehaine.littlekt.graphics.Color
 import com.lehaine.littlekt.util.viewport.ExtendViewport
 import com.lehaine.rune.engine.RuneSceneDefault
 import kotlin.time.Duration.Companion.milliseconds
@@ -20,6 +21,9 @@ class SettingsScene(
 
     private var switchingScenes = false
 
+    init {
+        clearColor = Color.fromHex("#8f6f6a")
+    }
     override suspend fun Node.initialize() {
         settingsDialog {
             onBack += {

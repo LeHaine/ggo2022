@@ -157,7 +157,8 @@ class GameScene(context: Context) :
 
     override suspend fun Node.initialize() {
         mapLoader?.dispose()
-        val mapLoader = resourcesVfs["world.ldtk"].readLDtkMapLoader().also { this@GameScene.mapLoader = it }
+        val mapLoader =
+            resourcesVfs["world.ldtk"].readLDtkMapLoader(Assets.atlas).also { this@GameScene.mapLoader = it }
         val world = mapLoader.loadMap(false, 0)
         ldtkLevel = world.levels[0]
         val cursorImage = resourcesVfs["cursor.png"].readPixmap()
