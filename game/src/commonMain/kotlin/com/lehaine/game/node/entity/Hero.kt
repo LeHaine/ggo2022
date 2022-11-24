@@ -55,6 +55,7 @@ fun Node.hero(
 class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, projectiles: Node2D) :
     ObliqueEntity(level, Config.GRID_CELL_SIZE.toFloat()), Effectible {
 
+    var godMode = false
     val onDeath = signal()
     var health = 6
 
@@ -318,7 +319,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
     }
 
     fun hit(from: Angle) {
-        if (hasEffect(Effect.Invincible) || health <= 0) return
+        if (hasEffect(Effect.Invincible) || health <= 0 || godMode) return
         health--
         addEffect(Effect.Invincible, 2.seconds)
         velocityX += 0.25f * from.cosine

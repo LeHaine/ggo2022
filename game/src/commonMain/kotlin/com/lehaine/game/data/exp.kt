@@ -15,6 +15,8 @@ class ExpTable {
     var level = 1
         private set
 
+    var stopLeveling = false
+
     val expRemaining: Int get() = expToNextLevel - exp
 
     val expToNextLevel: Int
@@ -23,6 +25,7 @@ class ExpTable {
     val ratioToNextLevel: Float get() = exp / expToNextLevel.toFloat()
 
     fun add(expToAdd: Int) {
+        if (stopLeveling) return
         val levelsGained = add(expToAdd, 0)
         if (levelsGained > 0) {
             onLevelUp.emit(level, levelsGained)

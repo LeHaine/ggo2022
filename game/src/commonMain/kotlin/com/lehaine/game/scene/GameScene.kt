@@ -158,7 +158,7 @@ class GameScene(context: Context) :
     override suspend fun Node.initialize() {
         mapLoader?.dispose()
         val mapLoader =
-            resourcesVfs["world.ldtk"].readLDtkMapLoader(Assets.atlas).also { this@GameScene.mapLoader = it }
+            resourcesVfs["world.ldtk"].readLDtkMapLoader().also { this@GameScene.mapLoader = it }
         val world = mapLoader.loadMap(false, 0)
         ldtkLevel = world.levels[0]
         val cursorImage = resourcesVfs["cursor.png"].readPixmap()
@@ -454,6 +454,12 @@ class GameScene(context: Context) :
             gameCanvas.updateInterval = 0
             upgradesDialog.enabled = true
             upgradesDialog.refresh()
+        }
+
+        // TODO remove this before final release
+        if(input.isKeyJustPressed(Key.G)) {
+            hero.godMode = !hero.godMode
+            state.exp.stopLeveling = !state.exp.stopLeveling
         }
 
 

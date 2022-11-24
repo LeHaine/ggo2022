@@ -151,7 +151,7 @@ class TestSpawner(hero: Hero, level: Level) : MonsterSpawner() {
 
         addEvent {
             oneTime = false
-            startAt = 3.minutes
+        //    startAt = 3.minutes
             endAt = 5.minutes
             actionTimer = { 500.milliseconds.withRespawnMulti }
             actionCondition = {
