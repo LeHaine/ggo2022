@@ -401,10 +401,8 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
         if (Mob.ALL.isEmpty()) return
 
         repeat(min(Mob.ALL.size, 5 + game.state.extraProjectiles)) {
-            var mob = Mob.ALL.random()
-            while (mobsTemp.contains(mob) || mob.marked) {
-                mob = Mob.ALL.random()
-            }
+            val mob = Mob.ALL.filter { !it.marked }.random()
+            mob.marked = true
             mobsTemp += mob
         }
 
