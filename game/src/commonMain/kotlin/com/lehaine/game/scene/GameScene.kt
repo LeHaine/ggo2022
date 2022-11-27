@@ -503,60 +503,12 @@ class GameScene(context: Context) :
             gameCanvas.updateInterval = 1
         }
 
-        // TODO remove this before final release
-        if (input.isKeyJustPressed(Key.R)) {
-            root.destroyAllChildren()
-            root.createNodes()
-            resize(graphics.width, graphics.height)
-        }
-
-        // TODO remove this before final release
-        if (input.isKeyJustPressed(Key.NUM1)) {
-            loadLevel(0) { onEnterArena() }
-        } else if (input.isKeyJustPressed(Key.NUM2)) {
-            loadLevel(1) { onEnterBoneMansOffice() }
-        }
-
         if (input.isKeyJustPressed(Key.T)) {
             println(root.treeString())
         }
 
         if (input.isKeyJustPressed(Key.P)) {
             println(stats)
-        }
-
-        // TODO remove this before final release
-        if (input.isKeyJustPressed(Key.NUMPAD1)) {
-            state.extraProjectiles++
-        }
-
-        // TODO remove this before final release
-        if (input.isKeyJustPressed(Key.NUMPAD2) || input.isKeyJustPressed(Key.U)) {
-            gameCanvas.updateInterval = 0
-            upgradesDialog.enabled = true
-            upgradesDialog.refresh()
-        }
-
-        // TODO remove this before final release
-        if (input.isKeyJustPressed(Key.G)) {
-            hero.godMode = !hero.godMode
-            state.exp.stopLeveling = !state.exp.stopLeveling
-        }
-
-
-        // TODO remove this before final release
-        if (input.isKeyJustPressed(Key.ENTER)) {
-            showDebugInfo = !showDebugInfo
-        }
-
-        // TODO remove this before final release
-        if (input.isKeyPressed(Key.SHIFT_LEFT) && input.isKeyJustPressed(Key.U)) {
-            state.boneSpearUnlocked = true
-            state.dashUnlocked = true
-            state.shootingUnlocked = true
-            state.handOfDeathUnlocked = true
-            state.soulsCaptured = 10000000
-            state.unlockIdx = 3
         }
 
         if (setupController) {
