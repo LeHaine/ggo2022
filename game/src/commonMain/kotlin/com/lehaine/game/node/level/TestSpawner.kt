@@ -9,6 +9,7 @@ import com.lehaine.game.pickOne
 import com.lehaine.littlekt.math.floorToInt
 import com.lehaine.littlekt.util.datastructure.pool
 import com.lehaine.littlekt.util.seconds
+import com.lehaine.littlekt.util.signal
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.minutes
@@ -63,6 +64,8 @@ class TestSpawner(hero: Hero, level: Level) : MonsterSpawner() {
         }
     }
 
+    var onMajorEvent = signal()
+
     init {
         addEvent {
             oneTime = false
@@ -86,6 +89,9 @@ class TestSpawner(hero: Hero, level: Level) : MonsterSpawner() {
                         spawnMob(it)
                     }
                 }
+            }
+            onStart = {
+                onMajorEvent.emit()
             }
         }
 
@@ -126,6 +132,9 @@ class TestSpawner(hero: Hero, level: Level) : MonsterSpawner() {
                     }
                 }
             }
+            onStart = {
+                onMajorEvent.emit()
+            }
         }
 
         addEvent {
@@ -146,6 +155,9 @@ class TestSpawner(hero: Hero, level: Level) : MonsterSpawner() {
                         spawnMob(it)
                     }
                 }
+            }
+            onStart = {
+                onMajorEvent.emit()
             }
         }
 
@@ -168,6 +180,9 @@ class TestSpawner(hero: Hero, level: Level) : MonsterSpawner() {
                     }
                 }
             }
+            onStart = {
+                onMajorEvent.emit()
+            }
         }
         addEvent {
             oneTime = false
@@ -186,6 +201,9 @@ class TestSpawner(hero: Hero, level: Level) : MonsterSpawner() {
                         spawnMob(it)
                     }
                 }
+            }
+            onStart = {
+                onMajorEvent.emit()
             }
         }
     }

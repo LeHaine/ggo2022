@@ -30,6 +30,7 @@ import com.lehaine.littlekt.input.GameButton
 import com.lehaine.littlekt.input.Key
 import com.lehaine.littlekt.input.Pointer
 import com.lehaine.littlekt.math.floorToInt
+import com.lehaine.littlekt.math.interpolate
 import com.lehaine.littlekt.util.seconds
 import com.lehaine.littlekt.util.toString
 import com.lehaine.littlekt.util.viewport.ExtendViewport
@@ -59,6 +60,7 @@ class GameScene(context: Context) :
     lateinit var pauseDialog: PauseDialog
     lateinit var settingsDialog: SettingsDialog
     lateinit var gameCanvas: CanvasLayer
+    private var monstersIncomingLabel: Label? = null
 
     private var setupController = false
 
@@ -234,7 +236,11 @@ class GameScene(context: Context) :
                     projectiles.addTo(this)
 
                     if (ldtkLevel.entitiesByIdentifier.contains("MonsterSpawner")) {
-                        TestSpawner(hero, level).addTo(this)
+                        TestSpawner(hero, level).apply {
+                            onMajorEvent += {
+                                monstersIncomingLabel?.visible = true
+                            }
+                        }.addTo(this)
                     }
                 }
 
@@ -375,7 +381,6 @@ class GameScene(context: Context) :
                 }
             }
 
-
             paddedContainer {
                 padding(15)
                 anchor(Control.AnchorLayout.CENTER_TOP)
@@ -383,6 +388,50 @@ class GameScene(context: Context) :
                     minWidth = 200f
                     onUpdate += {
                         ratio = state.exp.ratioToNextLevel
+                    }
+                }
+            }
+
+            monstersIncomingLabel = label {
+                horizontalAlign = HAlign.CENTER
+                anchorRight = 1f
+                marginTop = 100f
+
+                text = "Monsters incoming!"
+                visible = levelIdx == 0
+
+                var forward = true
+                var timer = Duration.ZERO
+                var duration = Duration.ZERO
+
+                onReady += {
+                    visible = false
+                }
+                onUpdate += {
+                    if (visible) {
+                        val ratio = timer.seconds / 0.5f
+                        fontScaleX = ratio.interpolate(1f, 3f)
+                        fontScaleY = ratio.interpolate(1f, 3f)
+
+                        if (forward) {
+                            timer += it
+                        } else {
+                            timer -= it
+                        }
+                        if (ratio >= 1f) {
+                            forward = false
+                            Assets.sfxWarning.play(0.1f * Config.sfxMultiplier)
+                        } else if (ratio <= 0f) {
+                            forward = true
+                        }
+
+
+                        duration += it
+                        if (duration >= 5.seconds) {
+                            visible = false
+                            timer = Duration.ZERO
+                            duration = Duration.ZERO
+                        }
                     }
                 }
             }
@@ -429,11 +478,12 @@ class GameScene(context: Context) :
             }
         }
 
-        state.exp.onLevelUp += { level, gained ->
-            gameCanvas.updateInterval = 0
-            upgradesDialog.enabled = true
-            upgradesDialog.refresh()
-        }
+        state.exp.onLevelUp +=
+            { level, gained ->
+                gameCanvas.updateInterval = 0
+                upgradesDialog.enabled = true
+                upgradesDialog.refresh()
+            }
 
         fx.createParticleBatchNodes()
     }

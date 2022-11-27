@@ -15,6 +15,7 @@ import com.lehaine.littlekt.graph.node.ui.Panel
 import com.lehaine.littlekt.graph.node.ui.ProgressBar
 import com.lehaine.littlekt.graphics.*
 import com.lehaine.littlekt.graphics.font.BitmapFont
+import com.lehaine.littlekt.util.fastForEach
 import kotlin.jvm.Volatile
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -141,6 +142,7 @@ class Assets private constructor(context: Context) : Disposable {
     private val sfxSkillUnlock: AudioClip by assets.load(context.resourcesVfs["sfx/skillUnlock0.wav"])
     private val sfxDeathHero: AudioClip by assets.load(context.resourcesVfs["sfx/deathHero0.wav"])
     private val sfxDeathMob: AudioClip by assets.load(context.resourcesVfs["sfx/deathMob0.wav"])
+    private val sfxWarning: AudioClip by assets.load(context.resourcesVfs["sfx/warning0.wav"])
     private val music: AudioStream by assets.load(context.resourcesVfs["sfx/music.mp3"])
 
     init {
@@ -198,6 +200,21 @@ class Assets private constructor(context: Context) : Disposable {
     override fun dispose() {
         atlas.dispose()
         pixelFont.dispose()
+
+        sfxDeathMob.dispose()
+        sfxCollect.dispose()
+        sfxDeathHero.dispose()
+        sfxFootstep.dispose()
+        sfxSelect.dispose()
+        sfxShoot.dispose()
+        sfxSkillUnlock.dispose()
+        sfxSlam.dispose()
+        sfxWarning.dispose()
+        sfxHits.fastForEach { it.dispose() }
+        sfxLands.fastForEach { it.dispose() }
+        sfxSwings.fastForEach { it.dispose() }
+
+        music.dispose()
     }
 
     companion object {
@@ -255,6 +272,7 @@ class Assets private constructor(context: Context) : Disposable {
         val sfxSkillUnlock get() = INSTANCE.sfxSkillUnlock
         val sfxDeathHero get() = INSTANCE.sfxDeathHero
         val sfxDeathMob get() = INSTANCE.sfxDeathMob
+        val sfxWarning get() = INSTANCE.sfxWarning
 
         val music get() = INSTANCE.music
 
