@@ -30,6 +30,7 @@ import com.lehaine.littlekt.input.GameButton
 import com.lehaine.littlekt.input.Key
 import com.lehaine.littlekt.input.Pointer
 import com.lehaine.littlekt.math.floorToInt
+import com.lehaine.littlekt.util.seconds
 import com.lehaine.littlekt.util.toString
 import com.lehaine.littlekt.util.viewport.ExtendViewport
 import com.lehaine.rune.engine.ActionCreator
@@ -309,32 +310,36 @@ class GameScene(context: Context) :
             }
             actionBar = actionBar()
 
-            column {
+            row {
                 marginLeft = 15f
-                marginTop = 25f
-                separation = 30
-                val deadHeart = Assets.atlas.getAnimation("heartDead")
+                marginTop = 15f
+                separation = 50
 
-                var lastHeroMultiplier = 0f
-                var lastBaseHealth = 0
+                column {
+                    separation = 30
+                    val deadHeart = Assets.atlas.getAnimation("heartDead")
 
-                onUpdate += {
-                    if (lastHeroMultiplier != state.heroHealthMultiplier || lastBaseHealth != state.heroBaseHealth) {
-                        lastHeroMultiplier = state.heroHealthMultiplier
-                        lastBaseHealth = state.heroBaseHealth
-                        destroyAllChildren()
-                        val newHealth =
-                            (state.heroBaseHealth * state.heroHealthMultiplier).floorToInt().coerceAtLeast(1)
-                        if (hero.health > newHealth) {
-                            hero.health = newHealth
-                        }
-                        repeat(newHealth) {
-                            control {
-                                animatedSprite {
-                                    val idx = it
-                                    onReady += {
-                                        registerState(Assets.heartBeating, priority = 5) { hero.health >= idx + 1 }
-                                        registerState(deadHeart, 0)
+                    var lastHeroMultiplier = 0f
+                    var lastBaseHealth = 0
+
+                    onUpdate += {
+                        if (lastHeroMultiplier != state.heroHealthMultiplier || lastBaseHealth != state.heroBaseHealth) {
+                            lastHeroMultiplier = state.heroHealthMultiplier
+                            lastBaseHealth = state.heroBaseHealth
+                            destroyAllChildren()
+                            val newHealth =
+                                (state.heroBaseHealth * state.heroHealthMultiplier).floorToInt().coerceAtLeast(1)
+                            if (hero.health > newHealth) {
+                                hero.health = newHealth
+                            }
+                            repeat(newHealth) {
+                                control {
+                                    animatedSprite {
+                                        val idx = it
+                                        onReady += {
+                                            registerState(Assets.heartBeating, priority = 5) { hero.health >= idx + 1 }
+                                            registerState(deadHeart, 0)
+                                        }
                                     }
                                 }
                             }
@@ -342,6 +347,32 @@ class GameScene(context: Context) :
                     }
                 }
 
+                if (levelIdx == 0) {
+                    label {
+                        name = "Timer"
+                        verticalSizeFlags = Control.SizeFlag.FILL
+                        var timer = Duration.ZERO
+                        onUpdate += {
+                            if (gameCanvas.updateInterval != 0) {
+                                val minutes = (timer.seconds / 60).floorToInt()
+                                val seconds = (timer.seconds % 60).floorToInt()
+
+                                val minutesStr = if (minutes < 10) {
+                                    "0$minutes"
+                                } else {
+                                    "$minutes"
+                                }
+                                val secondsStr = if (seconds < 10) {
+                                    "0$seconds"
+                                } else {
+                                    "$seconds"
+                                }
+                                text = "$minutesStr:$secondsStr"
+                                timer += it
+                            }
+                        }
+                    }
+                }
             }
 
 
@@ -457,7 +488,7 @@ class GameScene(context: Context) :
         }
 
         // TODO remove this before final release
-        if(input.isKeyJustPressed(Key.G)) {
+        if (input.isKeyJustPressed(Key.G)) {
             hero.godMode = !hero.godMode
             state.exp.stopLeveling = !state.exp.stopLeveling
         }
