@@ -28,7 +28,7 @@ class KeyboardSelectScene(
     private var switchingScenes = false
 
     init {
-        clearColor = Color.fromHex("#8f6f6a")
+        clearColor = Color.fromHex("#422e37")
     }
     override suspend fun Node.initialize() {
         centerContainer {

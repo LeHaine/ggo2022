@@ -1,6 +1,5 @@
 package com.lehaine.game.scene
 
-import com.lehaine.game.Assets
 import com.lehaine.game.Config
 import com.lehaine.game.node.ui.fadeMask
 import com.lehaine.littlekt.Context
@@ -9,6 +8,7 @@ import com.lehaine.littlekt.graph.node.component.AlignMode
 import com.lehaine.littlekt.graph.node.component.HAlign
 import com.lehaine.littlekt.graph.node.ui.column
 import com.lehaine.littlekt.graph.node.ui.label
+import com.lehaine.littlekt.graphics.Color
 import com.lehaine.littlekt.util.viewport.ExtendViewport
 import com.lehaine.rune.engine.Cooldown
 import com.lehaine.rune.engine.RuneSceneDefault
@@ -24,6 +24,10 @@ class GameOverScene(
     context: Context
 ) : RuneSceneDefault(context, ExtendViewport(Config.VIRTUAL_WIDTH, Config.VIRTUAL_HEIGHT)) {
 
+    init {
+        clearColor = Color.fromHex("#422e37")
+    }
+
     override suspend fun Node.initialize() {
         val cd = Cooldown()
         column {
@@ -35,9 +39,8 @@ class GameOverScene(
                 text = if (won) {
                     "You achieved maximum souls.\nThank you for playing!"
                 } else {
-                    "Thank you for playing!"
+                    "You have been terminated.\nBetter luck next time.\nThank you for playing!"
                 }
-                font = Assets.pixelFont
                 wrap = true
                 horizontalAlign = HAlign.CENTER
                 fontScaleX = 2f
@@ -46,12 +49,15 @@ class GameOverScene(
 
         }
 
-        fadeMask(delay = 250.milliseconds, fadeTime = 1.seconds)
-        { onFinish += { destroy() } }
+        fadeMask(delay = 250.milliseconds, fadeTime = 1.seconds) {
+            onFinish += { destroy() }
+        }
 
-        onReady +=
-            {
-                cd.timeout("switch", 3.seconds) { changeTo(MenuScene(context)) }
-            }
+        onReady += {
+            cd.timeout("switch", 3.seconds) { changeTo(MenuScene(context)) }
+        }
+        onUpdate += {
+            cd.update(it)
+        }
     }
 }

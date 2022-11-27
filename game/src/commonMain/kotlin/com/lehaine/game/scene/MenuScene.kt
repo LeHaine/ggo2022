@@ -8,6 +8,7 @@ import com.lehaine.littlekt.Context
 import com.lehaine.littlekt.file.vfs.readLDtkMapLoader
 import com.lehaine.littlekt.graph.node.Node
 import com.lehaine.littlekt.graph.node.ui.*
+import com.lehaine.littlekt.graphics.Color
 import com.lehaine.littlekt.util.viewport.ExtendViewport
 import com.lehaine.rune.engine.RuneSceneDefault
 import com.lehaine.rune.engine.node.renderable.animatedSprite
@@ -22,6 +23,9 @@ class MenuScene(
 
     private var switchingScenes = false
 
+    init {
+        clearColor = Color.fromHex("#422e37")
+    }
     override suspend fun Node.initialize() {
         val mapLoader = resourcesVfs["world.ldtk"].readLDtkMapLoader()
         val world = mapLoader.loadMap(false, 2)
