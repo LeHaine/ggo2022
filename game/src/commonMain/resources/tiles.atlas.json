@@ -1171,8 +1171,8 @@
         {
             "filename": "fxGib0",
             "frame": {
-                "x": 942,
-                "y": 126,
+                "x": 679,
+                "y": 264,
                 "w": 4,
                 "h": 3
             },
@@ -1192,7 +1192,7 @@
         {
             "filename": "fxGib1",
             "frame": {
-                "x": 692,
+                "x": 689,
                 "y": 264,
                 "w": 4,
                 "h": 3
@@ -3187,22 +3187,22 @@
         {
             "filename": "shadowSmall",
             "frame": {
-                "x": 669,
-                "y": 264,
-                "w": 7,
-                "h": 5
+                "x": 942,
+                "y": 126,
+                "w": 10,
+                "h": 4
             },
             "rotated": false,
-            "trimmed": false,
+            "trimmed": true,
             "spriteSourceSize": {
-                "x": 0,
-                "y": 0,
-                "w": 7,
-                "h": 5
+                "x": 3,
+                "y": 12,
+                "w": 10,
+                "h": 4
             },
             "sourceSize": {
-                "w": 7,
-                "h": 5
+                "w": 16,
+                "h": 16
             }
         },
         {
@@ -3229,7 +3229,7 @@
         {
             "filename": "soulBlob",
             "frame": {
-                "x": 682,
+                "x": 669,
                 "y": 264,
                 "w": 4,
                 "h": 5

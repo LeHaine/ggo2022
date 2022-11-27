@@ -29,6 +29,9 @@ class Beetle(hero: Hero, level: Level) : Mob(hero, level) {
     init {
         width = 11f
         height = 5f
+        shadow.apply {
+           slice = Assets.atlas.getByPrefix("shadowSmall").slice
+        }
         sprite.apply {
             registerState(Assets.beetleRun, 0) { !cd.has("stun") }
         }

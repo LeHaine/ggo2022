@@ -106,6 +106,7 @@ abstract class Mob(val hero: Hero, override val level: Level) : ObliqueEntity(le
             die()
         }
 
+        shadow.x = -Config.GRID_CELL_SIZE * 0.5f
         shadow.globalY = (cy + yr) * Config.GRID_CELL_SIZE - Config.GRID_CELL_SIZE + 2
     }
 

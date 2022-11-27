@@ -76,7 +76,7 @@ class Fx(val game: GameScene) {
     fun shadowSmall(x: Float, y: Float, duration: Duration) {
         create(1) {
             val shadowSlice = Assets.atlas.getByPrefix("shadowSmall").slice
-            val p = allocBotNormal(shadowSlice, x - shadowSlice.width * 0.5f, y - shadowSlice.height * 0.5f)
+            val p = allocBotNormal(shadowSlice, x - Config.GRID_CELL_SIZE * 0.5f, y - Config.GRID_CELL_SIZE * 0.5f - 7f)
             p.life = duration
         }
     }

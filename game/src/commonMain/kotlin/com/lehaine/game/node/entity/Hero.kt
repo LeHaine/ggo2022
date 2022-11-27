@@ -150,6 +150,7 @@ class Hero(data: LDtkEntity, level: GameLevel<*>, val camera: EntityCamera2D, pr
 
     override fun update(dt: Duration) {
         super.update(dt)
+        shadow.x = -Config.GRID_CELL_SIZE * 0.5f
         shadow.globalY = (cy + yr) * Config.GRID_CELL_SIZE - Config.GRID_CELL_SIZE + 2
 
         updateEffects(dt)
