@@ -7,3 +7,6 @@ Made for Github GameOff 2022. The theme was `cliché`. Play the game [here](http
 #### Credits
 * **Code, Art, Sfx, and Design**: LeHaine
 * **Music**: from Zapsplat.com
+
+
+Made with [LittleKt](https://littlekt.com).
