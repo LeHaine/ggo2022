@@ -4,9 +4,9 @@ import com.lehaine.game.scene.GameScene
 import com.lehaine.littlekt.graph.node.render.BlendMode
 import com.lehaine.littlekt.graph.node.render.Material
 import com.lehaine.littlekt.graphics.Color
-import com.lehaine.littlekt.graphics.Particle
-import com.lehaine.littlekt.graphics.ParticleSimulator
-import com.lehaine.littlekt.graphics.TextureSlice
+import com.lehaine.littlekt.graphics.g2d.Particle
+import com.lehaine.littlekt.graphics.g2d.ParticleSimulator
+import com.lehaine.littlekt.graphics.g2d.TextureSlice
 import com.lehaine.littlekt.math.PI2_F
 import com.lehaine.littlekt.math.geom.radians
 import com.lehaine.littlekt.math.random

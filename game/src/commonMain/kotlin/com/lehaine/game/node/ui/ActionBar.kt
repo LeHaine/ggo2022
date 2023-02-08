@@ -6,10 +6,10 @@ import com.lehaine.game.node.game
 import com.lehaine.game.node.hero
 import com.lehaine.littlekt.graph.node.Node
 import com.lehaine.littlekt.graph.node.annotation.SceneGraphDslMarker
-import com.lehaine.littlekt.graph.node.component.AlignMode
+import com.lehaine.littlekt.graph.node.resource.AlignMode
 import com.lehaine.littlekt.graph.node.node
 import com.lehaine.littlekt.graph.node.ui.*
-import com.lehaine.littlekt.graphics.TextureSlice
+import com.lehaine.littlekt.graphics.g2d.TextureSlice
 import com.lehaine.rune.engine.node.renderable.entity.cd
 
 fun Node.actionBar(

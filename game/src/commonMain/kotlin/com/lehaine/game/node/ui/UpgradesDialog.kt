@@ -4,8 +4,8 @@ import com.lehaine.game.GameState
 import com.lehaine.game.data.Upgrade
 import com.lehaine.game.data.createArenaUpgrades
 import com.lehaine.littlekt.graph.node.Node
-import com.lehaine.littlekt.graph.node.component.HAlign
-import com.lehaine.littlekt.graph.node.component.VAlign
+import com.lehaine.littlekt.graph.node.resource.HAlign
+import com.lehaine.littlekt.graph.node.resource.VAlign
 import com.lehaine.littlekt.graph.node.node
 import com.lehaine.littlekt.graph.node.ui.*
 import com.lehaine.littlekt.util.signal

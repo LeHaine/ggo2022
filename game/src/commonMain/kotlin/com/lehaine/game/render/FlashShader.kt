@@ -21,6 +21,6 @@ class FlashFragmentShader : FragmentShaderModel() {
     private val v_texCoords by varying(::Vec2)
 
     init {
-        gl_FragColor = vec4Lit(v_color.xyz, texture2D(u_texture, v_texCoords).w)
+        gl_FragColor = vec4(v_color.xyz, texture2D(u_texture, v_texCoords).w).lit
     }
 }

@@ -7,8 +7,8 @@ import com.lehaine.game.node.ui.soundButton
 import com.lehaine.littlekt.Context
 import com.lehaine.littlekt.async.KtScope
 import com.lehaine.littlekt.graph.node.Node
-import com.lehaine.littlekt.graph.node.component.AlignMode
-import com.lehaine.littlekt.graph.node.component.HAlign
+import com.lehaine.littlekt.graph.node.resource.AlignMode
+import com.lehaine.littlekt.graph.node.resource.HAlign
 import com.lehaine.littlekt.graph.node.ui.*
 import com.lehaine.littlekt.graphics.Color
 import com.lehaine.littlekt.util.viewport.ExtendViewport

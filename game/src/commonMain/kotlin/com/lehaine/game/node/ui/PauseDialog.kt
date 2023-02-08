@@ -2,7 +2,7 @@ package com.lehaine.game.node.ui
 
 import com.lehaine.littlekt.Context
 import com.lehaine.littlekt.graph.node.Node
-import com.lehaine.littlekt.graph.node.component.HAlign
+import com.lehaine.littlekt.graph.node.resource.HAlign
 import com.lehaine.littlekt.graph.node.node
 import com.lehaine.littlekt.graph.node.ui.*
 import com.lehaine.littlekt.util.signal

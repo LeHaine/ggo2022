@@ -2,7 +2,7 @@ package com.lehaine.game.node.entity
 
 import com.lehaine.game.Assets
 import com.lehaine.game.Config
-import com.lehaine.littlekt.graphics.tilemap.ldtk.LDtkEntity
+import com.lehaine.littlekt.graphics.g2d.tilemap.ldtk.LDtkEntity
 import com.lehaine.rune.engine.node.renderable.entity.Entity
 import com.lehaine.rune.engine.node.renderable.entity.toGridPosition
 import com.lehaine.rune.engine.node.renderable.sprite

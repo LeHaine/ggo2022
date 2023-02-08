@@ -17,7 +17,7 @@ import com.lehaine.littlekt.graph.node.node2d.Node2D
 import com.lehaine.littlekt.graph.node.render.Material
 import com.lehaine.littlekt.graphics.shader.ShaderProgram
 import com.lehaine.littlekt.graphics.shader.shaders.DefaultVertexShader
-import com.lehaine.littlekt.graphics.tilemap.ldtk.LDtkEntity
+import com.lehaine.littlekt.graphics.g2d.tilemap.ldtk.LDtkEntity
 import com.lehaine.littlekt.math.PI2
 import com.lehaine.littlekt.math.geom.*
 import com.lehaine.littlekt.math.isFuzzyZero

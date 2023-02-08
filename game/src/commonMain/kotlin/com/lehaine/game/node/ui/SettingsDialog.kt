@@ -2,8 +2,8 @@ package com.lehaine.game.node.ui
 
 import com.lehaine.game.Config
 import com.lehaine.littlekt.graph.node.Node
-import com.lehaine.littlekt.graph.node.component.AlignMode
-import com.lehaine.littlekt.graph.node.component.HAlign
+import com.lehaine.littlekt.graph.node.resource.AlignMode
+import com.lehaine.littlekt.graph.node.resource.HAlign
 import com.lehaine.littlekt.graph.node.node
 import com.lehaine.littlekt.graph.node.ui.*
 import com.lehaine.littlekt.util.signal

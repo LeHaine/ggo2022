@@ -4,8 +4,8 @@ import com.lehaine.game.Config
 import com.lehaine.game.node.ui.fadeMask
 import com.lehaine.littlekt.Context
 import com.lehaine.littlekt.graph.node.Node
-import com.lehaine.littlekt.graph.node.component.AlignMode
-import com.lehaine.littlekt.graph.node.component.HAlign
+import com.lehaine.littlekt.graph.node.resource.AlignMode
+import com.lehaine.littlekt.graph.node.resource.HAlign
 import com.lehaine.littlekt.graph.node.ui.column
 import com.lehaine.littlekt.graph.node.ui.label
 import com.lehaine.littlekt.graphics.Color
