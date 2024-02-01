@@ -8,5 +8,3 @@ pluginManagement {
 
 rootProject.name = "glutton-for-punishment"
 include("game")
-
-enableFeaturePreview("VERSION_CATALOGS")

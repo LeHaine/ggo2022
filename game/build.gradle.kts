@@ -26,22 +26,25 @@ littleKt {
 }
 
 kotlin {
-    android()
+    androidTarget()
     jvm {
         compilations {
             val main by getting
 
-            val mainClass = (findProperty("jvm.mainClass") as? String)?.plus("Kt")
-                ?: project.logger.log(
+            val mainClassName = (findProperty("jvm.mainClass") as? String)?.plus("Kt")
+            if (mainClassName == null) {
+                project.logger.log(
                     LogLevel.ERROR,
                     "Property 'jvm.mainClass' has either changed or has not been set. Check 'gradle.properties' and ensure it is properly set!"
                 )
+            }
             tasks {
                 register<Copy>("copyResources") {
                     group = "package"
                     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+                    dependsOn(named("jvmProcessResources"))
                     from(main.output.resourcesDir)
-                    destinationDir = File("$buildDir/publish")
+                    destinationDir = File("${layout.buildDirectory.asFile.get()}/publish")
                 }
                 register<Jar>("packageFatJar") {
                     group = "package"
@@ -50,9 +53,9 @@ kotlin {
                     dependsOn(named("jvmJar"))
                     dependsOn(named("copyResources"))
                     manifest {
-                        attributes["Main-Class"] = mainClass
+                        attributes["Main-Class"] = mainClassName
                     }
-                    destinationDirectory.set(File("$buildDir/publish/"))
+                    destinationDirectory.set(File("${layout.buildDirectory.asFile.get()}/publish/"))
                     from(
                         main.runtimeDependencyFiles.map { if (it.isDirectory) it else zipTree(it) },
                         main.output.classesDirs
@@ -125,4 +128,8 @@ android {
         minSdk = (findProperty("android.minSdk") as String).toInt()
         targetSdk = (findProperty("android.targetSdk") as String).toInt()
     }
+}
+
+rootProject.extensions.configure<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension> {
+    versions.webpackCli.version = "4.10.0"
 }
